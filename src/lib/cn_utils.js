@@ -1259,7 +1259,7 @@ var cnUtil = (function(initConfig) {
 	this.get_pre_mlsag_hash = function(rv) {
 		var hashes = "";
 		hashes += rv.message;
-		//hashes += this.cn_fast_hash(this.serialize_rct_base(rv));
+		hashes += this.cn_fast_hash(this.serialize_rct_base(rv));
 		var buf = serialize_range_proofs(rv);
 		hashes += this.cn_fast_hash(buf);
 		return this.cn_fast_hash(hashes);
@@ -1365,8 +1365,8 @@ var cnUtil = (function(initConfig) {
 
 	this.add_pub_key_to_extra = function(extra, pubkey) {
 		if (pubkey.length !== 64) throw "Invalid pubkey length";
-		// Add the public key
-		extra.publicKey = pubkey;
+		// Append pubkey tag and pubkey
+		extra += TX_EXTRA_TAGS.PUBKEY + pubkey;
 		return extra;
 	};
 
@@ -1437,35 +1437,35 @@ var cnUtil = (function(initConfig) {
 		var buf = "";
 		buf += this.encode_varint(tx.version);
 		buf += this.encode_varint(tx.unlock_time);
-		buf += this.encode_varint(tx.inputs.length);
+		buf += this.encode_varint(tx.vin.length);
 		var i, j;
-		for (i = 0; i < tx.inputs.length; i++) {
-			var vin = tx.inputs[i];
+		for (i = 0; i < tx.vin.length; i++) {
+			var vin = tx.vin[i];
 			switch (vin.type) {
-				case "02":
+				case "input_to_key":
 					buf += "02";
 					buf += this.encode_varint(vin.amount);
-					buf += this.encode_varint(vin.data.input.key_offsets.length);
-					for (j = 0; j < vin.data.input.key_offsets.length; j++) {
-						buf += this.encode_varint(vin.data.input.key_offsets[j]);
+					buf += this.encode_varint(vin.key_offsets.length);
+					for (j = 0; j < vin.key_offsets.length; j++) {
+						buf += this.encode_varint(vin.key_offsets[j]);
 					}
-					buf += vin.data.input.k_image;
+					buf += vin.k_image;
 					break;
 				default:
 					throw "Unhandled vin type: " + vin.type;
 			}
 		}
-		buf += this.encode_varint(tx.outputs.length);
-		for (i = 0; i < tx.outputs.length; i++) {
-			var vout = tx.outputs[i];
-            buf += this.encode_varint(vout.amount);
-            switch (vout.output.target.type) {
-				case "02":
+		buf += this.encode_varint(tx.vout.length);
+		for (i = 0; i < tx.vout.length; i++) {
+			var vout = tx.vout[i];
+			buf += this.encode_varint(vout.amount);
+			switch (vout.target.type) {
+				case "txout_to_key":
 					buf += "02";
-					buf += vout.output.target.data.key;
+					buf += vout.target.key;
 					break;
 				default:
-					throw "Unhandled txout target type: " + vout.output.target.data.type;
+					throw "Unhandled txout target type: " + vout.target.type;
 			}
 		}
 		if (!this.valid_hex(tx.extra)) {
@@ -1474,10 +1474,10 @@ var cnUtil = (function(initConfig) {
 		buf += this.encode_varint(tx.extra.length / 2);
 		buf += tx.extra;
 		if (!headeronly) {
-			if (tx.inputs.length !== tx.signatures.length) {
-				throw "Signatures length != inputs length";
+			if (tx.vin.length !== tx.signatures.length) {
+				throw "Signatures length != vin length";
 			}
-			for (i = 0; i < tx.inputs.length; i++) {
+			for (i = 0; i < tx.vin.length; i++) {
 				for (j = 0; j < tx.signatures[i].length; j++) {
 					buf += tx.signatures[i][j];
 				}
@@ -1491,20 +1491,20 @@ var cnUtil = (function(initConfig) {
 		var buf = "";
 		buf += this.serialize_tx(tx, true);
 		hashes += this.cn_fast_hash(buf);
-		//var buf2 = this.serialize_rct_base(tx.rct_signatures);
-		//hashes += this.cn_fast_hash(buf2);
-		//buf += buf2;
-		//var buf3 = serialize_range_proofs(tx.rct_signatures);
+		var buf2 = this.serialize_rct_base(tx.rct_signatures);
+		hashes += this.cn_fast_hash(buf2);
+		buf += buf2;
+		var buf3 = serialize_range_proofs(tx.rct_signatures);
 		//add MGs
-		//for (var i = 0; i < tx.rct_signatures.p.MGs.length; i++) {
-		//	for (var j = 0; j < tx.rct_signatures.p.MGs[i].ss.length; j++) {
-		//		buf3 += tx.rct_signatures.p.MGs[i].ss[j][0];
-		//		buf3 += tx.rct_signatures.p.MGs[i].ss[j][1];
-		//	}
-		//	buf3 += tx.rct_signatures.p.MGs[i].cc;
-		//}
-		//hashes += this.cn_fast_hash(buf3);
-		//buf += buf3;
+		for (var i = 0; i < tx.rct_signatures.p.MGs.length; i++) {
+			for (var j = 0; j < tx.rct_signatures.p.MGs[i].ss.length; j++) {
+				buf3 += tx.rct_signatures.p.MGs[i].ss[j][0];
+				buf3 += tx.rct_signatures.p.MGs[i].ss[j][1];
+			}
+			buf3 += tx.rct_signatures.p.MGs[i].cc;
+		}
+		hashes += this.cn_fast_hash(buf3);
+		buf += buf3;
 		var hash = this.cn_fast_hash(hashes);
 		return {
 			raw: buf,
@@ -1651,14 +1651,9 @@ var cnUtil = (function(initConfig) {
 
 	this.construct_tx = function(keys, sources, dsts, fee_amount, payment_id, pid_encrypt, realDestViewKey, unlock_time, rct) {
 		//we move payment ID stuff here, because we need txkey to encrypt
-        var txkey = this.random_keypair();
-        rct = false;
+		var txkey = this.random_keypair();
 		console.log(txkey);
-        var extra = {
-            nonce: [],
-            publicKey: "",
-            raw: ""
-        };
+		var extra = '';
 		if (payment_id) {
 			if (pid_encrypt && payment_id.length !== INTEGRATED_ID_SIZE * 2) {
 				throw "payment ID must be " + INTEGRATED_ID_SIZE + " bytes to be encrypted!";
@@ -1671,22 +1666,22 @@ var cnUtil = (function(initConfig) {
 			}
 			var nonce = this.get_payment_id_nonce(payment_id, pid_encrypt);
 			console.log("Extra nonce: " + nonce);
-            extra.nonce = nonce;
+			extra = this.add_nonce_to_extra(extra, nonce);
 		}
 		var tx = {
 			unlock_time: unlock_time,
-			//version: rct ? CURRENT_TX_VERSION : OLD_TX_VERSION,
+			version: rct ? CURRENT_TX_VERSION : OLD_TX_VERSION,
 			extra: extra,
-			//prvkey: '',
-			inputs: [],
-			outputs: []
+			prvkey: '',
+			vin: [],
+			vout: []
 		};
 		if (rct) {
 			tx.rct_signatures = {};
 		} else {
 			tx.signatures = [];
 		}
-		//tx.prvkey = txkey.sec;
+		tx.prvkey = txkey.sec;
 
 		var in_contexts = [];
 		var inputs_money = JSBigInt.ZERO;
@@ -1713,12 +1708,12 @@ var cnUtil = (function(initConfig) {
 			// coinbaser ringct txs.
 			//is_rct_coinbases.push((sources[i].mask ? sources[i].mask === I : 0));
 
-			//console.log('res.in_ephemeral.pub', res, res.in_ephemeral.pub, sources, i);
-			//if (res.in_ephemeral.pub !== sources[i].outputs[sources[i].real_out].key) {
-			//	throw "in_ephemeral.pub != source.real_out.key";
-			//}
+			console.log('res.in_ephemeral.pub', res, res.in_ephemeral.pub, sources, i);
+			if (res.in_ephemeral.pub !== sources[i].outputs[sources[i].real_out].key) {
+				throw "in_ephemeral.pub != source.real_out.key";
+			}
 			sources[i].key_image = res.image;
-			//sources[i].in_ephemeral = res.in_ephemeral;
+			sources[i].in_ephemeral = res.in_ephemeral;
 		}
 		//sort ins
 		sources.sort(function(a, b) {
@@ -1731,32 +1726,20 @@ var cnUtil = (function(initConfig) {
 		//copy the sorted sources data to tx
 		for (i = 0; i < sources.length; i++) {
 			inputs_money = inputs_money.add(sources[i].amount);
-			//in_contexts.push(sources[i].in_ephemeral);
-            var input_to_key = {
-                data: {
-                    input: {
-                        amount: 0,
-                        k_image: "",
-                        key_offsets: []
-                    },
-                    mixin: 0,
-                    output:{},
-                    type: "02"
-                }
-            };
-            //input_to_key.type = "02";
-            input_to_key.data.input.amount = sources[i].amount;
-            console.log("amount:", input_to_key.data.input.amount);
-			input_to_key.data.input.k_image = sources[i].key_image;
-			input_to_key.data.input.key_offsets = [];
+			in_contexts.push(sources[i].in_ephemeral);
+			var input_to_key = {};
+			input_to_key.type = "input_to_key";
+			input_to_key.amount = sources[i].amount;
+			input_to_key.k_image = sources[i].key_image;
+			input_to_key.key_offsets = [];
 			for (j = 0; j < sources[i].outputs.length; ++j) {
 				console.log('add to key offsets',sources[i].outputs[j].index, j, sources[i].outputs);
-				input_to_key.data.input.key_offsets.push(sources[i].outputs[j].index);
-            }
-            console.log('key offsets before abs', input_to_key.data.input.key_offsets);
-            input_to_key.data.input.key_offsets = this.abs_to_rel_offsets(input_to_key.data.input.key_offsets);
-			console.log('key offsets after abs',input_to_key.data.input.key_offsets);
-			tx.inputs.push(input_to_key);
+				input_to_key.key_offsets.push(sources[i].outputs[j].index);
+			}
+			console.log('key offsets before abs',input_to_key.key_offsets);
+			input_to_key.key_offsets = this.abs_to_rel_offsets(input_to_key.key_offsets);
+			console.log('key offsets after abs',input_to_key.key_offsets);
+			tx.vin.push(input_to_key);
 		}
 		var outputs_money = JSBigInt.ZERO;
 		var out_index = 0;
@@ -1768,9 +1751,9 @@ var cnUtil = (function(initConfig) {
 			dsts[i].keys = this.decode_address(dsts[i].address);
 
 			// R = rD for subaddresses
-			//if(this.is_subaddress(dsts[i].address)) {
-			//	txkey.pub = ge_scalarmult(dsts[i].keys.spend, txkey.sec);
-			//}
+			if(this.is_subaddress(dsts[i].address)) {
+				txkey.pub = ge_scalarmult(dsts[i].keys.spend, txkey.sec);
+			}
 			var out_derivation;
 			// send change to ourselves
 			if(dsts[i].keys.view === keys.view.pub) {
@@ -1778,50 +1761,40 @@ var cnUtil = (function(initConfig) {
 			}
 			else {
 				out_derivation = this.generate_key_derivation(dsts[i].keys.view, txkey.sec);
-            }
-            console.log("out derivation:" + out_derivation);
-			//if (rct) {
-			//	amountKeys.push(this.derivation_to_scalar(out_derivation, out_index));
-			//}
+			}
+
+			if (rct) {
+				amountKeys.push(this.derivation_to_scalar(out_derivation, out_index));
+			}
 			var out_ephemeral_pub = this.derive_public_key(out_derivation, out_index, dsts[i].keys.spend);
-            var out = {
-                output: {
-                    amount: dsts[i].amount.toString(),
-                    target: {}
-                }
+			var out = {
+				amount: dsts[i].amount.toString()
 			};
-			// add keys
-            out.output.target = {
-                data: {
-                    key: out_ephemeral_pub
-                },
-                type: "02",
+			// txout_to_key
+			out.target = {
+				type: "txout_to_key",
+				key: out_ephemeral_pub
 			};
-			tx.outputs.push(out);
+			tx.vout.push(out);
 			++out_index;
 			outputs_money = outputs_money.add(dsts[i].amount);
 		}
 
 		// add pub key to extra after we know whether to use R = rG or R = rD
 		tx.extra = this.add_pub_key_to_extra(tx.extra, txkey.pub);
-        console.log("extra:");
-        console.log(tx.extra);
-        if (outputs_money.add(fee_amount).compare(inputs_money) > 0) {
+
+		if (outputs_money.add(fee_amount).compare(inputs_money) > 0) {
 			throw "outputs money (" + this.formatMoneyFull(outputs_money) + ") + fee (" + this.formatMoneyFull(fee_amount) + ") > inputs money (" + this.formatMoneyFull(inputs_money) + ")";
 		}
-        if (!rct) {
-            console.log("!rct:");
-            console.log("sources:");
-            console.log(sources);
+		if (!rct) {
 			for (i = 0; i < sources.length; ++i) {
-                var src_keys = [];
-                for (j = 0; j < sources[i].outputs.length; ++j) {
+				var src_keys = [];
+				for (j = 0; j < sources[i].outputs.length; ++j) {
 					src_keys.push(sources[i].outputs[j].key);
-                }
-                //var sigs = this.generate_ring_signature(this.get_tx_prefix_hash(tx), tx.inputs[i].data.input.k_image, src_keys,in_contexts[i].sec, sources[i].real_out);
-    //            console.log("signatures:");
-    //            console.log(sigs);
-				//tx.signatures.push(sigs);
+				}
+				var sigs = this.generate_ring_signature(this.get_tx_prefix_hash(tx), tx.vin[i].k_image, src_keys,
+					in_contexts[i].sec, sources[i].real_out);
+				tx.signatures.push(sigs);
 			}
 		} else { //rct
 			var txnFee = fee_amount;
@@ -1830,7 +1803,7 @@ var cnUtil = (function(initConfig) {
 			var inAmounts = [];
 			var mixRing = [];
 			var indices = [];
-			for (i = 0; i < tx.inputs.length; i++) {
+			for (i = 0; i < tx.vin.length; i++) {
 				keyimages.push(tx.vin[i].k_image);
 				inSk.push({
 					x: in_contexts[i].sec,
