@@ -93,7 +93,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "config.js",
-    "revision": "2b84d4a2f5070c8d62c320c6ddafe7c1"
+    "revision": "7649fa0221eb6b8c4b6374da7fd3501c"
   },
   {
     "url": "d/vue-i118n.js",
@@ -133,7 +133,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "lib/cn_utils.js",
-    "revision": "49cae7ef8751c74e9db6a6f8476f64c2"
+    "revision": "a7ed4f18b6258fa0df4fe65e54eb1532"
   },
   {
     "url": "lib/crypto.js",
