@@ -68,7 +68,7 @@ define(["require", "exports", "../lib/numbersLab/VueAnnotate", "../lib/numbersLa
             }
             swal({
                 title: i18n.t('accountPage.txDetails.title'),
-                html: "\n<div class=\"tl\" >\n\t<div>" + i18n.t('accountPage.txDetails.txHash') + ": <a href=\"" + explorerUrl + "tx/" + transaction.hash + "\" target=\"_blank\">" + transaction.hash + "</a></div>\n\t" + paymentId + "\n\t" + feesHtml + "\n\t<div>" + i18n.t('accountPage.txDetails.blockHeight') + ": " + transaction.blockHeight + "</a></div>\n</div>"
+                html: "\n<div class=\"tl\" >\n\t<div>" + i18n.t('accountPage.txDetails.txHash') + ": <a href=\"" + explorerUrl + "/?hash=" + transaction.hash + "#blockchain_transaction\" target=\"_blank\">" + transaction.hash + "</a></div>\n\t" + paymentId + "\n\t" + feesHtml + "\n\t<div>" + i18n.t('accountPage.txDetails.blockHeight') + ": " + transaction.blockHeight + "</a></div>\n</div>"
             });
         };
         AccountView.prototype.refreshWallet = function () {

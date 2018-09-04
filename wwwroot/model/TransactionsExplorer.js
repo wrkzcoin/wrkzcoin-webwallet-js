@@ -32,8 +32,8 @@ define(["require", "exports", "./Transaction", "./CryptoUtils", "./MathUtil", ".
             var transaction = null;
             var tx_pub_key = '';
             var paymentId = null;
-            tx_pub_key = rawTransaction.pk;
-            paymentId = rawTransaction.pId;
+            tx_pub_key = rawTransaction.publicKey;
+            paymentId = rawTransaction.paymentId;
             var derivation = null;
             try {
                 derivation = CnUtilNative_1.CnUtilNative.generate_key_derivation(tx_pub_key, wallet.keys.priv.view);
@@ -44,15 +44,15 @@ define(["require", "exports", "./Transaction", "./CryptoUtils", "./MathUtil", ".
             }
             var outs = [];
             var ins = [];
-            for (var iOut = 0; iOut < rawTransaction.vo.length; ++iOut) {
-                var out = rawTransaction.vo[iOut];
+            for (var iOut = 0; iOut < rawTransaction.vout.length; ++iOut) {
+                var out = rawTransaction.vout[iOut];
                 //let txout_k = out;
-                var amount = out.a;
+                var amount = out.amount;
                 var output_idx_in_tx = iOut;
                 // let generated_tx_pubkey = cnUtil.derive_public_key(derivation,output_idx_in_tx,wallet.keys.pub.spend);//5.5ms
                 var generated_tx_pubkey = CnUtilNative_1.CnUtilNative.derive_public_key(derivation, output_idx_in_tx, wallet.keys.pub.spend); //5.5ms
                 // check if generated public key matches the current output's key
-                var mine_output = (out.k == generated_tx_pubkey);
+                var mine_output = (out.key == generated_tx_pubkey);
                 if (mine_output) {
                     //let minerTx = false;
                     //if (amount !== 0) {//miner tx
@@ -72,12 +72,13 @@ define(["require", "exports", "./Transaction", "./CryptoUtils", "./MathUtil", ".
                     //		amount = r;
                     //}
                     var transactionOut = new Transaction_1.TransactionOut();
-                    if (typeof rawTransaction.gI !== 'undefined')
-                        transactionOut.globalIndex = rawTransaction.gI + output_idx_in_tx;
-                    else
-                        transactionOut.globalIndex = output_idx_in_tx;
+                    //if (typeof rawTransaction.global_index_start !== 'undefined')
+                    //    transactionOut.globalIndex = rawTransaction.global_index_start + output_idx_in_tx;
+                    //else
+                    //    transactionOut.globalIndex = output_idx_in_tx;
+                    transactionOut.globalIndex = out.globalIndex;
                     transactionOut.amount = amount;
-                    transactionOut.pubKey = out.k;
+                    transactionOut.pubKey = out.key;
                     transactionOut.outputIdx = output_idx_in_tx;
                     //if (!minerTx) {
                     //	transactionOut.rtcOutPk = rawTransaction.rct_signatures.outPk[output_idx_in_tx];
@@ -102,14 +103,14 @@ define(["require", "exports", "./Transaction", "./CryptoUtils", "./MathUtil", ".
             //check if no read only wallet
             if (wallet.keys.priv.spend !== null && wallet.keys.priv.spend !== '') {
                 var keyImages = wallet.getTransactionKeyImages();
-                for (var iIn = 0; iIn < rawTransaction.vi.length; ++iIn) {
-                    var input = rawTransaction.vi[iIn];
-                    if (keyImages.indexOf(input.ki) != -1) {
+                for (var iIn = 0; iIn < rawTransaction.vin.length; ++iIn) {
+                    var input = rawTransaction.vin[iIn];
+                    if (keyImages.indexOf(input.k_image) != -1) {
                         // console.log('found in', vin);
                         var walletOuts = wallet.getAllOuts();
                         for (var _i = 0, walletOuts_1 = walletOuts; _i < walletOuts_1.length; _i++) {
                             var ut = walletOuts_1[_i];
-                            if (ut.keyImage == input.ki) {
+                            if (ut.keyImage == input.k_image) {
                                 // ins.push(vin.key.k_image);
                                 // sumIns += ut.amount;
                                 var transactionIn = new Transaction_1.TransactionIn();
@@ -125,9 +126,9 @@ define(["require", "exports", "./Transaction", "./CryptoUtils", "./MathUtil", ".
             }
             else {
                 var txOutIndexes = wallet.getTransactionOutIndexes();
-                for (var iIn = 0; iIn < rawTransaction.vi.length; ++iIn) {
-                    var input = rawTransaction.vi[iIn];
-                    var absoluteOffets = input.ko.slice();
+                for (var iIn = 0; iIn < rawTransaction.vin.length; ++iIn) {
+                    var input = rawTransaction.vin[iIn];
+                    var absoluteOffets = input.key_offsets.slice();
                     for (var i = 1; i < absoluteOffets.length; ++i) {
                         absoluteOffets[i] += absoluteOffets[i - 1];
                     }
@@ -152,16 +153,16 @@ define(["require", "exports", "./Transaction", "./CryptoUtils", "./MathUtil", ".
             }
             if (outs.length > 0 || ins.length > 0) {
                 transaction = new Transaction_1.Transaction();
-                if (typeof rawTransaction.h !== 'undefined')
-                    transaction.blockHeight = rawTransaction.h;
-                if (typeof rawTransaction.ts !== 'undefined')
-                    transaction.timestamp = rawTransaction.ts;
-                if (typeof rawTransaction.hs !== 'undefined')
-                    transaction.hash = rawTransaction.hs;
+                if (typeof rawTransaction.height !== 'undefined')
+                    transaction.blockHeight = rawTransaction.height;
+                if (typeof rawTransaction.timestamp !== 'undefined')
+                    transaction.timestamp = rawTransaction.timestamp;
+                if (typeof rawTransaction.hash !== 'undefined')
+                    transaction.hash = rawTransaction.hash;
                 transaction.txPubKey = tx_pub_key;
                 if (paymentId !== null && paymentId != '0000000000000000000000000000000000000000000000000000000000000000')
                     transaction.paymentId = paymentId;
-                transaction.fees = rawTransaction.f;
+                transaction.fees = rawTransaction.fee;
                 transaction.outs = outs;
                 transaction.ins = ins;
             }
@@ -385,7 +386,7 @@ define(["require", "exports", "./Transaction", "./CryptoUtils", "./MathUtil", ".
                             });
                         }
                         console.log('mix_outs', mix_outs);
-                        TransactionsExplorer.createRawTx(dsts, wallet, true, usingOuts, pid_encrypt, mix_outs, mixin, neededFee, paymentId).then(function (data) {
+                        TransactionsExplorer.createRawTx(dsts, wallet, false, usingOuts, pid_encrypt, mix_outs, mixin, neededFee, paymentId).then(function (data) {
                             resolve(data);
                         }).catch(function (e) {
                             reject(e);

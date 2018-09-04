@@ -55,7 +55,7 @@ define(["require", "exports", "../TransactionsExplorer", "../Transaction", "../M
                             self.signalWalletUpdate();
                         }
                         if (self.workerCurrentProcessing.length > 0) {
-                            var transactionHeight = self.workerCurrentProcessing[self.workerCurrentProcessing.length - 1].h;
+                            var transactionHeight = self.workerCurrentProcessing[self.workerCurrentProcessing.length - 1].height;
                             if (typeof transactionHeight !== 'undefined')
                                 self.wallet.lastHeight = transactionHeight;
                         }
@@ -119,7 +119,7 @@ define(["require", "exports", "../TransactionsExplorer", "../Transaction", "../M
         WalletWatchdog.prototype.checkTransactions = function (rawTransactions) {
             for (var _i = 0, rawTransactions_1 = rawTransactions; _i < rawTransactions_1.length; _i++) {
                 var rawTransaction = rawTransactions_1[_i];
-                var height = rawTransaction.h;
+                var height = rawTransaction.height;
                 if (typeof height !== 'undefined') {
                     var transaction = TransactionsExplorer_1.TransactionsExplorer.parse(rawTransaction, this.wallet);
                     if (transaction !== null) {
@@ -168,8 +168,8 @@ define(["require", "exports", "../TransactionsExplorer", "../Transaction", "../M
             var transactionsToAdd = [];
             for (var _i = 0, transactions_2 = transactions; _i < transactions_2.length; _i++) {
                 var tr = transactions_2[_i];
-                if (typeof tr.h !== 'undefined')
-                    if (tr.h > this.wallet.lastHeight) {
+                if (typeof tr.height !== 'undefined')
+                    if (tr.height > this.wallet.lastHeight) {
                         transactionsToAdd.push(tr);
                     }
             }
@@ -215,14 +215,14 @@ define(["require", "exports", "../TransactionsExplorer", "../Transaction", "../M
                         //to ensure no pile explosion
                         if (transactions.length > 0) {
                             var lastTx = transactions[transactions.length - 1];
-                            if (typeof lastTx.h !== 'undefined') {
-                                self.lastBlockLoading = lastTx.h + 1;
+                            if (typeof lastTx.height !== 'undefined') {
+                                self.lastBlockLoading = lastTx.height + 1;
                             }
                         }
                         self.processTransactions(transactions);
                         setTimeout(function () {
                             self.loadHistory();
-                        }, 1);
+                        }, 100);
                     }).catch(function () {
                         setTimeout(function () {
                             self.loadHistory();
@@ -347,21 +347,21 @@ define(["require", "exports", "../TransactionsExplorer", "../Transaction", "../M
                     var txCandidates = {};
                     for (var iOut = 0; iOut < txs.length; ++iOut) {
                         var tx = txs[iOut];
-                        if ((typeof tx.h !== 'undefined' && randomBlocksIndexesToGet.indexOf(tx.h) === -1) ||
-                            typeof tx.h === 'undefined') {
+                        if ((typeof tx.height !== 'undefined' && randomBlocksIndexesToGet.indexOf(tx.height) === -1) ||
+                            typeof tx.height === 'undefined') {
                             continue;
                         }
-                        for (var output_idx_in_tx = 0; output_idx_in_tx < tx.vo.length; ++output_idx_in_tx) {
+                        for (var output_idx_in_tx = 0; output_idx_in_tx < tx.vout.length; ++output_idx_in_tx) {
                             var globalIndex = output_idx_in_tx;
-                            if (typeof tx.gI !== 'undefined')
-                                globalIndex += tx.gI;
+                            if (typeof tx.global_index_start !== 'undefined')
+                                globalIndex += tx.global_index_start;
                             var newOut = {
-                                public_key: tx.vo[output_idx_in_tx].k,
+                                public_key: tx.vout[output_idx_in_tx].key,
                                 global_index: globalIndex,
                             };
-                            if (typeof txCandidates[tx.h] === 'undefined')
-                                txCandidates[tx.h] = [];
-                            txCandidates[tx.h].push(newOut);
+                            if (typeof txCandidates[tx.height] === 'undefined')
+                                txCandidates[tx.height] = [];
+                            txCandidates[tx.height].push(newOut);
                         }
                     }
                     console.log(txCandidates);

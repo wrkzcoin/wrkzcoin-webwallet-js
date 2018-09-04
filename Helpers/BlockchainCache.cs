@@ -26,31 +26,48 @@ namespace WebWallet.Helpers
             //temp commented out for multiple db comparison
             using (var db = new LiteDatabase(string.Concat(AppContext.BaseDirectory, @"App_Data\", "transactions.db")))
             {
-
+                int outCount = 0;
                 var transactions = db.GetCollection<CachedTx>("cached_txs");
                 //var rawDb = new LiteDatabase(string.Concat(AppContext.BaseDirectory, @"App_Data\", "raw-blockchain.db"));
                 //var rawtransactions = rawDb.GetCollection<TxBlockResp>("rawblockchain");
 
                 var date = DateTime.Now;
                 //what if the process dies half way through - we 
-                // Index document using height
-                transactions.EnsureIndex(x => x.h);
-                transactions.EnsureIndex(x => x.hs);
-                //rawtransactions.EnsureIndex(x => x.blockIndex);
+                // Index document using height's, hash and Id
+                transactions.EnsureIndex(x => x.height);
+                transactions.EnsureIndex(x => x.Id);
+                transactions.EnsureIndex(x => x.hash);
+                
                 int startHeight = 1;
+                var check = System.IO.File.AppendText(string.Concat(AppContext.BaseDirectory, @"App_Data\", "heights.txt"));
+                var outMap = System.IO.File.AppendText(string.Concat(AppContext.BaseDirectory, @"App_Data\", "outMap.txt"));
+                check.AutoFlush = true;
                 try
                 {
-                    startHeight = transactions.Max(x => x.h).AsInt32; //we start with the last block that was processed in case the process died and not all Tx's from that block where cached... 
-                    if (startHeight == 0)
+                    //get the maxTxId
+                    var lastTxId = transactions.Max(x => x.Id).AsInt32;
+                    var lastTx = transactions.FindOne(x => x.Id == lastTxId);
+                    if (lastTx != null)
                     {
-                        startHeight = 1;
+                        startHeight = lastTx.height;
+                        outCount = lastTx.global_index_start + lastTx.vout.Count;
+                    }
+                    else
+                    {
+                        startHeight = 0;
+                        outCount = 0;
                     }
                 }
                 catch (Exception ex)
                 {
                     //todo: add logging
                 }
-                context.WriteLine("Starting at height: " + startHeight);
+
+                if (startHeight == 0)
+                {
+                    startHeight = 1;
+                }
+
                 //get bc height from RPC
                 var currentHeight = RpcHelper.Request<GetHeightResp>("getheight").Height - 1;
 
@@ -62,37 +79,38 @@ namespace WebWallet.Helpers
                 if (currentHeight > startHeight)
                 {
                     //we need to catch the cache up.... 
-                    var progress = context.WriteProgressBar();
                     for (var i = startHeight; i <= currentHeight; i++)
                     {
-                        progress.SetValue((i / currentHeight * 100));
-                        context.WriteLine("retreiving block details: " + i);
+                        //TODO: potential issue with Cache not querying every block
+                        check.WriteLine(i);
                         //first, make 100% sure the current height (i) is not already in the cache... 
                         var height_args = new int[] { i };
                         var blockHash = RpcHelper.RequestJson<HashResp>("on_getblockhash", height_args).result;
                         //then, get the blockHash for the height we're currently processing...
                         var hash_args = new Dictionary<string, object>();
                         hash_args.Add("hash", blockHash);
-                        context.WriteLine("block(" + i + ") hash: " + blockHash);
-
-                        txHashes.AddRange(RpcHelper.RequestJson<BlockJsonResp>("f_block_json", hash_args).result.block.transactions.Select(x => x.hash).ToList<string>());
-                        context.WriteLine("fetched txs from block(" + i + ")");
+                        txHashes.AddRange(RpcHelper.RequestJson<BlockJsonResp>("f_block_json", hash_args, i).result.block.transactions.Select(x => x.hash).ToList<string>());
                         //next, get the block itself and extract all the tx hashes....
 
                         if (counter == 50 || gCounter == currentHeight)
                         {
-                            context.WriteLine("caching for height :" + gCounter);
                             var tx_args = new Dictionary<string, object>();
                             tx_args.Add("transactionHashes", txHashes.ToArray());
-                            var txs = RpcHelper.Request<TxDetailResp>("get_transaction_details_by_hashes", tx_args);
-
+                            var txs = RpcHelper.Request<TxDetailResp>("get_transaction_details_by_hashes", tx_args, gCounter);
                             foreach (var tx in txs.transactions)
                             {
                                 //TODO: find a way to exclude fusion Tx's from the cache
                                 var lightTx = TransactionHelpers.MapTx(tx);
                                 //persist tx's to cache
-                                if (lightTx != null && !transactions.Find(x => x.hs == lightTx.hs).Any())
+                                if (lightTx != null && !transactions.Find(x => x.hash == lightTx.hash).Any())
+                                {
+                                    //TODO: re-examine this and ensure it's correct
+                                    //set the global_index_start for this tx
+                                    lightTx.global_index_start = outCount;
+                                    outMap.WriteLine(tx.hash + " has global_start_index of " + outCount + " at height " + lightTx.height.ToString());
+                                    outCount += lightTx.vout.Count;
                                     transactions.Insert(lightTx);
+                                }
                             }
                             counter = 0;
                             txHashes.Clear();
@@ -106,10 +124,13 @@ namespace WebWallet.Helpers
 
                 }
                 //else there's nothing to do
+                check.Flush();
+                check.Close();
             }
+            
             //finally, schedule the next check in 30 seconds time
             Thread.Sleep(30000); //using .Schedule" below the jobs dfon't kick off, so reverting to a more crude method... sleep the thred for 30 seconds, then enqueue the job again... 
-            BackgroundJob.Enqueue(() => BlockchainCache.BuildCache(null));
+            BackgroundJob.Schedule(() => BlockchainCache.BuildCache(null), TimeSpan.FromSeconds(30));
         }
     }
 }

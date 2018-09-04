@@ -52,7 +52,7 @@ export class WalletWatchdog {
                         self.signalWalletUpdate();
                     }
                     if (self.workerCurrentProcessing.length > 0) {
-                        let transactionHeight = self.workerCurrentProcessing[self.workerCurrentProcessing.length - 1].h;
+                        let transactionHeight = self.workerCurrentProcessing[self.workerCurrentProcessing.length - 1].height;
                         if (typeof transactionHeight !== 'undefined')
                             self.wallet.lastHeight = transactionHeight;
                     }
@@ -134,7 +134,7 @@ export class WalletWatchdog {
 
     checkTransactions(rawTransactions: RawDaemonTransaction[]) {
         for (let rawTransaction of rawTransactions) {
-            let height = rawTransaction.h;
+            let height = rawTransaction.height;
             if (typeof height !== 'undefined') {
                 let transaction = TransactionsExplorer.parse(rawTransaction, this.wallet);
                 if (transaction !== null) {
@@ -187,8 +187,8 @@ export class WalletWatchdog {
     processTransactions(transactions: RawDaemonTransaction[]) {
         let transactionsToAdd = [];
         for (let tr of transactions) {
-            if (typeof tr.h !== 'undefined')
-                if (tr.h > this.wallet.lastHeight) {
+            if (typeof tr.height !== 'undefined')
+                if (tr.height > this.wallet.lastHeight) {
                     transactionsToAdd.push(tr);
                 }
         }
@@ -241,14 +241,14 @@ export class WalletWatchdog {
                     if (transactions.length > 0) {
                         let lastTx = transactions[transactions.length - 1];
 
-                        if (typeof lastTx.h !== 'undefined') {
-                            self.lastBlockLoading = lastTx.h + 1;
+                        if (typeof lastTx.height !== 'undefined') {
+                            self.lastBlockLoading = lastTx.height + 1;
                         }
                     }
                     self.processTransactions(transactions);
                     setTimeout(function () {
                         self.loadHistory();
-                    }, 1);
+                    }, 1000);//wait one second, then try load history again... 
                 }).catch(function () {
                     setTimeout(function () {
                         self.loadHistory();
@@ -386,24 +386,24 @@ export class BlockchainExplorerRpc2 implements BlockchainExplorer {
                     let tx = txs[iOut];
 
                     if (
-                        (typeof tx.h !== 'undefined' && randomBlocksIndexesToGet.indexOf(tx.h) === -1) ||
-                        typeof tx.h === 'undefined'
+                        (typeof tx.height !== 'undefined' && randomBlocksIndexesToGet.indexOf(tx.height) === -1) ||
+                        typeof tx.height === 'undefined'
                     ) {
                         continue;
                     }
 
-                    for (let output_idx_in_tx = 0; output_idx_in_tx < tx.vo.length; ++output_idx_in_tx) {
+                    for (let output_idx_in_tx = 0; output_idx_in_tx < tx.vout.length; ++output_idx_in_tx) {
                         let globalIndex = output_idx_in_tx;
-                        if (typeof tx.gI !== 'undefined')
-                            globalIndex += tx.gI;
+                        if (typeof tx.global_index_start !== 'undefined')
+                            globalIndex += tx.global_index_start;
                        
                         let newOut = {
-                            public_key: tx.vo[output_idx_in_tx].k,
+                            public_key: tx.vout[output_idx_in_tx].key,
                             global_index: globalIndex,
                             // global_index: count,
                         };
-                        if (typeof txCandidates[tx.h] === 'undefined') txCandidates[tx.h] = [];
-                        txCandidates[tx.h].push(newOut);
+                        if (typeof txCandidates[tx.height] === 'undefined') txCandidates[tx.height] = [];
+                        txCandidates[tx.height].push(newOut);
                     }
                 }
 

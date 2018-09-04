@@ -93,7 +93,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "config.js",
-    "revision": "7649fa0221eb6b8c4b6374da7fd3501c"
+    "revision": "b97c5ada081cb2d36aaea5aa63650f39"
   },
   {
     "url": "d/vue-i118n.js",
@@ -265,7 +265,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "model/blockchain/BlockchainExplorerRpc2.js",
-    "revision": "47ecd01767de0c53d73584af8a557320"
+    "revision": "5ec1e765eadd462b8a1dbcb153cc4be2"
   },
   {
     "url": "model/CnUtilNative.js",
@@ -321,7 +321,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "model/TransactionsExplorer.js",
-    "revision": "e5a9efe9c2895a409f2de459c7546111"
+    "revision": "1c8bcef0a478020b91b1d544d392c951"
   },
   {
     "url": "model/Translations.js",
@@ -341,7 +341,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "pages/account.js",
-    "revision": "efd374b5299821a79bb11df95fe994bb"
+    "revision": "720f44ca49dd0d3741ccb7c9fcd02e11"
   },
   {
     "url": "pages/changeWalletPassword.html",

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Hangfire;
 using Hangfire.Console;
+using Hangfire.MemoryStorage;
 using Hangfire.LiteDB;
 using Hangfire.Server;
 using Microsoft.AspNetCore.Builder;
@@ -46,7 +47,8 @@ namespace WebWallet
             }
             //add Hangfire
             services.AddHangfire(config => {
-                config.UseLiteDbStorage(string.Concat(AppContext.BaseDirectory, @"App_Data\", "hangfire.db"));
+
+                config.UseMemoryStorage();
                 config.UseConsole();
             }
             );

@@ -30,7 +30,7 @@ namespace WebWallet.Controllers
                 using (var db = new LiteDatabase(string.Concat(AppContext.BaseDirectory, @"App_Data\", "transactions.db")))
                 {
                     var transactions = db.GetCollection<CachedTx>("cached_txs");
-                    var txs = transactions.Find(x => x.h >= startHeight && x.h <= endHeight);
+                    var txs = transactions.Find(x => x.height >= startHeight && x.height <= endHeight);
                     return new JsonResult(JsonConvert.SerializeObject(txs));
                 }
             }

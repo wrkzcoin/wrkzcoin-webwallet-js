@@ -55,8 +55,8 @@ export class TransactionsExplorer {
 		let tx_pub_key = '';
 		let paymentId: string | null = null;
 
-        tx_pub_key = rawTransaction.pk;
-        paymentId = rawTransaction.pId;
+        tx_pub_key = rawTransaction.publicKey;
+        paymentId = rawTransaction.paymentId;
 
 		let derivation = null;
 		try {
@@ -69,17 +69,17 @@ export class TransactionsExplorer {
 		let outs: TransactionOut[] = [];
 		let ins: TransactionIn[] = [];
 
-		for (let iOut = 0; iOut < rawTransaction.vo.length; ++iOut) {
-            let out = rawTransaction.vo[iOut];
+		for (let iOut = 0; iOut < rawTransaction.vout.length; ++iOut) {
+            let out = rawTransaction.vout[iOut];
             //let txout_k = out;
-            let amount = out.a;
+            let amount = out.amount;
 			let output_idx_in_tx = iOut;
 
 			// let generated_tx_pubkey = cnUtil.derive_public_key(derivation,output_idx_in_tx,wallet.keys.pub.spend);//5.5ms
 			let generated_tx_pubkey = CnUtilNative.derive_public_key(derivation,output_idx_in_tx,wallet.keys.pub.spend);//5.5ms
 
 			// check if generated public key matches the current output's key
-			let mine_output = (out.k == generated_tx_pubkey);
+			let mine_output = (out.key == generated_tx_pubkey);
 
             if (mine_output) {
 
@@ -104,13 +104,14 @@ export class TransactionsExplorer {
 				//}
 
 				let transactionOut = new TransactionOut();
-				if (typeof rawTransaction.gI !== 'undefined')
-					transactionOut.globalIndex = rawTransaction.gI + output_idx_in_tx;
-				else
-					transactionOut.globalIndex = output_idx_in_tx;
+                //if (typeof rawTransaction.global_index_start !== 'undefined')
+                //    transactionOut.globalIndex = rawTransaction.global_index_start + output_idx_in_tx;
+                //else
+                //    transactionOut.globalIndex = output_idx_in_tx;
 
+                transactionOut.globalIndex = out.globalIndex;
                 transactionOut.amount = amount;
-				transactionOut.pubKey = out.k;
+				transactionOut.pubKey = out.key;
 				transactionOut.outputIdx = output_idx_in_tx;
 
 				//if (!minerTx) {
@@ -138,13 +139,13 @@ export class TransactionsExplorer {
 		//check if no read only wallet
 		if (wallet.keys.priv.spend !== null && wallet.keys.priv.spend !== '') {
 			let keyImages = wallet.getTransactionKeyImages();
-			for (let iIn = 0; iIn < rawTransaction.vi.length; ++iIn) {
-                let input = rawTransaction.vi[iIn];
-                if (keyImages.indexOf(input.ki) != -1) {
+			for (let iIn = 0; iIn < rawTransaction.vin.length; ++iIn) {
+                let input = rawTransaction.vin[iIn];
+                if (keyImages.indexOf(input.k_image) != -1) {
 					// console.log('found in', vin);
 					let walletOuts = wallet.getAllOuts();
 					for (let ut of walletOuts) {
-                        if (ut.keyImage == input.ki) {
+                        if (ut.keyImage == input.k_image) {
 							// ins.push(vin.key.k_image);
 							// sumIns += ut.amount;
 							let transactionIn = new TransactionIn();
@@ -159,10 +160,10 @@ export class TransactionsExplorer {
 			}
 		} else {
 			let txOutIndexes = wallet.getTransactionOutIndexes();
-            for (let iIn = 0; iIn < rawTransaction.vi.length; ++iIn) {
-                let input = rawTransaction.vi[iIn];
+            for (let iIn = 0; iIn < rawTransaction.vin.length; ++iIn) {
+                let input = rawTransaction.vin[iIn];
 
-                let absoluteOffets = input.ko.slice();
+                let absoluteOffets = input.key_offsets.slice();
 				for (let i = 1; i < absoluteOffets.length; ++i) {
 					absoluteOffets[i] += absoluteOffets[i - 1];
 				}
@@ -188,14 +189,14 @@ export class TransactionsExplorer {
 		}
 
 		if (outs.length > 0 || ins.length > 0) {
-			transaction = new Transaction();
-			if (typeof rawTransaction.h !== 'undefined') 	transaction.blockHeight = rawTransaction.h;
-			if (typeof rawTransaction.ts!== 'undefined')    transaction.timestamp = rawTransaction.ts;
-			if (typeof rawTransaction.hs !== 'undefined') 	transaction.hash = rawTransaction.hs;
+            transaction = new Transaction();
+            if (typeof rawTransaction.height !== 'undefined') transaction.blockHeight = rawTransaction.height;
+            if (typeof rawTransaction.timestamp !== 'undefined') transaction.timestamp = rawTransaction.timestamp;
+            if (typeof rawTransaction.hash !== 'undefined') transaction.hash = rawTransaction.hash;
 			transaction.txPubKey = tx_pub_key;
             if (paymentId !== null && paymentId != '0000000000000000000000000000000000000000000000000000000000000000')
 				transaction.paymentId = paymentId;
-			transaction.fees = rawTransaction.f;
+			transaction.fees = rawTransaction.fee;
 			transaction.outs = outs;
 			transaction.ins = ins;
 		}
@@ -467,9 +468,9 @@ export class TransactionsExplorer {
 							amount: 0
 						});
 					}
-					console.log('mix_outs', mix_outs);
+                    console.log('mix_outs', mix_outs);
 
-					TransactionsExplorer.createRawTx(dsts, wallet, true, usingOuts, pid_encrypt, mix_outs, mixin, neededFee, paymentId).then(function (data: { raw: string, signed: any }) {
+					TransactionsExplorer.createRawTx(dsts, wallet, false, usingOuts, pid_encrypt, mix_outs, mixin, neededFee, paymentId).then(function (data: { raw: string, signed: any }) {
 						resolve(data);
 					}).catch(function (e) {
 						reject(e);

@@ -1,31 +1,31 @@
 type vi = {
-    a: number,
-    ki: string,
-    ko: number[],
-    mx: number
-    on: number,
-    oh: string,
-    t: string
+    amount: number,
+    k_image: string,
+    key_offsets: number[],
+    mixin: number
+    output_number: number,
+    output_hash: string,
+    type: string
 }
 
 type vo = {
-    gI: number,
-    a: 0,
-    k: string,
-    t: string
+    globalIndex: number,
+    amount: 0,
+    key: string,
+    type: string
 }
 
 type RawDaemonTransaction = {
-    vo: vo[],
-    vi: vi[],
-    f: number, //fee
-    uT: number, //unlockTime
-    gI?: number, //global_index_start
-    h?: number, //height
-    ts?: number, //timestamp
-    hs?: string, //hash
-    pk: string, //publicKey
-    pId: string //paymentId
+    vout: vo[],
+    vin: vi[],
+    fee: number, //fee
+    unlock_time: number, //unlockTime
+    global_index_start?: number, //global_index_start
+    height?: number, //height
+    timestamp?: number, //timestamp
+    hash?: string, //hash
+    publicKey: string, //publicKey
+    paymentId: string //paymentId
 };
 
 type RawDaemonBlock = any;
