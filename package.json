@@ -1,21 +1,22 @@
 {
-  "name": "masariwebwallet",
+  "name": "plenteumwebwallet",
   "version": "1.0.0",
-  "description": "Fully client side web wallet for masari",
+  "description": "Fully client side web wallet for Plenteum",
   "main": "index.js",
   "dependencies": {
+    "localforage": "^1.7.2",
     "typescript": "^2.9.2",
-    "workbox-build": "^3.3.0"
+    "workbox-build": "^3.4.1"
   },
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gnock/masari-webwallet.git"
+    "url": "git+https://github.com/plenteum/plnteum-webwallet-js.git"
   },
-  "author": "Gnock",
+  "author": "gnock & Plenteum",
   "license": "BSD-3",
   "bugs": {
-    "url": "https://github.com/gnock/masari-webwallet/issues"
+    "url": "https://github.com/plenteum/plenteum-webwallet-js/issues"
   },
-  "homepage": "https://github.com/gnock/masari-webwallet#readme"
+  "homepage": "https://github.com/plenteum/plenteum-webwallet-js#readme"
 }

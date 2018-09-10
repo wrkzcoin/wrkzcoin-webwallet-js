@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2018, Gnock
  * Copyright (c) 2018, The Masari Project
+ * Copyright (c) 2018, The Plenteum Project
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
  *
@@ -19,9 +20,9 @@ const workboxBuild = require('workbox-build');
 const buildSW = () => {
 	// This will return a Promise
 	return workboxBuild.injectManifest({
-		swSrc: 'src/service-worker-raw.js',
-		swDest: 'src/service-worker.js',
-		globDirectory: 'src',
+		swSrc: 'wwwroot/service-worker-raw.js',
+		swDest: 'wwwroot/service-worker.js',
+		globDirectory: 'wwwroot',
 		globPatterns: [
 			'**\/*.{js,css,html,json,png,ico,jpg}',
 		],

@@ -9,3 +9,5 @@ src/**/*.js.map
 !src/lib/**/*.js
 src/lib/numbersLab/*.js
 debug/
+.vs
+bin/*

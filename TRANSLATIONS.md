@@ -1,5 +1,5 @@
 # Translating the web wallet 
-You can help Masari by translating the wallet into your native language, it's very easy!
+You can help us by translating the wallet into your native language, it's very easy!
 
 # Steps
 - Copy/paste the content of [the english translation](src/translations/en.json) in a text editor (Notepad, Word, etc.)
