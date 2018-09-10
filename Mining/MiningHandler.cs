@@ -5,10 +5,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-
 namespace WebWallet.Mining
 {
-    
     public class MiningHandler : SocketHandler
     {
         public MiningHandler(SocketManager socketManager) : base(socketManager)

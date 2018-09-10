@@ -8,6 +8,16 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 
+/*
+    
+    This is the core base class for the miner proxy that handles forwarding requests to the pool, and receiving responses / notifications from the pool
+    to pass back down to the websocket.
+
+    It has only been tested with a single miner connected, so may be a little flaky - use at your own risk. 
+
+*/
+
+
 namespace WebWallet.Mining
 {
     public abstract class SocketHandler
