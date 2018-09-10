@@ -28,27 +28,15 @@ onmessage = function(data : MessageEvent){
 				return;
 			}
 
-<<<<<<< HEAD:src/workers/TransferProcessing.ts
-			let rawTransactions : RawDaemonTransaction[] = event.transactions;
-=======
             let rawTransactions: RawDaemonTransaction[] = event.transactions;
->>>>>>> dncore-restructure:wwwroot/workers/TransferProcessing.ts
             let transactions: any[] = [];
             
 			for(let rawTransaction of rawTransactions){
                 let transaction = TransactionsExplorer.parse(rawTransaction, currentWallet);
 				if(transaction !== null){
                     currentWallet.addNew(transaction);
-<<<<<<< HEAD:src/workers/TransferProcessing.ts
-                    //if (transaction.getAmount() !== 0) //fusion
-                    //{
-                        transactions.push(transaction.export());
-                    //}
-				}
-=======
                         transactions.push(transaction.export());
     			}
->>>>>>> dncore-restructure:wwwroot/workers/TransferProcessing.ts
 			}
 
 			postMessage({

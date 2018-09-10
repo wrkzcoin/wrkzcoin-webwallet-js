@@ -80,24 +80,14 @@ class ImportView extends DestructableView{
 					}
 				};
 			}else {
-<<<<<<< HEAD:src/pages/importFromKeys.ts
-				console.log(1);
-=======
 				//console.log(1);
->>>>>>> dncore-restructure:wwwroot/pages/importFromKeys.ts
 				let viewkey = self.privateViewKey.trim();
 				if(viewkey === ''){
 					viewkey = cnUtil.generate_keys(cnUtil.cn_fast_hash(self.privateSpendKey.trim())).sec;
 				}
-<<<<<<< HEAD:src/pages/importFromKeys.ts
-				console.log(1, viewkey);
-				newWallet.keys = KeysRepository.fromPriv(self.privateSpendKey.trim(), viewkey);
-				console.log(1);
-=======
 				//console.log(1, viewkey);
 				newWallet.keys = KeysRepository.fromPriv(self.privateSpendKey.trim(), viewkey);
 				//console.log(1);
->>>>>>> dncore-restructure:wwwroot/pages/importFromKeys.ts
 			}
 
 			let height = self.importHeight;//never trust a perfect value from the user

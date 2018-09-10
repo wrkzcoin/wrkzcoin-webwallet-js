@@ -57,15 +57,9 @@ class NetworkView extends DestructableView{
 			url:config.apiUrl+'network'
 		}).done(function(data : any){
 			self.networkDifficulty = data.difficulty;
-<<<<<<< HEAD:src/pages/network.ts
-            self.networkHashrate = data.difficulty / 120 / 1000;
-			self.blockchainHeight = data.height;
-			self.lastReward = data.reward/100000000;
-=======
             self.networkHashrate = parseFloat((data.difficulty / 120 / 1000).toFixed(2));//hash rate in KH/s
 			self.blockchainHeight = data.height;
 			self.lastReward = data.reward;
->>>>>>> dncore-restructure:wwwroot/pages/network.ts
 			self.lastBlockFound = parseInt(data.timestamp);
 		});
 	}

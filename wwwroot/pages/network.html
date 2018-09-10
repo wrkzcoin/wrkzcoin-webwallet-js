@@ -15,11 +15,7 @@
 					<div>{{ $t("networkPage.statsBlock.height") }}: {{blockchainHeight}}</div>
 					<div>{{ $t("networkPage.statsBlock.difficulty") }}: {{networkDifficulty}}</div>
 					<div>{{ $t("networkPage.statsBlock.lastTimeBlock") }}: {{ $d(new Date(lastBlockFound*1000), 'long')}}</div>
-<<<<<<< HEAD:src/pages/network.html
-					<div>{{ $t("networkPage.statsBlock.lastReward") }}: {{lastReward}} PLE</div>
-=======
                     <div>{{ $t("networkPage.statsBlock.lastReward") }}: {{$n(lastReward / currencyDivider)}} PLE</div>
->>>>>>> dncore-restructure:wwwroot/pages/network.html
 				</div>
 			</div>
 		</div>

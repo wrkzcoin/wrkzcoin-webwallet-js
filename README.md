@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-# Plenteum fork of Masari Web Wallet - Fully client-side 
-=======
 # Plenteum fork of the Masari Web Wallet - Fully client-side 
->>>>>>> dncore-restructure
 This web wallet is doing everything client-side to give the best privacy to users.
 The server is currently only used to optimize the communication with the daemon and compress the blockchain.  
 

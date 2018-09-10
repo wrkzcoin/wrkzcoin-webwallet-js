@@ -297,11 +297,7 @@ class MiningView extends DestructableView{
 		this.running = true;
 
 		this.pool = new Pool(
-<<<<<<< HEAD:src/pages/mining.ts
-			config.testnet ? 'ws://testnet.pool.plenteum.com:8080' : 'wss://pool.plenteum.com/mining/',
-=======
             config.miningUrl,
->>>>>>> dncore-restructure:wwwroot/pages/mining.ts
 			this.miningAddress + '+' + this.difficulty,
 			'webminer',
 			'cn-lite',

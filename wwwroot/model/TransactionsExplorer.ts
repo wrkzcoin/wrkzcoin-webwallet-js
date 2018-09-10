@@ -50,21 +50,13 @@ type TxExtra = {
 
 export class TransactionsExplorer {
 
-<<<<<<< HEAD:src/model/TransactionsExplorer.ts
-	static parse(rawTransaction: RawDaemonTransaction, wallet: Wallet): Transaction | null {
-=======
     static parse(rawTransaction: RawDaemonTransaction, wallet: Wallet): Transaction | null {
->>>>>>> dncore-restructure:wwwroot/model/TransactionsExplorer.ts
 		let transaction: Transaction | null = null;
 
 		let tx_pub_key = '';
 		let paymentId: string | null = null;
 
-<<<<<<< HEAD:src/model/TransactionsExplorer.ts
-        tx_pub_key = rawTransaction.extra.publicKey;
-=======
         tx_pub_key = rawTransaction.publicKey;
->>>>>>> dncore-restructure:wwwroot/model/TransactionsExplorer.ts
         paymentId = rawTransaction.paymentId;
 
 		let derivation = null;
@@ -78,28 +70,17 @@ export class TransactionsExplorer {
 		let outs: TransactionOut[] = [];
 		let ins: TransactionIn[] = [];
 
-<<<<<<< HEAD:src/model/TransactionsExplorer.ts
-		for (let iOut = 0; iOut < rawTransaction.outputs.length; ++iOut) {
-			let out = rawTransaction.outputs[iOut];
-			let txout_k = out.output.target.data;
-			let amount = out.output.amount;
-=======
 		for (let iOut = 0; iOut < rawTransaction.vout.length; ++iOut) {
             let out = rawTransaction.vout[iOut];
             //let txout_k = out;
             let amount = out.amount;
->>>>>>> dncore-restructure:wwwroot/model/TransactionsExplorer.ts
 			let output_idx_in_tx = iOut;
 
 			// let generated_tx_pubkey = cnUtil.derive_public_key(derivation,output_idx_in_tx,wallet.keys.pub.spend);//5.5ms
 			let generated_tx_pubkey = CnUtilNative.derive_public_key(derivation,output_idx_in_tx,wallet.keys.pub.spend);//5.5ms
 
 			// check if generated public key matches the current output's key
-<<<<<<< HEAD:src/model/TransactionsExplorer.ts
-			let mine_output = (txout_k.key == generated_tx_pubkey);
-=======
 			let mine_output = (out.key == generated_tx_pubkey);
->>>>>>> dncore-restructure:wwwroot/model/TransactionsExplorer.ts
 
             if (mine_output) {
 
@@ -124,15 +105,6 @@ export class TransactionsExplorer {
 				//}
 
 				let transactionOut = new TransactionOut();
-<<<<<<< HEAD:src/model/TransactionsExplorer.ts
-				if (typeof rawTransaction.global_index_start !== 'undefined')
-					transactionOut.globalIndex = rawTransaction.global_index_start + output_idx_in_tx;
-				else
-					transactionOut.globalIndex = output_idx_in_tx;
-
-                transactionOut.amount = amount;
-				transactionOut.pubKey = txout_k.key;
-=======
                 //if (typeof rawTransaction.global_index_start !== 'undefined')
                 //    transactionOut.globalIndex = rawTransaction.global_index_start + output_idx_in_tx;
                 //else
@@ -141,7 +113,6 @@ export class TransactionsExplorer {
                 transactionOut.globalIndex = out.globalIndex;
                 transactionOut.amount = amount;
 				transactionOut.pubKey = out.key;
->>>>>>> dncore-restructure:wwwroot/model/TransactionsExplorer.ts
 				transactionOut.outputIdx = output_idx_in_tx;
 
 				//if (!minerTx) {
@@ -160,14 +131,7 @@ export class TransactionsExplorer {
 					transactionOut.keyImage = m_key_image.key_image;
 					//transactionOut.ephemeralPub = m_key_image.ephemeral_pub;
 				}
-<<<<<<< HEAD:src/model/TransactionsExplorer.ts
-                if (transactionOut.amount !== 0) { //fusion
-                    outs.push(transactionOut);
-                }
-
-=======
                 outs.push(transactionOut);
->>>>>>> dncore-restructure:wwwroot/model/TransactionsExplorer.ts
 				//if (minerTx)
 				//	break;
 			} //  if (mine_output)
@@ -176,15 +140,6 @@ export class TransactionsExplorer {
 		//check if no read only wallet
 		if (wallet.keys.priv.spend !== null && wallet.keys.priv.spend !== '') {
 			let keyImages = wallet.getTransactionKeyImages();
-<<<<<<< HEAD:src/model/TransactionsExplorer.ts
-			for (let iIn = 0; iIn < rawTransaction.inputs.length; ++iIn) {
-                let input = rawTransaction.inputs[iIn];
-                if (keyImages.indexOf(input.data.input.k_image) != -1) {
-					// console.log('found in', vin);
-					let walletOuts = wallet.getAllOuts();
-					for (let ut of walletOuts) {
-                        if (ut.keyImage == input.data.input.k_image) {
-=======
 			for (let iIn = 0; iIn < rawTransaction.vin.length; ++iIn) {
                 let input = rawTransaction.vin[iIn];
                 if (keyImages.indexOf(input.k_image) != -1) {
@@ -192,7 +147,6 @@ export class TransactionsExplorer {
 					let walletOuts = wallet.getAllOuts();
 					for (let ut of walletOuts) {
                         if (ut.keyImage == input.k_image) {
->>>>>>> dncore-restructure:wwwroot/model/TransactionsExplorer.ts
 							// ins.push(vin.key.k_image);
 							// sumIns += ut.amount;
 							let transactionIn = new TransactionIn();
@@ -207,17 +161,10 @@ export class TransactionsExplorer {
 			}
 		} else {
 			let txOutIndexes = wallet.getTransactionOutIndexes();
-<<<<<<< HEAD:src/model/TransactionsExplorer.ts
-            for (let iIn = 0; iIn < rawTransaction.inputs.length; ++iIn) {
-                let input = rawTransaction.inputs[iIn];
-
-                let absoluteOffets = input.data.input.key_offsets.slice();
-=======
             for (let iIn = 0; iIn < rawTransaction.vin.length; ++iIn) {
                 let input = rawTransaction.vin[iIn];
 
                 let absoluteOffets = input.key_offsets.slice();
->>>>>>> dncore-restructure:wwwroot/model/TransactionsExplorer.ts
 				for (let i = 1; i < absoluteOffets.length; ++i) {
 					absoluteOffets[i] += absoluteOffets[i - 1];
 				}
@@ -243,7 +190,6 @@ export class TransactionsExplorer {
 		}
 
 		if (outs.length > 0 || ins.length > 0) {
-<<<<<<< HEAD:src/model/TransactionsExplorer.ts
 			transaction = new Transaction();
 			if (typeof rawTransaction.height !== 'undefined') 	transaction.blockHeight = rawTransaction.height;
 			if (typeof rawTransaction.timestamp !== 'undefined')    transaction.timestamp = rawTransaction.timestamp;
@@ -252,7 +198,6 @@ export class TransactionsExplorer {
             if (paymentId !== null && paymentId != '0000000000000000000000000000000000000000000000000000000000000000')
 				transaction.paymentId = paymentId;
 			transaction.fees = rawTransaction.fee;
-=======
             transaction = new Transaction();
             if (typeof rawTransaction.height !== 'undefined') transaction.blockHeight = rawTransaction.height;
             if (typeof rawTransaction.timestamp !== 'undefined') transaction.timestamp = rawTransaction.timestamp;
@@ -262,7 +207,6 @@ export class TransactionsExplorer {
                 transaction.paymentId = paymentId;
             }
             transaction.fees = rawTransaction.fee;
->>>>>>> dncore-restructure:wwwroot/model/TransactionsExplorer.ts
 			transaction.outs = outs;
 			transaction.ins = ins;
 		}
@@ -274,11 +218,7 @@ export class TransactionsExplorer {
 	static formatWalletOutsForTx(wallet: Wallet, blockchainHeight: number): RawOutForTx[] {
 		let unspentOuts = [];
 
-<<<<<<< HEAD:src/model/TransactionsExplorer.ts
-		console.log(wallet.getAll());
-=======
 		//console.log(wallet.getAll());
->>>>>>> dncore-restructure:wwwroot/model/TransactionsExplorer.ts
 		for (let tr of wallet.getAll()) {
 			//todo improve to take into account miner tx
 			//only add outs unlocked
@@ -468,11 +408,7 @@ export class TransactionsExplorer {
 					let out = pop_random_value(unusedOuts);
 					usingOuts.push(out);
 					usingOuts_amount = usingOuts_amount.add(out.amount);
-<<<<<<< HEAD:src/model/TransactionsExplorer.ts
-					console.log("Using output: " + cnUtil.formatMoney(out.amount) + " - " + JSON.stringify(out));
-=======
 					//console.log("Using output: " + cnUtil.formatMoney(out.amount) + " - " + JSON.stringify(out));
->>>>>>> dncore-restructure:wwwroot/model/TransactionsExplorer.ts
 					newNeededFee = JSBigInt(Math.ceil((usingOuts.length, mixin, 2) / 1024)).multiply(feePerKB).multiply(fee_multiplayer);
 					totalAmount = totalAmountWithoutFee.add(newNeededFee);
 				}
@@ -486,11 +422,7 @@ export class TransactionsExplorer {
 
 			// neededFee = neededFee / 3 * 2;
 
-<<<<<<< HEAD:src/model/TransactionsExplorer.ts
-			console.log('using amount of ' + usingOuts_amount + ' for sending ' + totalAmountWithoutFee + ' with fees of ' + (neededFee / 100000000));
-=======
 			//console.log('using amount of ' + usingOuts_amount + ' for sending ' + totalAmountWithoutFee + ' with fees of ' + (neededFee / 100000000));
->>>>>>> dncore-restructure:wwwroot/model/TransactionsExplorer.ts
 			confirmCallback(totalAmountWithoutFee, neededFee).then(function () {
 				if (usingOuts_amount.compare(totalAmount) < 0) {
 					//console.log("Not enough spendable outputs / balance too low (have "

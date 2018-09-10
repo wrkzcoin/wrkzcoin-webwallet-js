@@ -71,11 +71,7 @@ interface CnUtilClass{
 		unlock_time : number
 		) : {
 			extra:string,
-<<<<<<< HEAD:src/d/cnUtil.d.ts
-			prvkey:string,
-=======
 			//prvkey:string,
->>>>>>> dncore-restructure:wwwroot/d/cnUtil.d.ts
 			unlock_time:number,
 			version:number,
 			inputs:any,

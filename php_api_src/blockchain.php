@@ -132,13 +132,6 @@ function createOptimizedBock($startHeight, $endHeight){
 //			if($txHashesMap[$txHashes[$iTransaction]] === $height){
 				//				++$outCount;
 				$finalTransaction = $rawTransaction;
-<<<<<<< HEAD:src_api/blockchain.php
-				unset($finalTransaction['signatures']);
-				unset($finalTransaction['ts']);
-				unset($finalTransaction['unlockTime']);
-				unset($finalTransaction['signaturesSize']);
-=======
->>>>>>> dncore-restructure:old_api/blockchain.php
 				$finalTransaction['global_index_start'] = $outCount;
 				$finalTransaction['ts'] = $rawTransaction['block_timestamp'];
 				$finalTransaction['height'] = $height;
