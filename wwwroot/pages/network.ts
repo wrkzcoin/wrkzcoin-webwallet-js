@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2018, Gnock
  * Copyright (c) 2018, The Masari Project
+ * Copyright (c) 2018, The Plenteum Project
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
  *
@@ -30,7 +31,8 @@ class NetworkView extends DestructableView{
 	@VueVar(0) blockchainHeight !: number;
 	@VueVar(0) networkDifficulty !: number;
 	@VueVar(0) lastReward !: number;
-	@VueVar(0) lastBlockFound !: number;
+    @VueVar(0) lastBlockFound !: number;
+    @VueVar(100000000) currencyDivider !: number;
 
 	private intervalRefreshStat = 0;
 
@@ -52,12 +54,12 @@ class NetworkView extends DestructableView{
 	refreshStats() {
 		let self = this;
 		$.ajax({
-			url:config.apiUrl+'network.php'
+			url:config.apiUrl+'network'
 		}).done(function(data : any){
 			self.networkDifficulty = data.difficulty;
-            self.networkHashrate = data.difficulty / 120 / 1000;
+            self.networkHashrate = parseFloat((data.difficulty / 120 / 1000).toFixed(2));//hash rate in KH/s
 			self.blockchainHeight = data.height;
-			self.lastReward = data.reward/100000000;
+			self.lastReward = data.reward;
 			self.lastBlockFound = parseInt(data.timestamp);
 		});
 	}

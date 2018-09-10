@@ -4,6 +4,7 @@
   "description": "Fully client side web wallet for Plenteum",
   "main": "index.js",
   "dependencies": {
+    "localforage": "^1.7.2",
     "typescript": "^2.9.2",
     "workbox-build": "^3.4.1"
   },

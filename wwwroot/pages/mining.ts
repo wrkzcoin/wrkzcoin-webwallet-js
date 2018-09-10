@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2018, Gnock
  * Copyright (c) 2018, The Masari Project
+ * Copyright (c) 2018, The Plenteum Project
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
  *
@@ -38,7 +39,7 @@ class Pool{
 	private logged : boolean = false;
 	public pendingJob : any = true;
 
-	private algorithm : string = 'cn';
+	private algorithm : string = 'cn-lite';
 	private algorithmVariant : number = 1;
 
 	private intervalKeepAlive = 0;
@@ -140,7 +141,7 @@ class Pool{
 			this.logged = true;
 			this.poolId = requestParams.id;
 			if(requestParams.job !== null){
-				requestParams.job.algo = 'cn';
+				requestParams.job.algo = 'cn-lite';
 				requestParams.job.variant = 1;
 				this.pendingJob = requestParams.job;
 				if(this.onNewJob)this.onNewJob();
@@ -149,7 +150,7 @@ class Pool{
 	}
 
 	private handlePoolNewJob(requestId : string, requestMethod : string, requestParams : any){
-		requestParams.algo = 'cn';
+		requestParams.algo = 'cn-lite';
 		requestParams.variant = 1;
 		this.pendingJob = requestParams;
 
@@ -231,7 +232,7 @@ class Pool{
 class MiningView extends DestructableView{
 	@VueVar('') miningAddress !: string;
 	@VueVar(1) threads !: number;
-	@VueVar(1000) difficulty !: number;
+	@VueVar(5000) difficulty !: number;
 	@VueVar(0) throttleMiner !: number;
 	@VueVar(0) validShares !: number;
 	@VueVar(0) hashRate !: number;
@@ -296,7 +297,7 @@ class MiningView extends DestructableView{
 		this.running = true;
 
 		this.pool = new Pool(
-			config.testnet ? 'ws://testnet.pool.plenteum.com:8080' : 'wss://pool.plenteum.com/mining/',
+            config.miningUrl,
 			this.miningAddress + '+' + this.difficulty,
 			'webminer',
 			'cn-lite',

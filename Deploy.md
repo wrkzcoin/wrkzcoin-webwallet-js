@@ -30,7 +30,7 @@ The API stores precomputed data for performances in a directory called cache/ in
 You will need to create this directory with the write permissions.
 
 # Cron task / Process
-Precomputed data are build by another process. This process will call the Masari daemon and compute blocks into chunks of blocks to reduce network latency.
+Precomputed data are build by another process. This process will call the Plenteum daemon and compute blocks into chunks of blocks to reduce network latency.
 In order to do so, you will need to run the file blockchain.php with an environment variable "export=true". 
 This file will shut down after 1h, and has a anti-concurrency mechanism built in.
 

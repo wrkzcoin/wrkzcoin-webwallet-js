@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2018, Gnock
  * Copyright (c) 2018, The Masari Project
+ * Copyright (c) 2018, The Plenteum Project
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
  *
@@ -160,8 +161,9 @@ define(["require", "exports", "./Transaction", "./CryptoUtils", "./MathUtil", ".
                 if (typeof rawTransaction.hash !== 'undefined')
                     transaction.hash = rawTransaction.hash;
                 transaction.txPubKey = tx_pub_key;
-                if (paymentId !== null && paymentId != '0000000000000000000000000000000000000000000000000000000000000000')
+                if (paymentId !== null && paymentId != '0000000000000000000000000000000000000000000000000000000000000000') {
                     transaction.paymentId = paymentId;
+                }
                 transaction.fees = rawTransaction.fee;
                 transaction.outs = outs;
                 transaction.ins = ins;
@@ -170,7 +172,7 @@ define(["require", "exports", "./Transaction", "./CryptoUtils", "./MathUtil", ".
         };
         TransactionsExplorer.formatWalletOutsForTx = function (wallet, blockchainHeight) {
             var unspentOuts = [];
-            console.log(wallet.getAll());
+            //console.log(wallet.getAll());
             for (var _i = 0, _a = wallet.getAll(); _i < _a.length; _i++) {
                 var tr = _a[_i];
                 //todo improve to take into account miner tx
@@ -190,10 +192,10 @@ define(["require", "exports", "./Transaction", "./CryptoUtils", "./MathUtil", ".
                     });
                 }
             }
-            console.log('outs count before spend:', unspentOuts.length, unspentOuts);
+            //console.log('outs count before spend:', unspentOuts.length, unspentOuts);
             for (var _d = 0, _e = wallet.getAll().concat(wallet.txsMem); _d < _e.length; _d++) {
                 var tr = _e[_d];
-                console.log(tr.ins);
+                //console.log(tr.ins);
                 for (var _f = 0, _g = tr.ins; _f < _g.length; _f++) {
                     var i = _g[_f];
                     for (var iOut = 0; iOut < unspentOuts.length; ++iOut) {
@@ -213,7 +215,7 @@ define(["require", "exports", "./Transaction", "./CryptoUtils", "./MathUtil", ".
             return new Promise(function (resolve, reject) {
                 var signed;
                 try {
-                    console.log('Destinations: ');
+                    //console.log('Destinations: ');
                     //need to get viewkey for encrypting here, because of splitting and sorting
                     var realDestViewKey = undefined;
                     if (pid_encrypt) {
@@ -231,7 +233,7 @@ define(["require", "exports", "./Transaction", "./CryptoUtils", "./MathUtil", ".
                 catch (e) {
                     reject("Failed to create transaction: " + e);
                 }
-                console.log("signed tx: ", JSON.stringify(signed));
+                //console.log("signed tx: ", JSON.stringify(signed));
                 var raw_tx = cnUtil.serialize_tx(signed);
                 resolve({ raw: raw_tx, signed: signed });
             });
@@ -289,7 +291,7 @@ define(["require", "exports", "./Transaction", "./CryptoUtils", "./MathUtil", ".
                     paymentId = userPaymentId;
                 }
                 var unspentOuts = TransactionsExplorer.formatWalletOutsForTx(wallet, blockchainHeight);
-                console.log('outs available:', unspentOuts.length, unspentOuts);
+                //console.log('outs available:', unspentOuts.length, unspentOuts);
                 var usingOuts = [];
                 var usingOuts_amount = new JSBigInt(0);
                 var unusedOuts = unspentOuts.slice(0);
@@ -305,7 +307,7 @@ define(["require", "exports", "./Transaction", "./CryptoUtils", "./MathUtil", ".
                     var out = pop_random_value(unusedOuts);
                     usingOuts.push(out);
                     usingOuts_amount = usingOuts_amount.add(out.amount);
-                    console.log("Using output: " + out.amount + " - " + JSON.stringify(out));
+                    //console.log("Using output: " + out.amount + " - " + JSON.stringify(out));
                 }
                 var calculateFeeWithBytes = function (fee_per_kb, bytes, fee_multiplier) {
                     var kB = (bytes + 1023) / 1024;
@@ -320,24 +322,24 @@ define(["require", "exports", "./Transaction", "./CryptoUtils", "./MathUtil", ".
                         var out = pop_random_value(unusedOuts);
                         usingOuts.push(out);
                         usingOuts_amount = usingOuts_amount.add(out.amount);
-                        console.log("Using output: " + cnUtil.formatMoney(out.amount) + " - " + JSON.stringify(out));
+                        //console.log("Using output: " + cnUtil.formatMoney(out.amount) + " - " + JSON.stringify(out));
                         newNeededFee = JSBigInt(Math.ceil((usingOuts.length, mixin, 2) / 1024)).multiply(feePerKB).multiply(fee_multiplayer);
                         totalAmount = totalAmountWithoutFee.add(newNeededFee);
                     }
-                    console.log("New fee: " + cnUtil.formatMoneySymbol(newNeededFee) + " for " + usingOuts.length + " inputs");
+                    //console.log("New fee: " + cnUtil.formatMoneySymbol(newNeededFee) + " for " + usingOuts.length + " inputs");
                     neededFee = newNeededFee;
                 }
                 if (neededFee < 10000000) {
                     neededFee = 10000000;
                 }
                 // neededFee = neededFee / 3 * 2;
-                console.log('using amount of ' + usingOuts_amount + ' for sending ' + totalAmountWithoutFee + ' with fees of ' + (neededFee / 100000000));
+                //console.log('using amount of ' + usingOuts_amount + ' for sending ' + totalAmountWithoutFee + ' with fees of ' + (neededFee / 100000000));
                 confirmCallback(totalAmountWithoutFee, neededFee).then(function () {
                     if (usingOuts_amount.compare(totalAmount) < 0) {
-                        console.log("Not enough spendable outputs / balance too low (have "
-                            + cnUtil.formatMoneyFull(usingOuts_amount) + " but need "
-                            + cnUtil.formatMoneyFull(totalAmount)
-                            + " (estimated fee " + cnUtil.formatMoneyFull(neededFee) + " included)");
+                        //console.log("Not enough spendable outputs / balance too low (have "
+                        //	+ cnUtil.formatMoneyFull(usingOuts_amount) + " but need "
+                        //	+ cnUtil.formatMoneyFull(totalAmount)
+                        //	+ " (estimated fee " + cnUtil.formatMoneyFull(neededFee) + " included)");
                         // return;
                         reject({ error: 'balance_too_low' });
                         return;
@@ -345,8 +347,7 @@ define(["require", "exports", "./Transaction", "./CryptoUtils", "./MathUtil", ".
                     else if (usingOuts_amount.compare(totalAmount) > 0) {
                         var changeAmount = usingOuts_amount.subtract(totalAmount);
                         //add entire change for rct
-                        console.log("1) Sending change of " + cnUtil.formatMoneySymbol(changeAmount)
-                            + " to " /*+ AccountService.getAddress()*/);
+                        //console.log("1) Sending change of " + cnUtil.formatMoneySymbol(changeAmount) + " to " /*+ AccountService.getAddress()*/);
                         dsts.push({
                             address: wallet.getPublicAddress(),
                             amount: changeAmount
@@ -355,21 +356,21 @@ define(["require", "exports", "./Transaction", "./CryptoUtils", "./MathUtil", ".
                     else if (usingOuts_amount.compare(totalAmount) === 0) {
                         //create random destination to keep 2 outputs always in case of 0 change
                         var fakeAddress = cnUtil.create_address(cnUtil.random_scalar()).public_addr;
-                        console.log("Sending 0 XMR to a fake address to keep tx uniform (no change exists): " + fakeAddress);
+                        //console.log("Sending 0 XMR to a fake address to keep tx uniform (no change exists): " + fakeAddress);
                         dsts.push({
                             address: fakeAddress,
                             amount: 0
                         });
                     }
-                    console.log('destinations', dsts);
+                    //console.log('destinations', dsts);
                     var amounts = [];
                     for (var l = 0; l < usingOuts.length; l++) {
                         amounts.push(usingOuts[l].amount.toString());
                     }
                     obtainMixOutsCallback(amounts.length * (mixin + 1)).then(function (lotsMixOuts) {
-                        console.log('------------------------------mix_outs', lotsMixOuts);
-                        console.log('amounts', amounts);
-                        console.log('lots_mix_outs', lotsMixOuts);
+                        //console.log('------------------------------mix_outs', lotsMixOuts);
+                        //console.log('amounts', amounts);
+                        //console.log('lots_mix_outs', lotsMixOuts);
                         var mix_outs = [];
                         var iMixOutsIndexes = 0;
                         for (var _i = 0, amounts_1 = amounts; _i < amounts_1.length; _i++) {

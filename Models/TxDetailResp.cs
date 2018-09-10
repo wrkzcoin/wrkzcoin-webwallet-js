@@ -19,9 +19,7 @@ namespace WebWallet.Models
         public int Id { get; set; }
         public string blockHash { get; set; }
         public int blockIndex { get; set; }
-
         public TxExtra extra { get; set; }
-        
         public Int64 fee { get; set; }
         public string hash { get; set; }
         public List<Input> inputs { get; set; }
@@ -30,13 +28,10 @@ namespace WebWallet.Models
         public bool inBlockchain { get; set; }
         public int mixin { get; set; }
         public string paymentId { get; set; }
-
         public int size { get; set; }
         public int timestamp { get; set; }
         public Int64 totalInputsAmount { get; set; }
         public Int64 totalOutputsAmount { get; set; }
-        //TODO: move to output
-        public int global_start_index { get; set; }
         public int unlockTime { get; set; }
     }
 

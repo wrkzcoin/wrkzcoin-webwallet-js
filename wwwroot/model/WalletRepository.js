@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2018, Gnock
  * Copyright (c) 2018, The Masari Project
+ * Copyright (c) 2018, The Plenteum Project
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
  *
@@ -42,11 +43,11 @@ define(["require", "exports", "./Wallet", "./CoinUri", "./Storage"], function (r
         WalletRepository.getLocalWalletWithPassword = function (password) {
             var _this = this;
             return Storage_1.Storage.getItem('wallet', null).then(function (existingWallet) {
-                console.log(existingWallet);
+                //console.log(existingWallet);
                 if (existingWallet !== null) {
-                    console.log(JSON.parse(existingWallet));
+                    //console.log(JSON.parse(existingWallet));
                     var wallet = _this.getWithPassword(JSON.parse(existingWallet), password);
-                    console.log(wallet);
+                    //console.log(wallet);
                     return wallet;
                 }
                 else {
@@ -128,13 +129,13 @@ define(["require", "exports", "./Wallet", "./CoinUri", "./Storage"], function (r
             doc.setTextColor(255, 255, 255);
             doc.setFontSize(10);
             doc.text(110, 120, "To deposit funds to this paper wallet, send ");
-            doc.text(110, 125, "Masari to the public address");
+            doc.text(110, 125, "Plenteum to the public address");
             doc.text(110, 135, "DO NOT REVEAL THE PRIVATE KEY");
             //adding masari logo
             var c = document.getElementById('canvasExport');
             if (c !== null) {
                 var ctx = c.getContext("2d");
-                var img = document.getElementById("verticalMasariLogo");
+                var img = document.getElementById("verticalPlenteumLogo");
                 if (ctx !== null && img !== null) {
                     c.width = img.width;
                     c.height = img.height;

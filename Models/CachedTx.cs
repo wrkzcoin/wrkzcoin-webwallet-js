@@ -14,7 +14,6 @@ namespace WebWallet.Models
         public string paymentId { get; set; } //paymentId
         public Int64 fee { get; set; } //fee
         public int unlock_time { get; set; } //unlock time
-        public int global_index_start { get; set; } //global_index_start
         public string publicKey { get; set; }
         public List<CachedInput> vin { get; set; } //inputs
         public List<CachedOutput> vout { get; set; } //outputs

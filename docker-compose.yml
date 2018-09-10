@@ -1,8 +1,0 @@
-version: '3.4'
-
-services:
-  plenteum-webwallet:
-    image: ${DOCKER_REGISTRY}plenteumwebwallet
-    build:
-      context: .
-      dockerfile: Dockerfile

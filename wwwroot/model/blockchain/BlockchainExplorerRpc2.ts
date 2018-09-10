@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2018, Gnock
  * Copyright (c) 2018, The Masari Project
+ * Copyright (c) 2018, The Plenteum Project
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
  *
@@ -47,8 +48,9 @@ export class WalletWatchdog {
                 if (message.type === 'processed') {
                     let transactions = message.transactions;
                     if (transactions.length > 0) {
-                        for (let tx of transactions)
+                        for (let tx of transactions) {
                             self.wallet.addNew(Transaction.fromRaw(tx));
+                        }
                         self.signalWalletUpdate();
                     }
                     if (self.workerCurrentProcessing.length > 0) {
@@ -104,9 +106,9 @@ export class WalletWatchdog {
 
         this.wallet.txsMem = [];
         this.explorer.getTransactionPool().then(function (data: any) {
-            if (typeof data.transactions !== 'undefined')
-                for (let rawTx of data.transactions) {
-                    let tx = TransactionsExplorer.parse(rawTx.tx_json, self.wallet);
+            if (typeof data !== 'undefined')
+                for (let rawTx of data) {
+                    let tx = TransactionsExplorer.parse(rawTx, self.wallet);
                     if (tx !== null) {
                         self.wallet.txsMem.push(tx);
                     }
@@ -215,7 +217,7 @@ export class WalletWatchdog {
         if (this.workerProcessingWorking || !this.workerProcessingReady) {
             setTimeout(function () {
                 self.loadHistory();
-            }, 100);
+            }, 500);
             return;
         }
         if (this.transactionsToProcess.length > 100) {
@@ -248,7 +250,7 @@ export class WalletWatchdog {
                     self.processTransactions(transactions);
                     setTimeout(function () {
                         self.loadHistory();
-                    }, 1000);//wait one second, then try load history again... 
+                    }, 1);// then try load history again... 
                 }).catch(function () {
                     setTimeout(function () {
                         self.loadHistory();
@@ -257,7 +259,7 @@ export class WalletWatchdog {
             } else {
                 setTimeout(function () {
                     self.loadHistory();
-                }, 30 * 1000);
+                }, 30 * 1000);//retry 30s later if an error occurred
             }
         }).catch(function () {
             setTimeout(function () {
@@ -407,16 +409,16 @@ export class BlockchainExplorerRpc2 implements BlockchainExplorer {
                     }
                 }
 
-                console.log(txCandidates);
+                //console.log(txCandidates);
 
                 let selectedOuts = [];
                 for (let txsOutsHeight in txCandidates) {
                     let outIndexSelect = MathUtil.getRandomInt(0, txCandidates[txsOutsHeight].length - 1);
-                    console.log('select ' + outIndexSelect + ' for ' + txsOutsHeight + ' with length of ' + txCandidates[txsOutsHeight].length);
+                    //console.log('select ' + outIndexSelect + ' for ' + txsOutsHeight + ' with length of ' + txCandidates[txsOutsHeight].length);
                     selectedOuts.push(txCandidates[txsOutsHeight][outIndexSelect]);
                 }
 
-                console.log(selectedOuts);
+                //console.log(selectedOuts);
 
                 return selectedOuts;
             });
@@ -426,7 +428,7 @@ export class BlockchainExplorerRpc2 implements BlockchainExplorer {
     sendRawTx(rawTx: string) {
         let self = this;
         return new Promise(function (resolve, reject) {
-            console.log('sending:', rawTx);
+            //console.log('sending:', rawTx);
             $.post(self.serverAddress + 'sendrawtx', { '': rawTx })
             .done(function (transactions: any) {
                 if (transactions.status && transactions.status == 'OK') {

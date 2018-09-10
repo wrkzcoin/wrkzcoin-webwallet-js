@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2018, Gnock
  * Copyright (c) 2018, The Masari Project
+ * Copyright (c) 2018, The Plenteum Project
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
  *
@@ -45,11 +46,11 @@ export class WalletRepository{
 
 	static getLocalWalletWithPassword(password : string) : Promise<Wallet|null>{
 		return Storage.getItem('wallet', null).then((existingWallet : any) => {
-			console.log(existingWallet);
+			//console.log(existingWallet);
 			if(existingWallet !== null){
-				console.log(JSON.parse(existingWallet));
+				//console.log(JSON.parse(existingWallet));
 				let wallet : Wallet|null = this.getWithPassword(JSON.parse(existingWallet), password);
-				console.log(wallet);
+				//console.log(wallet);
 				return wallet;
 			}else{
 				return null;
@@ -155,7 +156,7 @@ export class WalletRepository{
 		doc.setTextColor(255, 255, 255);
 		doc.setFontSize(10);
 		doc.text(110, 120, "To deposit funds to this paper wallet, send ");
-		doc.text(110, 125, "Masari to the public address");
+		doc.text(110, 125, "Plenteum to the public address");
 
 		doc.text(110, 135, "DO NOT REVEAL THE PRIVATE KEY");
 
@@ -163,7 +164,7 @@ export class WalletRepository{
 		let c : HTMLCanvasElement|null = <HTMLCanvasElement>document.getElementById('canvasExport');
 		if(c !== null) {
 			let ctx = c.getContext("2d");
-			let img: ImageBitmap | null = <ImageBitmap | null>document.getElementById("verticalMasariLogo");
+			let img: ImageBitmap | null = <ImageBitmap | null>document.getElementById("verticalPlenteumLogo");
 			if (ctx !== null && img !== null) {
 				c.width = img.width;
 				c.height = img.height;

@@ -16,11 +16,19 @@ namespace WebWallet.Controllers
         public JsonResult Index()
         {
             var rawTxs = RpcHelper.RequestJson<TxPoolResp>("f_on_transactions_pool_json", new Dictionary<string, object>()).result.transactions;
-            
-            List<CachedTx> transactions = new List<CachedTx>();
-            if (rawTxs != null)
+            var txHashes = new List<string>();
+            foreach (var rawTx in rawTxs)
             {
-                foreach (var rawTx in rawTxs)
+                txHashes.Add(rawTx.hash);
+            }
+            var tx_args = new Dictionary<string, object>();
+            tx_args.Add("transactionHashes", txHashes.ToArray());
+            var txs = RpcHelper.Request<TxDetailResp>("get_transaction_details_by_hashes", tx_args);
+
+            List<CachedTx> transactions = new List<CachedTx>();
+            if (txs != null)
+            {
+                foreach (var rawTx in txs.transactions)
                 {
                     transactions.Add(TransactionHelpers.MapTx(rawTx));
                 }

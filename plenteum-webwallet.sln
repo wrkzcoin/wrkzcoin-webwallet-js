@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "plenteum-webwallet", "plenteum-webwallet.csproj", "{AA9CFC66-52F2-4521-B026-47B83047398D}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{CBB839DE-198A-48B2-9CA6-9F3D35EBD06B}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{AA9CFC66-52F2-4521-B026-47B83047398D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA9CFC66-52F2-4521-B026-47B83047398D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA9CFC66-52F2-4521-B026-47B83047398D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CBB839DE-198A-48B2-9CA6-9F3D35EBD06B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CBB839DE-198A-48B2-9CA6-9F3D35EBD06B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CBB839DE-198A-48B2-9CA6-9F3D35EBD06B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CBB839DE-198A-48B2-9CA6-9F3D35EBD06B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

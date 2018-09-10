@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2018, Gnock
  * Copyright (c) 2018, The Masari Project
+ * Copyright (c) 2018, The Plenteum Project
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
  *
@@ -176,8 +177,9 @@ define(["require", "exports", "./Transaction", "./KeysRepository", "../lib/numbe
             if (replace === void 0) { replace = true; }
             var exist = this.findWithTxPubKey(transaction.txPubKey);
             if (!exist || replace) {
-                if (!exist)
+                if (!exist) {
                     this.transactions.push(transaction);
+                }
                 else
                     for (var tr = 0; tr < this.transactions.length; ++tr)
                         if (this.transactions[tr].txPubKey === transaction.txPubKey) {
@@ -246,12 +248,19 @@ define(["require", "exports", "./Transaction", "./KeysRepository", "../lib/numbe
             configurable: true
         });
         Wallet.prototype.unlockedAmount = function (currentBlockHeight) {
+            //TODO: fix the display of unlocked balances vs total
             if (currentBlockHeight === void 0) { currentBlockHeight = -1; }
             var amount = 0;
             for (var _i = 0, _a = this.transactions; _i < _a.length; _i++) {
                 var transaction = _a[_i];
                 if (!transaction.isFullyChecked())
                     continue;
+                if (transaction.isFusionTx()) {
+                    //Handle what we do with fusion Tx's
+                    //this needs to be something like:
+                    //tx's that are still locked up in fusion should display as "locked" balance, 
+                    //only if it's been "cleared", then we should see it in "unlocked" balance
+                }
                 // if(transaction.ins.length > 0){
                 // 	amount -= transaction.fees;
                 // }
@@ -265,7 +274,6 @@ define(["require", "exports", "./Transaction", "./KeysRepository", "../lib/numbe
                     amount -= nin.amount;
                 }
             }
-            // console.log(this.txsMem);
             for (var _f = 0, _g = this.txsMem; _f < _g.length; _f++) {
                 var transaction = _g[_f];
                 // console.log(transaction.paymentId);

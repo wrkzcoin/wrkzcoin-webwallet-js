@@ -17,6 +17,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using WebWallet.Helpers;
+using Microsoft.AspNetCore.ResponseCompression;
+using WebWallet.Mining;
 
 namespace WebWallet
 {
@@ -32,34 +34,24 @@ namespace WebWallet
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //first, delete the hangfire Jobs DB so we don't get duplicate background jobs running... 
-            if (System.IO.File.Exists(string.Concat(AppContext.BaseDirectory, @"App_Data\", "hangfire.db")))
-            {
-                try
-                {
-                    System.IO.File.Delete(string.Concat(AppContext.BaseDirectory, @"App_Data\", "hangfire.db"));
-                }
-                catch (Exception ex)
-                {
-                    //add logging
-                    throw ex;
-                }
-            }
             //add Hangfire
             services.AddHangfire(config => {
 
                 config.UseMemoryStorage();
                 config.UseConsole();
-            }
-            );
+            });
+
+            //add the websocket service
+            services.AddSocketManager();
+
             //add MVC
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
-            // In production, the Angular files will be served from this directory
-            //services.AddSpaStaticFiles(configuration =>
-            //{
-            //    configuration.RootPath = "ClientApp/dist";
-            //});
+            services.Configure<GzipCompressionProviderOptions>(options =>
+                options.Level = System.IO.Compression.CompressionLevel.Optimal
+            );
+            services.AddResponseCompression(options =>
+                options.EnableForHttps = true
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -86,9 +78,16 @@ namespace WebWallet
             {
                 app.UseHsts();
             }
+            //setup web socket for mining
+            app.UseWebSockets();
+            app.MapSocketManager("/mining", serviceProvider.GetService<MiningHandler>());
 
+            app.UseResponseCompression();
             app.UseHttpsRedirection();
             app.UseFileServer();
+
+            
+
 
             app.UseMvc(routes =>
             {

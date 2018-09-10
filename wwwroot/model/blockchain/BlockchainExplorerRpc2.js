@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2018, Gnock
  * Copyright (c) 2018, The Masari Project
+ * Copyright (c) 2018, The Plenteum Project
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
  *
@@ -98,10 +99,10 @@ define(["require", "exports", "../TransactionsExplorer", "../Transaction", "../M
             }
             this.wallet.txsMem = [];
             this.explorer.getTransactionPool().then(function (data) {
-                if (typeof data.transactions !== 'undefined')
-                    for (var _i = 0, _a = data.transactions; _i < _a.length; _i++) {
-                        var rawTx = _a[_i];
-                        var tx = TransactionsExplorer_1.TransactionsExplorer.parse(rawTx.tx_json, self.wallet);
+                if (typeof data !== 'undefined')
+                    for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {
+                        var rawTx = data_1[_i];
+                        var tx = TransactionsExplorer_1.TransactionsExplorer.parse(rawTx, self.wallet);
                         if (tx !== null) {
                             self.wallet.txsMem.push(tx);
                         }
@@ -191,7 +192,7 @@ define(["require", "exports", "../TransactionsExplorer", "../Transaction", "../M
             if (this.workerProcessingWorking || !this.workerProcessingReady) {
                 setTimeout(function () {
                     self.loadHistory();
-                }, 100);
+                }, 500);
                 return;
             }
             if (this.transactionsToProcess.length > 100) {
@@ -222,7 +223,7 @@ define(["require", "exports", "../TransactionsExplorer", "../Transaction", "../M
                         self.processTransactions(transactions);
                         setTimeout(function () {
                             self.loadHistory();
-                        }, 100);
+                        }, 1); // then try load history again... 
                     }).catch(function () {
                         setTimeout(function () {
                             self.loadHistory();
@@ -232,7 +233,7 @@ define(["require", "exports", "../TransactionsExplorer", "../Transaction", "../M
                 else {
                     setTimeout(function () {
                         self.loadHistory();
-                    }, 30 * 1000);
+                    }, 30 * 1000); //retry 30s later if an error occurred
                 }
             }).catch(function () {
                 setTimeout(function () {
@@ -364,14 +365,14 @@ define(["require", "exports", "../TransactionsExplorer", "../Transaction", "../M
                             txCandidates[tx.height].push(newOut);
                         }
                     }
-                    console.log(txCandidates);
+                    //console.log(txCandidates);
                     var selectedOuts = [];
                     for (var txsOutsHeight in txCandidates) {
                         var outIndexSelect = MathUtil_1.MathUtil.getRandomInt(0, txCandidates[txsOutsHeight].length - 1);
-                        console.log('select ' + outIndexSelect + ' for ' + txsOutsHeight + ' with length of ' + txCandidates[txsOutsHeight].length);
+                        //console.log('select ' + outIndexSelect + ' for ' + txsOutsHeight + ' with length of ' + txCandidates[txsOutsHeight].length);
                         selectedOuts.push(txCandidates[txsOutsHeight][outIndexSelect]);
                     }
-                    console.log(selectedOuts);
+                    //console.log(selectedOuts);
                     return selectedOuts;
                 });
             });
@@ -379,7 +380,7 @@ define(["require", "exports", "../TransactionsExplorer", "../Transaction", "../M
         BlockchainExplorerRpc2.prototype.sendRawTx = function (rawTx) {
             var self = this;
             return new Promise(function (resolve, reject) {
-                console.log('sending:', rawTx);
+                //console.log('sending:', rawTx);
                 $.post(self.serverAddress + 'sendrawtx', { '': rawTx })
                     .done(function (transactions) {
                     if (transactions.status && transactions.status == 'OK') {

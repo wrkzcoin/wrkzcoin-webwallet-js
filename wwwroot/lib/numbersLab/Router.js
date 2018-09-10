@@ -128,7 +128,7 @@ define(["require", "exports", "./Logger", "./DestructableView", "./Context"], fu
         Router.prototype.unloadRequirejs = function (moduleName) {
             // console.log('unload '+moduleName);
             var context = Context_1.Context.getGlobalContext()['requirejs'].s.contexts['_'];
-            console.log('unload', moduleName, context.defined[moduleName], context.defined);
+            //console.log('unload', moduleName, context.defined[moduleName], context.defined);
             if (typeof context.defined[moduleName] !== 'undefined') {
                 delete context.defined[moduleName];
             }

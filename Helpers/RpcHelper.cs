@@ -23,7 +23,6 @@ namespace WebWallet.Helpers
             }
             catch (Exception ex)
             {
-                throw ex;
                 return default(T);
             }
         }
@@ -41,33 +40,6 @@ namespace WebWallet.Helpers
             }
             catch (Exception ex)
             {
-                throw ex;
-                return default(T);
-            }
-        }
-
-        public static T Request<T>(string method, Dictionary<string, object> args, int Height)
-        {
-            try
-            {
-                using (WalletClient client = new WalletClient())
-                {
-                    string payload = JsonConvert.SerializeObject(args, Formatting.Indented);
-                    var response = client.UploadString(string.Concat("http://", SettingsProvider.RpcUrl, ":", SettingsProvider.RpcPort.ToString(), "/", method), payload);
-
-                    //Temp, write out all the actual BC responses into Files to check against
-                    var txs = System.IO.File.AppendText(string.Concat(AppContext.BaseDirectory, @"App_Data\transactions\", "txs-"+ Height +".txt"));
-                    txs.Write(response);
-                    txs.Flush();
-                    txs.Close();
-                    txs.Dispose();
-
-                    return JsonConvert.DeserializeObject<T>(response);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
                 return default(T);
             }
         }
@@ -84,7 +56,6 @@ namespace WebWallet.Helpers
             }
             catch (Exception ex)
             {
-                throw ex;
                 return default(T);
             }
         }
@@ -115,13 +86,12 @@ namespace WebWallet.Helpers
             }
             catch (Exception ex)
             {
-                throw ex;
                 return default(T);
             }
 
         }
 
-        public static T RequestJson<T>(string method, Dictionary<string, object> args, int height)
+        public static T RequestJson<T>(string method)
         {
             try
             {
@@ -131,7 +101,6 @@ namespace WebWallet.Helpers
                     {
                         { "jsonrpc", "2.0" },
                         { "method", method },
-                        { "params", args },
                         { "id", "0" }
                     };
                     string payloadJSON = JsonConvert.SerializeObject(payload, Formatting.Indented);
@@ -142,19 +111,11 @@ namespace WebWallet.Helpers
 
                     string response = client.UploadString(string.Concat("http://", SettingsProvider.RpcUrl, ":", SettingsProvider.RpcPort.ToString(), "/json_rpc"), payloadJSON);
 
-                    //Temp, write out all the actual BC responses into Files to check against
-                    var txs = System.IO.File.AppendText(string.Concat(AppContext.BaseDirectory, @"App_Data\blocks\", "block-" + height + ".txt"));
-                    txs.Write(response);
-                    txs.Flush();
-                    txs.Close();
-                    txs.Dispose();
-
                     return JsonConvert.DeserializeObject<T>(response);
                 }
             }
             catch (Exception ex)
             {
-                throw ex;
                 return default(T);
             }
 
@@ -186,7 +147,6 @@ namespace WebWallet.Helpers
             }
             catch (Exception ex)
             {
-                throw ex;
                 return default(T);
             }
 
@@ -218,7 +178,6 @@ namespace WebWallet.Helpers
             }
             catch (Exception ex)
             {
-                throw ex;
                 return default(T);
             }
 

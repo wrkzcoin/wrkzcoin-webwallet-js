@@ -2,6 +2,7 @@
 /*
  * Copyright (c) 2018, Gnock
  * Copyright (c) 2018, The Masari Project
+ * Copyright (c) 2018, The Plenteum Project
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
  *
@@ -96,7 +97,7 @@ export class Transaction {
             transac.outs = outs;
         }
         if (typeof raw.paymentId !== 'undefined') transac.paymentId = raw.paymentId;
-        if (typeof raw.fees !== 'undefined') transac.fees = raw.fee;
+        if (typeof raw.fees !== 'undefined') transac.fees = raw.fees;
         if (typeof raw.hash !== 'undefined') transac.hash = raw.hash;
         return transac;
     }
@@ -146,11 +147,15 @@ export class Transaction {
     }
 
     isFullyChecked() {
-        if (this.getAmount() === 0) return false; //fusion
         for (let input of this.ins) {
             if (input.amount < 0)
                 return false;
         }
         return true;
+    }
+
+    isFusionTx() {
+        if (this.getAmount() === 0) return true; //fusion
+        return false;
     }
 }

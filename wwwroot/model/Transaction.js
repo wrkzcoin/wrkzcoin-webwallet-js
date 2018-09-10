@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2018, Gnock
  * Copyright (c) 2018, The Masari Project
+ * Copyright (c) 2018, The Plenteum Project
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
  *
@@ -103,7 +104,7 @@ define(["require", "exports"], function (require, exports) {
             if (typeof raw.paymentId !== 'undefined')
                 transac.paymentId = raw.paymentId;
             if (typeof raw.fees !== 'undefined')
-                transac.fees = raw.fee;
+                transac.fees = raw.fees;
             if (typeof raw.hash !== 'undefined')
                 transac.hash = raw.hash;
             return transac;
@@ -156,14 +157,17 @@ define(["require", "exports"], function (require, exports) {
             return false;
         };
         Transaction.prototype.isFullyChecked = function () {
-            if (this.getAmount() === 0)
-                return false; //fusion
             for (var _i = 0, _a = this.ins; _i < _a.length; _i++) {
                 var input = _a[_i];
                 if (input.amount < 0)
                     return false;
             }
             return true;
+        };
+        Transaction.prototype.isFusionTx = function () {
+            if (this.getAmount() === 0)
+                return true; //fusion
+            return false;
         };
         return Transaction;
     }());

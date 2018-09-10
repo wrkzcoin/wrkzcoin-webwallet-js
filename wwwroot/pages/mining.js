@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2018, Gnock
  * Copyright (c) 2018, The Masari Project
+ * Copyright (c) 2018, The Plenteum Project
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
  *
@@ -45,7 +46,7 @@ define(["require", "exports", "../lib/numbersLab/DestructableView", "../lib/numb
             this.poolUrl = '';
             this.logged = false;
             this.pendingJob = true;
-            this.algorithm = 'cn';
+            this.algorithm = 'cn-lite';
             this.algorithmVariant = 1;
             this.intervalKeepAlive = 0;
             this.reconnectCount = 0;
@@ -135,7 +136,7 @@ define(["require", "exports", "../lib/numbersLab/DestructableView", "../lib/numb
                 this.logged = true;
                 this.poolId = requestParams.id;
                 if (requestParams.job !== null) {
-                    requestParams.job.algo = 'cn';
+                    requestParams.job.algo = 'cn-lite';
                     requestParams.job.variant = 1;
                     this.pendingJob = requestParams.job;
                     if (this.onNewJob)
@@ -144,7 +145,7 @@ define(["require", "exports", "../lib/numbersLab/DestructableView", "../lib/numb
             }
         };
         Pool.prototype.handlePoolNewJob = function (requestId, requestMethod, requestParams) {
-            requestParams.algo = 'cn';
+            requestParams.algo = 'cn-lite';
             requestParams.variant = 1;
             this.pendingJob = requestParams;
             if (this.onNewJob)
@@ -266,7 +267,7 @@ define(["require", "exports", "../lib/numbersLab/DestructableView", "../lib/numb
                 this.pool.stop();
             this.updateThreads();
             this.running = true;
-            this.pool = new Pool(config.testnet ? 'ws://testnet.pool.plenteum.com:8080' : 'wss://pool.plenteum.com/mining/', this.miningAddress + '+' + this.difficulty, 'webminer', 'cn-lite', 1);
+            this.pool = new Pool(config.miningUrl, this.miningAddress + '+' + this.difficulty, 'webminer', 'cn-lite', 1);
             this.pool.onNewJob = function () {
                 for (var _i = 0, _a = self.workersThread; _i < _a.length; _i++) {
                     var worker = _a[_i];
@@ -359,7 +360,7 @@ define(["require", "exports", "../lib/numbersLab/DestructableView", "../lib/numb
             VueAnnotate_1.VueVar(1)
         ], MiningView.prototype, "threads", void 0);
         __decorate([
-            VueAnnotate_1.VueVar(1000)
+            VueAnnotate_1.VueVar(5000)
         ], MiningView.prototype, "difficulty", void 0);
         __decorate([
             VueAnnotate_1.VueVar(0)

@@ -1,5 +1,6 @@
 declare var config : {
-	apiUrl:string,
+    apiUrl: string,
+    miningUrl : string,
 	mainnetExplorerUrl: string,
 	testnetExplorerUrl: string,
 	testnet: boolean,

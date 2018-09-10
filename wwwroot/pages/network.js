@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2018, Gnock
  * Copyright (c) 2018, The Masari Project
+ * Copyright (c) 2018, The Plenteum Project
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
  *
@@ -51,12 +52,12 @@ define(["require", "exports", "../lib/numbersLab/DestructableView", "../lib/numb
         NetworkView.prototype.refreshStats = function () {
             var self = this;
             $.ajax({
-                url: config.apiUrl + 'network.php'
+                url: config.apiUrl + 'network'
             }).done(function (data) {
                 self.networkDifficulty = data.difficulty;
-                self.networkHashrate = data.difficulty / 120 / 1000;
+                self.networkHashrate = parseFloat((data.difficulty / 120 / 1000).toFixed(2)); //hash rate in KH/s
                 self.blockchainHeight = data.height;
-                self.lastReward = data.reward / 100000000;
+                self.lastReward = data.reward;
                 self.lastBlockFound = parseInt(data.timestamp);
             });
         };
@@ -75,6 +76,9 @@ define(["require", "exports", "../lib/numbersLab/DestructableView", "../lib/numb
         __decorate([
             VueAnnotate_1.VueVar(0)
         ], NetworkView.prototype, "lastBlockFound", void 0);
+        __decorate([
+            VueAnnotate_1.VueVar(100000000)
+        ], NetworkView.prototype, "currencyDivider", void 0);
         return NetworkView;
     }(DestructableView_1.DestructableView));
     new NetworkView('#app');

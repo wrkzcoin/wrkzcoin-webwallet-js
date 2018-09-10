@@ -19,7 +19,7 @@ onmessage = function(data : MessageEvent){
 			postMessage('readyWallet');
 		}else if (event.type === 'process'){
             if (typeof event.wallet !== 'undefined') {
-                console.log('loading from raw');
+                //console.log('loading from raw');
 				currentWallet = Wallet.loadFromRaw(event.wallet,true);
 			}
 

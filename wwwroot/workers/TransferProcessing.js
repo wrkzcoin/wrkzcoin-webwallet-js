@@ -16,7 +16,7 @@ define(["require", "exports", "../model/TransactionsExplorer", "../model/Wallet"
             }
             else if (event_1.type === 'process') {
                 if (typeof event_1.wallet !== 'undefined') {
-                    console.log('loading from raw');
+                    //console.log('loading from raw');
                     currentWallet = Wallet_1.Wallet.loadFromRaw(event_1.wallet, true);
                 }
                 if (currentWallet === null) {

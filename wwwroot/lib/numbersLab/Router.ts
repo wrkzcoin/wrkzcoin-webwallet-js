@@ -142,7 +142,7 @@ export class Router {
 		// console.log('unload '+moduleName);
 		let context = Context.getGlobalContext()['requirejs'].s.contexts['_'];
 
-		console.log('unload', moduleName, context.defined[moduleName], context.defined);
+		//console.log('unload', moduleName, context.defined[moduleName], context.defined);
 		if (typeof context.defined[moduleName] !== 'undefined') {
 			delete context.defined[moduleName];
 		}

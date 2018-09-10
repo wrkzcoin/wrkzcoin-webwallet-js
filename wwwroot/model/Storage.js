@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2018, Gnock
  * Copyright (c) 2018, The Masari Project
+ * Copyright (c) 2018, The Plenteum Project
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
  *
@@ -12,7 +13,7 @@
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-define(["require", "exports"], function (require, exports) {
+define(["require", "exports", "localforage"], function (require, exports, localForage) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var LocalStorage = /** @class */ (function () {
@@ -118,42 +119,57 @@ define(["require", "exports"], function (require, exports) {
         };
         return NativeStorageWrap;
     }());
-    //class IndexedDbStorageWrap implements StorageInterface {
-    //    setItem(key: string, value: any): Promise<void> {
-    //        return new Promise<void>(function (resolve, reject) {
-    //            set(key, value).then(val => resolve()).catch(err => reject());
-    //        });
-    //    }
-    //    getItem(key: string, defaultValue: any = null): Promise<any> {
-    //        return new Promise<any>(function (resolve, reject) {
-    //            get(key).then(val => resolve(val)).catch(err => reject());
-    //        });
-    //    }
-    //    keys(): Promise<string[]> {
-    //        return new Promise<string[]>(function (resolve, reject) {
-    //            keys().then(keys => function () {
-    //                let ikeys: string[] = [];
-    //                for (let i = 0; i < keys.length; ++i) {
-    //                    let k = keys[i].toString();
-    //                    if (k !== null)
-    //                        ikeys.push(k);
-    //                }
-    //                resolve(ikeys);
-    //            }
-    //            ).catch(err => reject());
-    //        });
-    //    }
-    //    remove(key: string): Promise<void> {
-    //        return new Promise<void>(function (resolve, reject) {
-    //            del(key).then(val => resolve()).catch(err => reject());
-    //        });
-    //    }
-    //    clear(): Promise<void> {
-    //        return new Promise<void>(function (resolve, reject) {
-    //            clear().then(val => resolve()).catch(err => reject());
-    //        });
-    //    }
-    //}
+    var IndexedDbStorageWrap = /** @class */ (function () {
+        function IndexedDbStorageWrap() {
+        }
+        IndexedDbStorageWrap.prototype.setItem = function (key, value) {
+            return new Promise(function (resolve, reject) {
+                localForage.setItem(key, value).then(function (value) {
+                    resolve(value);
+                }).catch(function (err) {
+                    reject();
+                });
+            });
+        };
+        IndexedDbStorageWrap.prototype.getItem = function (key, defaultValue) {
+            if (defaultValue === void 0) { defaultValue = null; }
+            return new Promise(function (resolve, reject) {
+                localForage.getItem(key).then(function (value) {
+                    resolve(value);
+                }).catch(function (err) {
+                    reject();
+                });
+            });
+        };
+        IndexedDbStorageWrap.prototype.keys = function () {
+            return new Promise(function (resolve, reject) {
+                localForage.keys().then(function (keys) {
+                    resolve(keys);
+                }).catch(function (err) {
+                    reject();
+                });
+            });
+        };
+        IndexedDbStorageWrap.prototype.remove = function (key) {
+            return new Promise(function (resolve, reject) {
+                localForage.removeItem(key).then(function () {
+                    resolve();
+                }).catch(function (err) {
+                    reject();
+                });
+            });
+        };
+        IndexedDbStorageWrap.prototype.clear = function () {
+            return new Promise(function (resolve, reject) {
+                localForage.clear().then(function () {
+                    resolve();
+                }).catch(function (err) {
+                    reject();
+                });
+            });
+        };
+        return IndexedDbStorageWrap;
+    }());
     var Storage = /** @class */ (function () {
         function Storage() {
         }
@@ -183,10 +199,10 @@ define(["require", "exports"], function (require, exports) {
     if (window.NativeStorage) {
         Storage._storage = new NativeStorageWrap();
     }
+    else {
+        //check for and initialize indexedDB
+        if (('indexedDB' in window)) {
+            Storage._storage = new IndexedDbStorageWrap();
+        }
+    }
 });
-//else {
-//    //check for and initialize indexedDB
-//    if (('indexedDB' in window)) {
-//        Storage._storage = new IndexedDbStorageWrap();
-//    }
-//}

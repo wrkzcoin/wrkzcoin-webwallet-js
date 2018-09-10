@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2018, Gnock
  * Copyright (c) 2018, The Masari Project
+ * Copyright (c) 2018, The Plenteum Project
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
  *
@@ -177,8 +178,9 @@ export class Wallet extends Observable {
     addNew(transaction: Transaction, replace = true) {
         let exist = this.findWithTxPubKey(transaction.txPubKey);
         if (!exist || replace) {
-            if (!exist)
+            if (!exist) {
                 this.transactions.push(transaction);
+            }
             else
                 for (let tr = 0; tr < this.transactions.length; ++tr)
                     if (this.transactions[tr].txPubKey === transaction.txPubKey) {
@@ -247,10 +249,19 @@ export class Wallet extends Observable {
     }
 
     unlockedAmount(currentBlockHeight: number = -1): number {
+        //TODO: fix the display of unlocked balances vs total
+
         let amount = 0;
         for (let transaction of this.transactions) {
             if (!transaction.isFullyChecked())
                 continue;
+
+            if (transaction.isFusionTx()) {
+                //Handle what we do with fusion Tx's
+                //this needs to be something like:
+                //tx's that are still locked up in fusion should display as "locked" balance, 
+                //only if it's been "cleared", then we should see it in "unlocked" balance
+            }
 
             // if(transaction.ins.length > 0){
             // 	amount -= transaction.fees;
@@ -264,7 +275,6 @@ export class Wallet extends Observable {
             }
         }
 
-        // console.log(this.txsMem);
         for (let transaction of this.txsMem) {
             // console.log(transaction.paymentId);
             // for(let out of transaction.outs){

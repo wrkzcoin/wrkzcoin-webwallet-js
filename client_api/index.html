@@ -1,7 +1,7 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!--
   ~ Copyright (c) 2018, Gnock
-  ~ Copyright (c) 2018, The Masari Project
+  ~ Copyright (c) 2018, The Plenteum Project
   ~
   ~ Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
   ~
@@ -29,10 +29,10 @@
 <script>
 	var clickButton = document.getElementById('payButton');
 
-	function MasariLoaded(){
+	function PlenteumLoaded(){
 		clickButton.disabled = false;
 		clickButton.addEventListener("click", function(){
-			MasariApi.makeTransfer({
+			PlenteumApi.makeTransfer({
 				amount:10,
 				address:'wallet.masaricoin.com',
 				description:'Description',
@@ -44,12 +44,12 @@
 		});
 
 		console.log('LOADED CALLBACK');
-		MasariApi.hasWallet().then(function(hasWAllet){
+		PlenteumApi.hasWallet().then(function(hasWAllet){
 			console.log('HAS WALLET');
 			console.log(hasWAllet);
 		});
 	}
-	MasariApi.init().then(MasariLoaded);
+	PlenteumApi.init().then(PlenteumLoaded);
 
 </script>
 

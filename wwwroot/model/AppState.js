@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2018, Gnock
  * Copyright (c) 2018, The Masari Project
+ * Copyright (c) 2018, The Plenteum Project
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
  *
@@ -98,7 +99,7 @@ define(["require", "exports", "../lib/numbersLab/DependencyInjector", "./blockch
                             var memoryWallet = DependencyInjector_1.DependencyInjectorInstance().getInstance(Wallet_1.Wallet.name, 'default', false);
                             if (memoryWallet === null) {
                                 WalletRepository_1.WalletRepository.getLocalWalletWithPassword(savePassword_1).then(function (wallet) {
-                                    console.log(wallet);
+                                    //console.log(wallet);
                                     if (wallet !== null) {
                                         wallet.recalculateIfNotViewOnly();
                                         //checking the wallet to find integrity/problems and try to update it before loading

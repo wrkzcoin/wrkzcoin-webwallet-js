@@ -29,7 +29,7 @@ define(["require", "exports", "./Context"], function (require, exports, Context_
         };
         DependencyInjector.prototype.returnBest = function (name, subname) {
             var found = this.searchFromRequireJs(name);
-            console.log(name, subname, found);
+            //console.log(name, subname,found);
             if (found != null) {
                 this.register(name, new found(), subname);
             }
@@ -39,7 +39,7 @@ define(["require", "exports", "./Context"], function (require, exports, Context_
             //noinspection TypeScriptUnresolvedVariable
             var loaded = window.require.s.contexts._.defined;
             var dependency = null;
-            console.log(loaded);
+            //console.log(loaded);
             for (var containerName in loaded) {
                 var container = loaded[containerName];
                 // console.log('type', typeof container, container, container[name]);
@@ -48,7 +48,7 @@ define(["require", "exports", "./Context"], function (require, exports, Context_
                         return container[name];
                     else {
                         if (dependency != null) {
-                            console.log('%c/!\\ Dependency injector : Multiple Classes Have the same name !! Conflict when resolving dependencies', 'background: white;color: red');
+                            //console.log('%c/!\\ Dependency injector : Multiple Classes Have the same name !! Conflict when resolving dependencies', 'background: white;color: red');
                         }
                     }
                     dependency = container[name];
@@ -62,7 +62,7 @@ define(["require", "exports", "./Context"], function (require, exports, Context_
                                 return container['default'];
                             else {
                                 if (dependency != null) {
-                                    console.log('%c/!\\ Dependency injector : Multiple Classes Have the same name !! Conflict when resolving dependencies', 'background: white;color: red');
+                                    //console.log('%c/!\\ Dependency injector : Multiple Classes Have the same name !! Conflict when resolving dependencies', 'background: white;color: red');
                                 }
                             }
                             dependency = container['default'];
@@ -81,7 +81,7 @@ define(["require", "exports", "./Context"], function (require, exports, Context_
             Context_1.Context.getGlobalContext()['di'] === null) {
             var Inj = new DependencyInjector();
             Context_1.Context.getGlobalContext()['di'] = Inj;
-            console.log('register');
+            //console.log('register');
         }
         return Context_1.Context.getGlobalContext()['di'];
     }
@@ -96,7 +96,7 @@ define(["require", "exports", "./Context"], function (require, exports, Context_
             // property getter
             var getter = function () {
                 var Inj = DependencyInjectorInstance();
-                //console.log(Get: ${key} => ${_val});
+                ///console.log(Get: ${key} => ${_val});
                 var subname = keys.length > 1 ? keys[1] : 'default';
                 return Inj.getInstance(keys[0], subname);
             };
