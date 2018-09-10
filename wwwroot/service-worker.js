@@ -42,31 +42,31 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "assets/img/favicon.ico",
-    "revision": "2f6d855fc0aac990a5f49b59d2fd2be8"
+    "revision": "12458b914baedde9297ba45becb69400"
   },
   {
     "url": "assets/img/icons/icon-128x128.png",
-    "revision": "e811e677a13d26ebef437640e1bb7d30"
+    "revision": "e34530a36ef9cf074197b80b1560bb27"
   },
   {
     "url": "assets/img/icons/icon-144x144.png",
-    "revision": "acc05fbd2d5578b078dded25d19e731d"
+    "revision": "0a89c4a38cc10726b614a30227162b5e"
   },
   {
     "url": "assets/img/icons/icon-152x152.png",
-    "revision": "a4f5659dda1cfe7aba3fb84104a563c5"
+    "revision": "5f68b0bff496d8566c349d90f23f3d48"
   },
   {
     "url": "assets/img/icons/icon-192x192.png",
-    "revision": "78dfb4755afb8642a9c43147ccb1cd08"
+    "revision": "64adddf26f140413e7214a94d78797f9"
   },
   {
     "url": "assets/img/icons/icon-256x256.png",
-    "revision": "ae887fc3850ec2b3cdb71d5a97b318be"
+    "revision": "7dd6ad2b73c9938593268a9c53e804b7"
   },
   {
     "url": "assets/img/icons/icon-402x402.png",
-    "revision": "3f37d9ffeb2d1e492a6b6d6d9e90d5bc"
+    "revision": "0827310a1f622a90348340e64f2f8d5b"
   },
   {
     "url": "assets/img/landing/75-usersthink-stock-image.jpg",
@@ -74,23 +74,19 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "assets/img/logo_white.png",
-    "revision": "021a9a3c4434d955aa6430d6f32d24f6"
+    "revision": "2824d8ede1a1df017e3ede454fd7f2a4"
   },
   {
     "url": "assets/img/logo.png",
-    "revision": "fe067968ab8da376ec9ef5f45f6b0ef5"
-  },
-  {
-    "url": "assets/img/logoQrCode.jpg",
-    "revision": "06e867b1281284af0732ba9ef0e11d6d"
+    "revision": "686c9eccc934e32076127f4671eba942"
   },
   {
     "url": "assets/img/logoQrCode.png",
-    "revision": "db552925892bbba67897385ea2c91b39"
+    "revision": "998554cd3aa8de3de02cbbcf4962fdfd"
   },
   {
-    "url": "assets/img/Masari_Vertical.png",
-    "revision": "6f0560be9757e26945f1eb232474bc22"
+    "url": "assets/img/Plenteum_Vertical.png",
+    "revision": "cc8bb367eafb7b2d7092a9f5e24e45a0"
   },
   {
     "url": "config.js",
@@ -258,7 +254,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "model/blockchain/BlockchainExplorerRpc2.js",
-    "revision": "3fbd2bf3c086dd4ad6ba7c9d6b99b60b"
+    "revision": "c67b656544002fbe886d33a1ead6739d"
   },
   {
     "url": "model/CnUtilNative.js",
@@ -362,7 +358,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "pages/donate.html",
-    "revision": "c4429d026caa723dd16c254584270df7"
+    "revision": "73ad1deb2bd30139ac67f03eeb336cc1"
   },
   {
     "url": "pages/donate.js",

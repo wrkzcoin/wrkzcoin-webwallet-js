@@ -204,7 +204,7 @@ define(["require", "exports", "../TransactionsExplorer", "../Transaction", "../M
             }
             // console.log('checking');
             this.explorer.getHeight().then(function (height) {
-                console.log("loading height:", self.lastBlockLoading, height);
+                //console.log("loading height:", self.lastBlockLoading,height);
                 if (height > self.lastMaximumHeight)
                     self.lastMaximumHeight = height;
                 if (self.lastBlockLoading !== height) {
