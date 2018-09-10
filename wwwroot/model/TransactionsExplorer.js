@@ -161,6 +161,17 @@ define(["require", "exports", "./Transaction", "./CryptoUtils", "./MathUtil", ".
                 if (typeof rawTransaction.hash !== 'undefined')
                     transaction.hash = rawTransaction.hash;
                 transaction.txPubKey = tx_pub_key;
+                if (paymentId !== null && paymentId != '0000000000000000000000000000000000000000000000000000000000000000')
+                    transaction.paymentId = paymentId;
+                transaction.fees = rawTransaction.fee;
+                transaction = new Transaction_1.Transaction();
+                if (typeof rawTransaction.height !== 'undefined')
+                    transaction.blockHeight = rawTransaction.height;
+                if (typeof rawTransaction.timestamp !== 'undefined')
+                    transaction.timestamp = rawTransaction.timestamp;
+                if (typeof rawTransaction.hash !== 'undefined')
+                    transaction.hash = rawTransaction.hash;
+                transaction.txPubKey = tx_pub_key;
                 if (paymentId !== null && paymentId != '0000000000000000000000000000000000000000000000000000000000000000') {
                     transaction.paymentId = paymentId;
                 }

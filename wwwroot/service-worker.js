@@ -106,7 +106,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "index.html",
-    "revision": "0e9d14cf15668c765e2161a73225de93"
+    "revision": "5300edfd031f758f89e4350b54d19226"
   },
   {
     "url": "index.js",
@@ -162,7 +162,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "lib/mining/worker.js",
-    "revision": "28fbbf35d845ac23c8e1e0b9d22614b6"
+    "revision": "56f04bf3eb8d4d93752dca47f95adbd5"
   },
   {
     "url": "lib/mnemonic.js",
@@ -242,11 +242,11 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "localforage.js",
-    "revision": "35ba30bc6640adb836a6748b9453251b"
+    "revision": "371744264096fd11aac649ce9442fb11"
   },
   {
     "url": "manifest.json",
-    "revision": "853e269ae97fc7e8e45ea338007b7099"
+    "revision": "70a5824be1067c32ef427806bb602c5b"
   },
   {
     "url": "model/AppState.js",
@@ -314,7 +314,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "model/TransactionsExplorer.js",
-    "revision": "b4e1dadba708f1fcaf1108ad16b8a771"
+    "revision": "5a71de22f2fdc55925e61dabe6a0eb9a"
   },
   {
     "url": "model/Translations.js",
@@ -330,7 +330,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "pages/account.html",
-    "revision": "60f4d83c8ecc79130978a3a0b5d129aa"
+    "revision": "3b220b35733f2360a4fa4a8b4a8a3d22"
   },
   {
     "url": "pages/account.js",
@@ -362,7 +362,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "pages/donate.html",
-    "revision": "5319cb3b3e3e8321112bf0d8e38da84d"
+    "revision": "c4429d026caa723dd16c254584270df7"
   },
   {
     "url": "pages/donate.js",
@@ -434,7 +434,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "pages/network.html",
-    "revision": "580a62bfc944395dd63e564e361671dc"
+    "revision": "745e7aa93cd047ef4a37ff142062958e"
   },
   {
     "url": "pages/network.js",
