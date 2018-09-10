@@ -1,4 +1,4 @@
-# TurtleCoin fork of Plenteum Web Wallet - Fully client-side 
+# Plenteum fork of the Masari Web Wallet - Fully client-side 
 This web wallet is doing everything client-side to give the best privacy to users.
 The server is currently only used to optimize the communication with the daemon and compress the blockchain.  
 
@@ -13,6 +13,7 @@ Encryption is done with a certified library, [Tweetnacl.Js.](https://github.com/
 Developers:
 - gnock (main)
 - cryptochangements
+- WhassupZA (dotnet core port and bytecoin derivatives)
 
 Translations:
 - English: too many people
@@ -21,10 +22,10 @@ Translations:
 - German: F0sching
 
 # Contributing
-- You can help Plenteum by translation the wallet in your native language, it's really easy!  
+- You can help us by translation the wallet in your native language, it's really easy!  
 Read [the translations guide](TRANSLATIONS.md) to get instructions on how to do that
 - Report bugs & ideas to help us improve the web wallet by opening an issue 
-- [Make a donation to Plenteum](https://www.masariwallet.com/#!donate)
+- [Make a donation to Plenteum](https://wallet.plenteum.com/#!donate)
 
 # Forks / Other Coins
 We have been receiving multiple coin developers help to fork it. As the time required to develop this project is heavy, please consider giving a mention to this project if you fork it.

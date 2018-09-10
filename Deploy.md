@@ -14,27 +14,27 @@ The first task install dependencies (typescript) and the text one compile the ty
 We are using a custom tsconfig file which is optimized for production.
 
 # Change configuration
-You will have to edit the file src/config.js in order to change the API endpoint. 
+You will have to edit the file wwwroot/config.js in order to change the API endpoint. 
 The default value use the same domain appended by /api/
 
 That's all
 
 # Deploy
-All the content of the src directory needs to be exposed with a web-server.
-You will also need to expose the content of the src_api content to an endpoint which can interpret PHP.
+The Core application includes Kestrel Web Server for Self-Hosting. However, in a production environment we would recommend a more robust hosting solution such as IIS or Nginx for Linux:
+Linux hosting with Nginx: https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/linux-nginx?view=aspnetcore-2.1&tabs=aspnetcore2x
+Windows Hosting with IIS: https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/iis/?view=aspnetcore-2.1&tabs=aspnetcore2x
+All the content of the wwwroot directory needs to be exposed with a web-server.
 By default the configuration looks at domainname.com/api/
 
 
 # Permissions
-The API stores precomputed data for performances in a directory called cache/ in the same directory of the API code (PHP code).
-You will need to create this directory with the write permissions.
+The API stores precomputed data for performances in a LiteDB file within App_Data/transactions.db in the runtime folder for the compiled application.
+You will need to create this directory with the write permissions. The app will attempt to create it for you, but Write Permissions will be required to do so. 
 
-# Cron task / Process
-Precomputed data are build by another process. This process will call the Plenteum daemon and compute blocks into chunks of blocks to reduce network latency.
-In order to do so, you will need to run the file blockchain.php with an environment variable "export=true". 
-This file will shut down after 1h, and has a anti-concurrency mechanism built in.
+# Caching Process
+Precomputed data stored in the cache is built by background process using HangFire that executes every 30 seconds. 
+This process is initialized on app startup and will run in the background.
+If you compile the app in Debug, you can access the Hangfire Dashboard on [your url]/hangfire - do not publish a production release with a debug build, as this is not a secure route and could allow for the background process to be disabled / stopped.
+This process will call the Plenteum daemon and compute blocks into chunks of blocks to reduce network latency.
+See "BlockchainCache.cs" in the Helpers Folder.
 
-One way to handle this is by running a cron task each minute with something like:
-```
-* * * * * root cd /var/www/domain.com/api && export generate=true && php blockchain.php
-```
