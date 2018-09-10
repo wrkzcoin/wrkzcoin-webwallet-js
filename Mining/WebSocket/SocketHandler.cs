@@ -63,7 +63,8 @@ namespace WebWallet.Mining
             //setup connection to the server and wait for it to return completed
             _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             _socket.NoDelay = true;
-            _socket.BeginConnect("192.168.1.60", 3333, EndConnect, _socket);
+            //Test Pool setup on local
+            _socket.BeginConnect("127.0.0.1", 3333, EndConnect, _socket);
             //create the redirector
             onConnected = new ManualResetEvent(false);
         }

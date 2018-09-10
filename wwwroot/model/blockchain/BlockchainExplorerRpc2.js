@@ -204,7 +204,7 @@ define(["require", "exports", "../TransactionsExplorer", "../Transaction", "../M
             }
             // console.log('checking');
             this.explorer.getHeight().then(function (height) {
-                // console.log(self.lastBlockLoading,height);
+                console.log("loading height:", self.lastBlockLoading, height);
                 if (height > self.lastMaximumHeight)
                     self.lastMaximumHeight = height;
                 if (self.lastBlockLoading !== height) {
@@ -217,7 +217,7 @@ define(["require", "exports", "../TransactionsExplorer", "../Transaction", "../M
                         if (transactions.length > 0) {
                             var lastTx = transactions[transactions.length - 1];
                             if (typeof lastTx.height !== 'undefined') {
-                                self.lastBlockLoading = lastTx.height + 1;
+                                self.lastBlockLoading = lastTx.height + 2; //we're operating one block behind to give the Tx Caching process a chance to catch up
                             }
                         }
                         self.processTransactions(transactions);

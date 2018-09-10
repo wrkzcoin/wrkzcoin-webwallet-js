@@ -155,9 +155,9 @@ define(["require", "exports"], function (require, exports) {
                 encoded += '?encrypt_method=' + encryptMethod;
             return encoded;
         };
-        CoinUri.coinTxPrefix = 'masari:';
-        CoinUri.coinWalletPrefix = 'masari:';
-        CoinUri.coinAddressLength = 95;
+        CoinUri.coinTxPrefix = 'plenteum:';
+        CoinUri.coinWalletPrefix = 'plenteum:';
+        CoinUri.coinAddressLength = 98;
         return CoinUri;
     }());
     exports.CoinUri = CoinUri;

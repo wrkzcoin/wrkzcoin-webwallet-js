@@ -106,7 +106,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "index.html",
-    "revision": "5300edfd031f758f89e4350b54d19226"
+    "revision": "849e2a7691a5ebbe81e90b75fb6a1f5b"
   },
   {
     "url": "index.js",
@@ -258,7 +258,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "model/blockchain/BlockchainExplorerRpc2.js",
-    "revision": "6516e7121ac0ea7766f3b16f27316c30"
+    "revision": "3fbd2bf3c086dd4ad6ba7c9d6b99b60b"
   },
   {
     "url": "model/CnUtilNative.js",
@@ -266,7 +266,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "model/CoinUri.js",
-    "revision": "bbcd96db19165f894f5d81fc19ea9a63"
+    "revision": "4f5aeddfc4aba3273d3b1724caf58d1a"
   },
   {
     "url": "model/Constants.js",

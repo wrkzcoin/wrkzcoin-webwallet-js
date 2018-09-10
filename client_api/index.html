@@ -1,7 +1,8 @@
 ﻿<!DOCTYPE html>
 <!--
   ~ Copyright (c) 2018, Gnock
-  ~ Copyright (c) 2018, The Plenteum Project
+  ~ Copyright (c) 2018, The Masari Project
+    ~ Copyright (c) 2018, The Plenteum Project
   ~
   ~ Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
   ~
@@ -16,42 +17,42 @@
 
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Title</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
 
-<button id="payButton" disabled="disabled">Pay</button>
+    <button id="payButton" disabled="disabled">Pay</button>
 
 
-<script src="api.js" ></script>
+    <script src="api.js"></script>
 
-<script>
-	var clickButton = document.getElementById('payButton');
+    <script>
+        var clickButton = document.getElementById('payButton');
 
-	function PlenteumLoaded(){
-		clickButton.disabled = false;
-		clickButton.addEventListener("click", function(){
-			PlenteumApi.makeTransfer({
-				amount:10,
-				address:'wallet.masaricoin.com',
-				description:'Description',
-				destName:'Webwallet',
-				redirect:encodeURIComponent(window.location.href)
-			}).then(function(txHash){
+        function PlenteumLoaded() {
+            clickButton.disabled = false;
+            clickButton.addEventListener("click", function () {
+                PlenteumApi.makeTransfer({
+                    amount: 10,
+                    address: 'wallet.masaricoin.com',
+                    description: 'Description',
+                    destName: 'Webwallet',
+                    redirect: encodeURIComponent(window.location.href)
+                }).then(function (txHash) {
 
-			});
-		});
+                });
+            });
 
-		console.log('LOADED CALLBACK');
-		PlenteumApi.hasWallet().then(function(hasWAllet){
-			console.log('HAS WALLET');
-			console.log(hasWAllet);
-		});
-	}
-	PlenteumApi.init().then(PlenteumLoaded);
+            console.log('LOADED CALLBACK');
+            PlenteumApi.hasWallet().then(function (hasWAllet) {
+                console.log('HAS WALLET');
+                console.log(hasWAllet);
+            });
+        }
+        PlenteumApi.init().then(PlenteumLoaded);
 
-</script>
+    </script>
 
 </body>
 </html>
