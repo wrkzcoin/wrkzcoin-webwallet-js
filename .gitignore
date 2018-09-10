@@ -8,6 +8,7 @@ wwwroot/**/*.js.map
 !wwwroot/lib/*.js
 !wwwroot/lib/**/*.js
 wwwroot/lib/numbersLab/*.js
+wwwroot/lib/numbersLab/*.map
 debug/
 .vs
 bin/*
