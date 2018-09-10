@@ -163,29 +163,30 @@ export class TransactionsExplorer {
 			let txOutIndexes = wallet.getTransactionOutIndexes();
             for (let iIn = 0; iIn < rawTransaction.vin.length; ++iIn) {
                 let input = rawTransaction.vin[iIn];
+                if (input.key_offsets) { //if not key_inputs, then it's a miner Tx and we only want the outs
+                    let absoluteOffets = input.key_offsets.slice();
+                    for (let i = 1; i < absoluteOffets.length; ++i) {
+                        absoluteOffets[i] += absoluteOffets[i - 1];
+                    }
 
-                let absoluteOffets = input.key_offsets.slice();
-				for (let i = 1; i < absoluteOffets.length; ++i) {
-					absoluteOffets[i] += absoluteOffets[i - 1];
-				}
+                    let ownTx = -1;
+                    for (let index of absoluteOffets) {
+                        if (txOutIndexes.indexOf(index) !== -1) {
+                            ownTx = index;
+                            break;
+                        }
+                    }
 
-				let ownTx = -1;
-				for (let index of absoluteOffets) {
-					if (txOutIndexes.indexOf(index) !== -1) {
-						ownTx = index;
-						break;
-					}
-				}
-
-				if (ownTx !== -1) {
-					let txOut = wallet.getOutWithGlobalIndex(ownTx);
-					if (txOut !== null) {
-						let transactionIn = new TransactionIn();
-						transactionIn.amount = -txOut.amount;
-						transactionIn.keyImage = txOut.keyImage;
-                        ins.push(transactionIn);
-					}
-				}
+                    if (ownTx !== -1) {
+                        let txOut = wallet.getOutWithGlobalIndex(ownTx);
+                        if (txOut !== null) {
+                            let transactionIn = new TransactionIn();
+                            transactionIn.amount = -txOut.amount;
+                            transactionIn.keyImage = txOut.keyImage;
+                            ins.push(transactionIn);
+                        }
+                    }
+                }
 			}
 		}
 
