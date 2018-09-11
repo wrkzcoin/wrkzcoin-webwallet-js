@@ -12,7 +12,7 @@ namespace WebWallet.Helpers
         public static CachedTx MapTx(TxResp tx)
         {
             CachedTx lightTx = new CachedTx();
-            lightTx.height = tx.blockIndex;
+            lightTx.height = tx.blockIndex + 1;
             if (tx.extra != null)
                 lightTx.publicKey = tx.extra.publicKey;
             lightTx.hash = tx.hash;
