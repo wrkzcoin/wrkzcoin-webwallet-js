@@ -18,12 +18,9 @@ global.config = {
 	feePerKB: new JSBigInt('1000000'), //for testnet its not used, as fee is dynamic.
 	dustThreshold: new JSBigInt('1000000'),//used for choosing outputs/change - we decompose all the way down if the receiver wants now regardless of threshold
 	defaultMixin: 0, // default value mixins
-
 	idleTimeout: 30,
 	idleWarningDuration: 20,
-
 	coinSymbol: 'PLE',
-	openAliasPrefix: "ple",
 	coinName: 'Plenteum',
 	coinUriPrefix: 'plenteum:',
 	avgBlockTime: 120,
