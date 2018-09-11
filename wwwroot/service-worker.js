@@ -310,7 +310,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "model/TransactionsExplorer.js",
-    "revision": "5a71de22f2fdc55925e61dabe6a0eb9a"
+    "revision": "c83362196fd1c32cfd41987b5b266d61"
   },
   {
     "url": "model/Translations.js",
@@ -318,15 +318,15 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "model/Wallet.js",
-    "revision": "23a0f475520a220b30745f41af95fde1"
+    "revision": "7d16d01cbc557b4da9378a89be0b5b7b"
   },
   {
     "url": "model/WalletRepository.js",
-    "revision": "43978437eab84ae8dece82c3cbdda118"
+    "revision": "837a791004c6e1578e52c71d4d181a78"
   },
   {
     "url": "pages/account.html",
-    "revision": "3b220b35733f2360a4fa4a8b4a8a3d22"
+    "revision": "5491cd45b58c3d6034604e4481c2e24b"
   },
   {
     "url": "pages/account.js",
@@ -390,7 +390,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "pages/importFromKeys.html",
-    "revision": "9eeaa15d98e7871992ca14d5e14dd0b1"
+    "revision": "66ba3b1306fee8b98c735fb5e0277800"
   },
   {
     "url": "pages/importFromKeys.js",
@@ -422,11 +422,11 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "pages/mining.html",
-    "revision": "36b62bc413f550c0d85e4087b0dd76b1"
+    "revision": "1ab6c72665746380882b65c38fd6968f"
   },
   {
     "url": "pages/mining.js",
-    "revision": "7a018bf5fd2457f236faff3038c1bd15"
+    "revision": "1c6a10efdb3c5b477d8f7a819ffeb894"
   },
   {
     "url": "pages/network.html",
@@ -454,7 +454,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "pages/settings.html",
-    "revision": "25e554d8d1d854700a70cc10d789bab6"
+    "revision": "029b729cf33d5a9c9cb9b0d8b5a94719"
   },
   {
     "url": "pages/settings.js",
@@ -486,23 +486,23 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "translations/de.json",
-    "revision": "94c2913014fd2573f56a02e47fdedc56"
+    "revision": "3c51c0d644a34b83c1713f0cc4044591"
   },
   {
     "url": "translations/en.json",
-    "revision": "4f407442ecbf74c56fbc61acb8fd1381"
+    "revision": "ea428f22d2a3f357f8c2cb7f4dd41af8"
   },
   {
     "url": "translations/fr.json",
-    "revision": "91a016c99006f17c9fd83f4467700393"
+    "revision": "57216637f729bf38e5fa0996d42af3cd"
   },
   {
     "url": "translations/hu.json",
-    "revision": "5a0b06f672048c3446c6199ccbe13afc"
+    "revision": "cee28a9f27ba39c7c24d168ab90b2474"
   },
   {
     "url": "translations/sr.json",
-    "revision": "63433dd57583f2eb010a5681fbff2ece"
+    "revision": "81af0e254dada71ecb2247f0ddc0d291"
   },
   {
     "url": "utils/Url.js",

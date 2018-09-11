@@ -295,23 +295,13 @@
 	  }
 	},
 	"miningPage":{
-	  "title":"Mine directly in your browser",
+	  "title":"Mining information",
 	  "subtitle":"Support the network by mining and be rewarded with PLE",
-	  "parameterBlock":{
-		"title":"Parameters",
-		"labelDestinationAddress":"Wallet to mine",
-		"labelThreads":"Number of threads (more = higher hashrate)",
-		"start":"Start",
-		"stop":"Stop"
-	  },
-	  "statisticsBlocks":{
-		"title":"Statistics",
-		"validShares":"Valid shares",
-		"hashrate":"Hashrate",
-		"maxHashrate":"Max Hashrate",
-		"dedicatedHardware":"With dedicating mining software and hardware, you could earn more and help decentralize the network.",
-		"miningHandledBy":"This mining is handled by the mining pool get.masaricoin.com"
-	  }
+    "contentBlock": {
+      "title": "How to get started mining",
+      "intro": "Mining helps decentralise the network and allows you to earn Plenteum. There is no need for specialist equipment to mine Plenteum.",
+      "linkText": "Click here to read our mining guide"
+    }
 	},
 	"settingsPage":{
 	  "title":"Settings",
@@ -453,9 +443,10 @@
 	  "title":"Importing wallet from keys",
 	  "subtitle":"Use your keys to create a wallet",
 	  "parametersBlock":{
-		"viewOnlyWallet":{
-		  "label":"Do you want a view only wallet?"
-		}
+      "viewOnlyWallet": {
+        "label": "Do you want a view only wallet?",
+        "info": "Please note that View Only wallets can only track incoming transactions, so your wallet balance may appear inflated!"
+      }
 	  },
 	  "keysBlock":{
 		"titleNotViewOnly":"Wallet keys",
