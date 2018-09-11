@@ -219,6 +219,20 @@ export class Wallet extends Observable {
         return null;
     }
 
+    getCorrespondingOut(index: number, hash: string): TransactionOut | null {
+        //find a corresponding output by Tx hash and "number" (index in Tx)
+        for (let tx of this.transactions) {
+            if (tx.hash === hash) {
+                for (let out of tx.outs) {
+                    if (out.outputIdx === index) {
+                        return out;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
     private keyImages: string[] = [];
     private txOutIndexes: number[] = [];
     private recalculateKeyImages() {

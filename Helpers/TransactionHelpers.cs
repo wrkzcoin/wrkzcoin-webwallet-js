@@ -49,8 +49,8 @@ namespace WebWallet.Helpers
                         }
                         if (inp.data.output != null)
                         {
-                            cachedInput.hash = inp.data.output.transactionHash;
-                            cachedInput.number = inp.data.output.number;        
+                            cachedInput.outhash = inp.data.output.transactionHash;
+                            cachedInput.outnumber = inp.data.output.number;        
                         }
                     }
                     cachedInput.type = inp.type;

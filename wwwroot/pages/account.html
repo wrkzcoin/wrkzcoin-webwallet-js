@@ -37,7 +37,7 @@
 
 					<div class="transactions" >
 						<table>
-							<template v-for="transaction of transactions" v-if="transaction.isFullyChecked()">
+							<template v-for="transaction of transactions" v-if="transaction.isFullyChecked() && !transaction.isFusionTx()">
 								<tr class="transaction" :class="(transaction.blockHeight === 0 ? 'pending' : '')">
 									<td class="direction" >
 										<i v-if="transaction.ins.length == 0" class="fa fa-level-down" aria-hidden="true"></i>
@@ -45,7 +45,7 @@
 									</td><!--LEfT-->
 									<td class="timestamp" v-if="transaction.blockHeight > 0">{{$d(new Date(transaction.timestamp*1000), 'long')}}</td>
 									<td class="timestamp" v-else="">{{ $t("accountPage.historyBlock.pendingTxStatus") }}...</td>
-									<td :class="'amount '+(transaction.getAmount() > 0 ? 'more' : 'less')" >{{ transaction.getAmount() / currencyDivider }}</td>
+									<td :class="'amount '+(transaction.getAmount() > 0 ? 'more' : 'less')" >{{ $n(transaction.getAmount() / currencyDivider) }}</td>
 									<td class="moreInfo">
 										<i class="fa fa-search" aria-hidden="true" @click="moreInfoOnTx(transaction)"></i>
 									</td>
