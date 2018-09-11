@@ -12,3 +12,5 @@ wwwroot/lib/numbersLab/*.map
 debug/
 .vs
 bin/*
+wwwroot/service-worker.js
+wwwroot/service-worker.js

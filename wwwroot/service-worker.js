@@ -90,7 +90,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "config.js",
-    "revision": "b75e4873915676a2a896d76b51ebd36c"
+    "revision": "4360d66d1d7ed0dbd7e2b20d5590fd63"
   },
   {
     "url": "d/vue-i118n.js",
@@ -147,18 +147,6 @@ workbox.precaching.precacheAndRoute([
   {
     "url": "lib/kjua-0.1.1.min.js",
     "revision": "f0ea94e8c4cbc705eaaf8b6cede15389"
-  },
-  {
-    "url": "lib/mining/cn.js",
-    "revision": "61bb278f05944f130d36441262aafe65"
-  },
-  {
-    "url": "lib/mining/cn2.js",
-    "revision": "bc3b8fa73d894d3ddffa1d2e7bb0bb0f"
-  },
-  {
-    "url": "lib/mining/worker.js",
-    "revision": "56f04bf3eb8d4d93752dca47f95adbd5"
   },
   {
     "url": "lib/mnemonic.js",
@@ -254,7 +242,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "model/blockchain/BlockchainExplorerRpc2.js",
-    "revision": "c67b656544002fbe886d33a1ead6739d"
+    "revision": "9493b8f90d5617d9eff115e9cb86e895"
   },
   {
     "url": "model/CnUtilNative.js",
@@ -450,7 +438,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "pages/send.js",
-    "revision": "54d449e6749f04dd25a86f2c6a8bb081"
+    "revision": "50540cee2ae2907e131b8e5af167db31"
   },
   {
     "url": "pages/settings.html",
