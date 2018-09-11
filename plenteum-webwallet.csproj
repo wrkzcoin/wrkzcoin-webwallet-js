@@ -11,16 +11,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Mining\Pool\**" />
-    <Content Remove="Mining\Pool\**" />
-    <EmbeddedResource Remove="Mining\Pool\**" />
-    <None Remove="Mining\Pool\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="Mining\Redirector.cs" />
-    <Compile Remove="Mining\TcpSession.cs" />
-    <Compile Remove="Mining\WebSocketSession.cs" />
     <Compile Remove="Models\MinerStats.cs" />
   </ItemGroup>
 
@@ -103,9 +93,6 @@
     <None Include="wwwroot\lib\jquery-3.2.1.min.js" />
     <None Include="wwwroot\lib\jspdf.min.js" />
     <None Include="wwwroot\lib\kjua-0.1.1.min.js" />
-    <None Include="wwwroot\lib\mining\cn.js" />
-    <None Include="wwwroot\lib\mining\cn2.js" />
-    <None Include="wwwroot\lib\mining\worker.js" />
     <None Include="wwwroot\lib\mnemonic.js" />
     <None Include="wwwroot\lib\nacl-fast-cn.js" />
     <None Include="wwwroot\lib\nacl-fast.js" />
