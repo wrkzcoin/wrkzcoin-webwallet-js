@@ -19,128 +19,125 @@ namespace WebWallet.Helpers
         [DisableConcurrentExecution(30)]
         public static void BuildCache(PerformContext context)
         {
-            //TODO: Update this to work in a loop and store seperate db files per 10,000 blocks... 
-            //should improve performance and make re-sync'ing / re-caching much easier... 
-            /*
-                Some things to consider though:
-                1. Need a check mechanism to check that no files in the sequence are missing.
-                2. The way we check "last cached tx" needs to be changed so it gets the latest file.. 
-                3. Will also need to update the Blockchain Controller to get Tx's from the right cache file
-             */
-            // So, first we need to 
-
-            //first, we need to know the current BC Height
-            //get bc height from RPC
-            var currentHeight = 0;
             try
             {
-                currentHeight = RpcHelper.Request<GetHeightResp>("getheight").Height - 1;
-            }
-            catch
-            {
-                currentHeight = 0;
-            }
-            var startHeight = 1;
-            var endHeight = Convert.ToInt32(Math.Ceiling((double)(currentHeight / 10000) * 10000)) + 10000;
-            //now, splt the current height into blocks of 10000
-            for (int i = startHeight; i <= endHeight; i += 10000)
-            {
-                var start = i;
-                var end = i + 10000 - 1;
-                //retreive, transform and cache the blockchain and store in LiteDB
-                using (var db = new LiteDatabase(string.Concat(AppContext.BaseDirectory, @"App_Data\", "transactions_", start, "-", end, ".db")))
+                //first, we need to know the current BC Height
+                //get bc height from RPC
+                var currentHeight = 0;
+                try
                 {
-                    var transactions = db.GetCollection<CachedTx>("cached_txs");
-                    var date = DateTime.Now;
-                    // Index document using height's, hash and Id
-                    transactions.EnsureIndex(x => x.height);
-                    transactions.EnsureIndex(x => x.Id);
-                    transactions.EnsureIndex(x => x.hash);
-
-                    try
+                    currentHeight = RpcHelper.Request<GetHeightResp>("getheight").Height - 1;
+                }
+                catch
+                {
+                    currentHeight = 0;
+                }
+                var startHeight = 1;
+                var endHeight = Convert.ToInt32(Math.Ceiling((double)(currentHeight / 10000) * 10000)) + 10000;
+                //now, splt the current height into blocks of 10000
+                for (int i = startHeight; i <= endHeight; i += 10000)
+                {
+                    var start = i;
+                    var end = i + 10000 - 1;
+                    //retreive, transform and cache the blockchain and store in LiteDB
+                    using (var db = new LiteDatabase(string.Concat(AppContext.BaseDirectory, @"App_Data\", "transactions_", start, "-", end, ".db")))
                     {
-                        //get the maxTxId
-                        var lastTxId = transactions.Max(x => x.Id).AsInt32;
-                        //get the last Tx we cached
-                        var lastTx = transactions.FindOne(x => x.Id == lastTxId);
-                        if (lastTx != null)
-                        {
-                            start = lastTx.height;
-                            if (start == end)
-                                continue; //move to the next file... 
-                        }
-                        else
-                        {
-                            start = i;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        //todo: add logging
-                    }
-                    var counter = 1;
-                    var gCounter = start;
+                        var transactions = db.GetCollection<CachedTx>("cached_txs");
+                        var date = DateTime.Now;
+                        // Index document using height's, hash and Id
+                        transactions.EnsureIndex(x => x.height);
+                        transactions.EnsureIndex(x => x.Id);
+                        transactions.EnsureIndex(x => x.hash);
 
-                    var txHashes = new List<string>();
-
-                    if (currentHeight > start)
-                    {
-                        if (end > currentHeight) end = currentHeight;
-                        for (var j = start;j <= end; j++)
+                        try
                         {
-                            var height_args = new int[] { j };
-                            var blockHash = "";
-                            try
+                            //get the maxTxId
+                            var lastTxId = transactions.Max(x => x.Id).AsInt32;
+                            //get the last Tx we cached
+                            var lastTx = transactions.FindOne(x => x.Id == lastTxId);
+                            if (lastTx != null)
                             {
-                                blockHash = RpcHelper.RequestJson<HashResp>("on_getblockhash", height_args).result;
+                                start = lastTx.height;
+                                if (start == end)
+                                    continue; //move to the next file... 
                             }
-                            catch { }
-                            if (!string.IsNullOrEmpty(blockHash))
+                            else
                             {
-                                //then, get the blockHash for the height we're currently processing...
-                                var hash_args = new Dictionary<string, object>();
-                                hash_args.Add("hash", blockHash);
-                                txHashes.AddRange(RpcHelper.RequestJson<BlockJsonResp>("f_block_json", hash_args).result.block.transactions.Select(x => x.hash).ToList<string>());
-                                //next, get the block itself and extract all the tx hashes....
+                                start = i;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            //todo: add logging
+                        }
+                        var counter = 1;
+                        var gCounter = start;
 
-                                if (counter == 50 || gCounter == currentHeight)
+                        var txHashes = new List<string>();
+
+                        if (currentHeight > start)
+                        {
+                            if (end > currentHeight) end = currentHeight;
+                            for (var j = start; j <= end; j++)
+                            {
+                                var height_args = new int[] { j };
+                                var blockHash = "";
+                                try
                                 {
-                                    var tx_args = new Dictionary<string, object>();
-                                    tx_args.Add("transactionHashes", txHashes.ToArray());
-                                    var txs = RpcHelper.Request<TxDetailResp>("get_transaction_details_by_hashes", tx_args);
-                                    var transactionsToInsert = new List<CachedTx>();
-                                    foreach (var tx in txs.transactions)
-                                    {
-                                        var cachedTx = TransactionHelpers.MapTx(tx);
-                                        //persist tx's to cache
-                                        if (cachedTx != null && !transactions.Find(x => x.hash == cachedTx.hash).Any())
-                                        {
-                                            transactionsToInsert.Add(cachedTx);
-                                        }
-                                    }
-                                    if (transactionsToInsert.Any())
-                                    {
-                                        transactions.InsertBulk(transactionsToInsert);
-                                        //temp monitoring
-                                        var heights = transactionsToInsert.Select(x => x.height).Distinct().OrderBy(x => x).ToList();
-                                        System.IO.File.AppendAllText(string.Concat(AppContext.BaseDirectory, @"App_Data\", "moniter.txt"), counter + ", " + gCounter + ", "+ string.Join(", ", heights) + Environment.NewLine); //output csv of heights captured to check against
-                                    }
-                                    counter = 0;
-                                    txHashes.Clear();
+                                    blockHash = RpcHelper.RequestJson<HashResp>("on_getblockhash", height_args).result;
                                 }
-                                gCounter++;
-                                counter++;
+                                catch { }
+                                if (!string.IsNullOrEmpty(blockHash))
+                                {
+                                    //then, get the blockHash for the height we're currently processing...
+                                    var hash_args = new Dictionary<string, object>();
+                                    hash_args.Add("hash", blockHash);
+                                    //if it fails here we need to exit the loop
+
+                                    txHashes.AddRange(RpcHelper.RequestJson<BlockJsonResp>("f_block_json", hash_args).result.block.transactions.Select(x => x.hash).ToList<string>());
+                                    if (counter == 50 || gCounter == currentHeight)
+                                    {
+                                        var tx_args = new Dictionary<string, object>();
+                                        tx_args.Add("transactionHashes", txHashes.ToArray());
+                                        var txs = RpcHelper.Request<TxDetailResp>("get_transaction_details_by_hashes", tx_args);
+                                        var transactionsToInsert = new List<CachedTx>();
+                                        foreach (var tx in txs.transactions)
+                                        {
+                                            var cachedTx = TransactionHelpers.MapTx(tx);
+                                            //persist tx's to cache
+                                            if (cachedTx != null && !transactions.Find(x => x.hash == cachedTx.hash).Any())
+                                            {
+                                                transactionsToInsert.Add(cachedTx);
+                                            }
+                                        }
+                                        if (transactionsToInsert.Any())
+                                        {
+                                            transactions.InsertBulk(transactionsToInsert);
+                                            var heights = transactionsToInsert.Select(x => x.height).Distinct().OrderBy(x => x).ToList();
+                                        }
+                                        counter = 0;
+                                        txHashes.Clear();
+                                    }
+                                    gCounter++;
+                                    counter++;
+                                }
+
                             }
 
                         }
-
+                        //else there's nothing to do
                     }
-                    //else there's nothing to do
                 }
             }
-
-            //finally, schedule the next check in 30 seconds time
-            BackgroundJob.Schedule(() => BlockchainCache.BuildCache(null), TimeSpan.FromSeconds(30));
+            catch (Exception ex)
+            {
+                //todo: add logging
+            }
+            finally
+            {
+                //finally, schedule the next check in 30 seconds time
+                BackgroundJob.Schedule(() => BlockchainCache.BuildCache(null), TimeSpan.FromSeconds(30));
+            }
         }
     }
 }
