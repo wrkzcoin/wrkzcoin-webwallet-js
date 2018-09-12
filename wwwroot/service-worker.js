@@ -90,7 +90,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "config.js",
-    "revision": "4360d66d1d7ed0dbd7e2b20d5590fd63"
+    "revision": "7044923c5d766f65d850a9198354cc02"
   },
   {
     "url": "d/vue-i118n.js",
@@ -102,7 +102,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "index.html",
-    "revision": "849e2a7691a5ebbe81e90b75fb6a1f5b"
+    "revision": "280f2e39e511af89539d230670ad680a"
   },
   {
     "url": "index.js",
@@ -203,6 +203,10 @@ workbox.precaching.precacheAndRoute([
   {
     "url": "lib/numbersLab/VueAnnotate.js",
     "revision": "503a173798ba5bfb0598061b62864920"
+  },
+  {
+    "url": "lib/particles.min.js",
+    "revision": "6ce3765b50a8c3e38538046b5a0bce60"
   },
   {
     "url": "lib/require.js",
@@ -346,7 +350,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "pages/donate.html",
-    "revision": "73ad1deb2bd30139ac67f03eeb336cc1"
+    "revision": "b335911d91f5627e3ba4f3fbaae4bd47"
   },
   {
     "url": "pages/donate.js",
@@ -402,7 +406,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "pages/index.html",
-    "revision": "5371958a3cdb141b289048159188bcd9"
+    "revision": "a5301ea1dfd381801d0ab50393146832"
   },
   {
     "url": "pages/index.js",
@@ -426,11 +430,11 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "pages/receive.html",
-    "revision": "f2f69df6e47d5e4c20fd20cd053e3e44"
+    "revision": "33871cda807c1532aefdfe58fac7ba19"
   },
   {
     "url": "pages/receive.js",
-    "revision": "adace8043322916bbdb1dbdd7c3bb776"
+    "revision": "e7d80d79da9587b8f49fb0a9a55db45b"
   },
   {
     "url": "pages/send.html",
@@ -458,7 +462,7 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "pages/termsOfUse.html",
-    "revision": "23e7e746bdc2181caf52bdcc07a8cafc"
+    "revision": "ae2d4e5428a150b1531c5975eb05e756"
   },
   {
     "url": "pages/termsOfUse.js",
@@ -474,23 +478,23 @@ workbox.precaching.precacheAndRoute([
   },
   {
     "url": "translations/de.json",
-    "revision": "3c51c0d644a34b83c1713f0cc4044591"
+    "revision": "fa527a45b13e3730d36bf26c90ae2552"
   },
   {
     "url": "translations/en.json",
-    "revision": "ea428f22d2a3f357f8c2cb7f4dd41af8"
+    "revision": "a1c2bb1bd1993b035d9b55bb8f5c7660"
   },
   {
     "url": "translations/fr.json",
-    "revision": "57216637f729bf38e5fa0996d42af3cd"
+    "revision": "26ca8f9cddfc2572a8e8001db5638a9e"
   },
   {
     "url": "translations/hu.json",
-    "revision": "cee28a9f27ba39c7c24d168ab90b2474"
+    "revision": "2196a06e8e0bd0d0f9a4079254a371f8"
   },
   {
     "url": "translations/sr.json",
-    "revision": "81af0e254dada71ecb2247f0ddc0d291"
+    "revision": "2086e6c9e0aca553ba8d08acc680a295"
   },
   {
     "url": "utils/Url.js",

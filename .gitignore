@@ -14,3 +14,5 @@ debug/
 bin/*
 wwwroot/service-worker.js
 wwwroot/service-worker.js
+Properties/PublishProfiles/FolderProfile1.pubxml
+*.pubxml
