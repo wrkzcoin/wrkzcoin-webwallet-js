@@ -22,14 +22,14 @@ namespace WebWallet.Helpers
             lightTx.unlock_time = tx.unlockTime;
             //lightTx.global_index_start = tx.blockIndex; - handled in the cache calling process
             //map signatures
-            lightTx.signatures = new List<CachedSignature>();
-            if (tx.signatures != null)
-            {
-                foreach (var sig in tx.signatures)
-                {
-                    lightTx.signatures.Add(new CachedSignature() { first = sig.first, second = sig.second });
-                }
-            }
+            //lightTx.signatures = new List<CachedSignature>();
+            //if (tx.signatures != null)
+            //{
+            //    foreach (var sig in tx.signatures)
+            //    {
+            //        lightTx.signatures.Add(new CachedSignature() { first = sig.first, second = sig.second });
+            //    }
+            //}
             //map inputs
             lightTx.vin = new List<CachedInput>();
             if (tx.inputs != null)
