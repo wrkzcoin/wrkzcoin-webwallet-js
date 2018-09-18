@@ -2,6 +2,7 @@
 The project is using Typescript as main language and not other dependencies on external libraries (everything is already included).
 
 # Compilation
+
 The first step will be to compile the typescript code into javascript code so browsers will be able to understand it. 
 You also need to build some files that are dynamically generated like the manifest ...
 This task is doable with :

@@ -64,6 +64,7 @@ export class Wallet extends Observable {
     private _lastHeight: number = 0;
 
     private transactions: Transaction[] = [];
+    fusionTxs: Transaction[] = [];
     txsMem: Transaction[] = [];
     private modified = true;
     creationHeight: number = 0;

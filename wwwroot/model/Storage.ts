@@ -220,6 +220,11 @@ if (window.NativeStorage) {
 else {
     //check for and initialize indexedDB
     if (('indexedDB' in window)) {
+        //init localForage
+        localForage.config({
+            name: "web-wallet",
+            storeName: "wallet"
+        });
         Storage._storage = new IndexedDbStorageWrap();
     }
 }
