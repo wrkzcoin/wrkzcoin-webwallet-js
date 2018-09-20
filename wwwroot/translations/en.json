@@ -98,7 +98,7 @@
     "balanceBlock": {
       "title": "Your balance",
       "unlocked": "Unlocked",
-      "fusions": "Fusion transactions yet to confirm"
+      "fusions": "Fusion transactions to unlock"
     },
 	  "historyBlock": {
 		"title": "Transaction history",
