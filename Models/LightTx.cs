@@ -9,7 +9,7 @@ namespace WebWallet.Models
     {
         public string hash { get; set; } //hash
         public int height { get; set; } //hash
-        public string pK { get; set; }
+        public string publicKey { get; set; }
         public List<LightOutput> vout { get; set; } //outputs
         //public List<CachedSignature> signatures { get; set; }
     }

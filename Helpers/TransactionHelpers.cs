@@ -78,7 +78,7 @@ namespace WebWallet.Helpers
         public static LightTx MapTx(CachedTx tx)
         {
             LightTx lightTx = new LightTx();
-            lightTx.pK = tx.publicKey;
+            lightTx.publicKey = tx.publicKey;
             lightTx.hash = tx.hash;
             lightTx.height = tx.height;
             //map outputs

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
-    <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
     <DockerComposeProjectPath>docker-compose.dcproj</DockerComposeProjectPath>
     <UserSecretsId>722088e8-8897-47f7-9434-a6c7827d2221</UserSecretsId>
     <AssemblyName>WebWallet</AssemblyName>
@@ -12,6 +12,11 @@
 
   <ItemGroup>
     <Compile Remove="Models\MinerStats.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="compilerconfig.json" />
+    <Content Remove="wwwroot\pages\local.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,6 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="compilerconfig.json" />
     <None Include="wwwroot\api.html" />
     <None Include="wwwroot\api.ts" />
     <None Include="wwwroot\config.ts" />
@@ -179,6 +185,10 @@
     <None Include="wwwroot\utils\Url.ts" />
     <None Include="wwwroot\workers\TransferProcessing.ts" />
     <None Include="wwwroot\workers\TransferProcessingEntrypoint.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="wwwroot\local.ts" />
   </ItemGroup>
 
 </Project>

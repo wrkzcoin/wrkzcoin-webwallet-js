@@ -1,0 +1,76 @@
+$font:              'Arial', sans-serif;
+$header-font:       'Arial', sans-serif;
+$light:				300;
+$light:				300;
+$regular:			400;
+$medium:			500;
+$bold:				700;
+
+/*spacing and multipliers */
+$baseline:			20px;
+
+$lineheightMultiplier: 1.5;
+
+/* Colours - see colour_pallette.scss */
+
+
+/* Font Scaling */
+
+$useScaling:        true;
+
+$desktopScale:      0.9;
+$laptopScale:       0.9;
+$tabletScale:       0.9;
+$mobileScale:       0.9;
+$smallMobileScale:  0.9;
+
+
+
+
+
+
+/* Mixins should probably be in a file on its own */
+@mixin Heading1Display1 {
+    font-family: $header-font;
+    font-size: 70px;
+    font-weight: $bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.05;
+    letter-spacing: -0.4px;
+    text-align: left;
+    color: $white;
+    background-color: $primary-100-1-transparent;
+}
+
+
+
+/* Buttons */
+@mixin btn-dt-primary-green {
+    width: 182px;
+    height: 60px;
+    background-color: #009b9a;
+    
+}  
+
+@mixin btn-dt-primary-text {
+    width: 122px;
+    height: 38px;
+    font-family: $font;
+    font-size: 25px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: left;
+    color: $white;
+
+    
+}
+
+@mixin v-align-div-text($divHeight) {
+    height: $divHeight;
+    line-height: $divHeight;
+    text-align: center;    
+}

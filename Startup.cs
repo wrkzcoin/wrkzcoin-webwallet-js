@@ -97,7 +97,7 @@ namespace WebWallet
                 app.UseHsts();
             }
             app.UseResponseCompression();
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseFileServer();
             app.UseMvc(routes =>
             {
@@ -105,7 +105,7 @@ namespace WebWallet
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
             });
-            
+
             //Queue up the caching job
             using (var jobServer = new BackgroundJobServer(new BackgroundJobServerOptions { ServerName = "BackgroundJobServer", WorkerCount = 1 }))
             {

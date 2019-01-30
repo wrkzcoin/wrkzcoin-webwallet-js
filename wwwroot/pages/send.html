@@ -46,7 +46,7 @@
 
 					<div class="field" >
 						<label>{{ $t("sendPage.sendBlock.paymentId.label") }}</label>
-						<input class="amountInput" type="text" v-model="paymentId" placeholder="" :readonly="lockedForm"/>
+						<input class="amountInput" type="text" v-model="paymentId" placeholder="Payment Id" :readonly="lockedForm"/>
 						<div v-if="!paymentIdValid && paymentId != ''" class="message error">
 							{{ $t("sendPage.sendBlock.paymentId.invalid") }}
 						</div>

@@ -367,7 +367,7 @@ export class TransactionsExplorer {
 
 			//console.log("Selected outs:", usingOuts);
 			if (usingOuts.length > 1) {
-                let newNeededFee = 10000000; //JSBigInt(Math.ceil(cnUtil.estimateRctSize(usingOuts.length, mixin, 2) / 1024)).multiply(feePerKB).multiply(fee_multiplayer);
+                let newNeededFee = 0; //JSBigInt(Math.ceil(cnUtil.estimateRctSize(usingOuts.length, mixin, 2) / 1024)).multiply(feePerKB).multiply(fee_multiplayer);
 				totalAmount = totalAmountWithoutFee.add(newNeededFee);
 				//add outputs 1 at a time till we either have them all or can meet the fee
 				while (usingOuts_amount.compare(totalAmount) < 0 && unusedOuts.length > 0) {
@@ -382,9 +382,9 @@ export class TransactionsExplorer {
 				neededFee = newNeededFee;
 			}
 
-            if (neededFee < 10000000) {
-                neededFee = 10000000;
-            }
+            //if (neededFee < 10000000) {
+            //    neededFee = 10000000;
+            //}
 
 			// neededFee = neededFee / 3 * 2;
 

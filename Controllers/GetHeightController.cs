@@ -21,7 +21,7 @@ namespace WebWallet.Controllers
         {
             try
             {
-                return Content((RpcHelper.Request<GetHeightResp>("getheight").Height - 1).ToString());
+                return Content((RpcHelper.Request<GetHeightResp>("getheight").Height -1).ToString());
             }
             catch (Exception ex)
             {

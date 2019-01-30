@@ -12,7 +12,10 @@ wwwroot/lib/numbersLab/*.map
 debug/
 .vs
 bin/*
+obj/*
 wwwroot/service-worker.js
 wwwroot/service-worker.js
 Properties/PublishProfiles/FolderProfile1.pubxml
 *.pubxml
+wwwroot/service-worker.js
+*.user

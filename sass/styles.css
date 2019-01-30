@@ -13,6 +13,20 @@
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+/* this file includes any custom / web font definitions.. */
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500");
+@font-face {
+  font-family: "Brokman";
+  src: url("/fonts/5af72774-b902-4a7b-8b86-a96b26956476.eot?#iefix");
+  src: url("/fonts/5af72774-b902-4a7b-8b86-a96b26956476.eot?#iefix") format("eot"), url("/fonts/efb8959e-4511-41c3-86a7-310060569004.woff2") format("woff2"), url("/fonts/1a86710b-f99e-495c-9736-7bfdb99018bf.woff") format("woff"), url("/fonts/c66501c2-7ef6-4fe6-99a0-36556619471d.ttf") format("truetype"), url("/fonts/bef14683-fafb-4ded-bc5c-42b53a9d0b26.svg#bef14683-fafb-4ded-bc5c-42b53a9d0b26") format("svg");
+  font-weight: normal; }
+
+@font-face {
+  font-family: "Brokman";
+  src: url("/fonts/590e7d16-64a9-482f-a6f8-c4629091075f.eot?#iefix");
+  src: url("/fonts/590e7d16-64a9-482f-a6f8-c4629091075f.eot?#iefix") format("eot"), url("/fonts/d1d2e785-c662-4e36-9ed1-69cffa95003f.woff2") format("woff2"), url("/fonts/9482680e-467e-4bd7-9d49-a0ea5f0cfe86.woff") format("woff"), url("/fonts/be719cfd-19dc-4609-b1d8-f25a4b9985af.ttf") format("truetype"), url("/fonts/83d31176-9dda-46a7-a343-02117a506785.svg#83d31176-9dda-46a7-a343-02117a506785") format("svg");
+  font-weight: bold; }
+
 /*spacing and multipliers */
 /* Colours - see colour_pallette.scss */
 /* Font Scaling */
@@ -24,49 +38,6 @@
 /* Mixins should probably be in a file on its own */
 /* Buttons */
 /* @include box-shadow(1px,1px,1px,0, #fff, true); */
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline; }
-
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
-  display: block; }
-
-body {
-  line-height: 1; }
-
-ol, ul {
-  list-style: none; }
-
-blockquote, q {
-  quotes: none; }
-  blockquote:before, blockquote:after, q:before, q:after {
-    content: '';
-    content: none; }
-
-table {
-  border-collapse: collapse;
-  border-spacing: 0; }
-
-/* Standard Colours */
-/* Colour Variables */
 html {
   font-size: 62.5%;
   overflow-x: hidden; }
@@ -78,7 +49,7 @@ html, body {
   height: 100%;
   min-height: 100%;
   padding: 0;
-  font-family: "Arial", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-weight: 400;
   -webkit-font-smoothing: antialiased; }
 
@@ -145,18 +116,11 @@ body.native .hideOnNonNative {
   background: #36393f;
   color: white;
   font-size: 16px;
-  font-size: 1.6rem;
-  line-height: 24px;
   font-weight: bold;
   padding: 0 10px;
   z-index: 20;
   left: 280px;
   display: none; }
-  @media (max-width: 767px) {
-    #topBar {
-      font-size: 12.8px;
-      font-size: 1.28rem;
-      line-height: 19.2px; } }
 
 #topBar a {
   color: white; }
@@ -200,16 +164,9 @@ body.menuHidden #menu {
   border-bottom: 1px solid #a1a1a1;
   color: white;
   font-size: 20px;
-  font-size: 2rem;
-  line-height: 30px;
   padding: 14px 0;
   text-decoration: none;
   font-weight: 300; }
-  @media (max-width: 767px) {
-    #menu a {
-      font-size: 16px;
-      font-size: 1.6rem;
-      line-height: 24px; } }
 
 #menu a:hover {
   border-right: 5px solid white; }
@@ -244,14 +201,7 @@ body.menuHidden #menu {
   position: relative;
   top: 50%;
   margin-top: -20px;
-  font-size: 40px;
-  font-size: 4rem;
-  line-height: 60px; }
-  @media (max-width: 767px) {
-    #pageLoading i {
-      font-size: 32px;
-      font-size: 3.2rem;
-      line-height: 48px; } }
+  font-size: 40px; }
 
 body.menuHidden #pageLoading {
   left: 0; }
@@ -277,15 +227,8 @@ body.menuHidden #page, body.menuDisabled #page {
   padding: 30px 0;
   color: #474E5D;
   font-size: 14px;
-  font-size: 1.4rem;
-  line-height: 21px;
   padding-left: 10px;
   margin-left: 280px; }
-  @media (max-width: 767px) {
-    #copyright {
-      font-size: 11.2px;
-      font-size: 1.12rem;
-      line-height: 16.8px; } }
 
 body.menuDisabled #copyright {
   margin-left: 0; }
@@ -323,24 +266,10 @@ body.transparent #copyright {
 
 .walletHeader .amount {
   text-align: center;
-  font-size: 30px;
-  font-size: 3rem;
-  line-height: 45px; }
-  @media (max-width: 767px) {
-    .walletHeader .amount {
-      font-size: 24px;
-      font-size: 2.4rem;
-      line-height: 36px; } }
+  font-size: 30px; }
 
 .walletHeader .amount.unlocked {
-  font-size: 18px;
-  font-size: 1.8rem;
-  line-height: 27px; }
-  @media (max-width: 767px) {
-    .walletHeader .amount.unlocked {
-      font-size: 14.4px;
-      font-size: 1.44rem;
-      line-height: 21.6px; } }
+  font-size: 18px; }
 
 .walletHeader .connectionStatus {
   text-align: right; }
@@ -360,50 +289,22 @@ body.transparent #copyright {
   text-align: center; }
 
 .transactions .transaction div {
-  font-size: 16px;
-  font-size: 1.6rem;
-  line-height: 24px; }
-  @media (max-width: 767px) {
-    .transactions .transaction div {
-      font-size: 12.8px;
-      font-size: 1.28rem;
-      line-height: 19.2px; } }
+  font-size: 16px; }
 
 .transactions .transaction .direction {
   font-size: 20px;
-  font-size: 2rem;
-  line-height: 30px;
   width: 5%;
   padding-left: 5px; }
-  @media (max-width: 767px) {
-    .transactions .transaction .direction {
-      font-size: 16px;
-      font-size: 1.6rem;
-      line-height: 24px; } }
 
 .transactions .transaction .timestamp {
   width: 45%;
-  font-size: 20px;
-  font-size: 2rem;
-  line-height: 30px; }
-  @media (max-width: 767px) {
-    .transactions .transaction .timestamp {
-      font-size: 16px;
-      font-size: 1.6rem;
-      line-height: 24px; } }
+  font-size: 20px; }
 
 .transactions .transaction .amount {
   font-size: 20px;
-  font-size: 2rem;
-  line-height: 30px;
   width: 42%;
   text-align: right;
   padding-right: 5px; }
-  @media (max-width: 767px) {
-    .transactions .transaction .amount {
-      font-size: 16px;
-      font-size: 1.6rem;
-      line-height: 24px; } }
 
 .transactions .transaction .amount.more {
   color: #6bc534; }
@@ -413,16 +314,9 @@ body.transparent #copyright {
 
 .transactions .transaction .moreInfo {
   font-size: 20px;
-  font-size: 2rem;
-  line-height: 30px;
   width: 8%;
   text-align: right;
   padding-right: 10px; }
-  @media (max-width: 767px) {
-    .transactions .transaction .moreInfo {
-      font-size: 16px;
-      font-size: 1.6rem;
-      line-height: 24px; } }
 
 .receiveTab .qrCode {
   text-align: center;
@@ -445,29 +339,15 @@ body.transparent #copyright {
 .receiveTab .address input {
   width: calc(100% - 50px);
   font-size: 20px;
-  font-size: 2rem;
-  line-height: 30px;
   border: none;
   padding: 5px; }
-  @media (max-width: 767px) {
-    .receiveTab .address input {
-      font-size: 16px;
-      font-size: 1.6rem;
-      line-height: 24px; } }
 
 .receiveTab .address .copy {
   width: 20px;
   font-size: 20px;
-  font-size: 2rem;
-  line-height: 30px;
   height: 100%;
   border-left: 1px solid gray;
   padding: 5px; }
-  @media (max-width: 767px) {
-    .receiveTab .address .copy {
-      font-size: 16px;
-      font-size: 1.6rem;
-      line-height: 24px; } }
 
 .tab {
   display: block;
@@ -485,13 +365,13 @@ body.transparent #copyright {
 	padding-top:20px;
 }
 .sendTab .icon i{
-    @include fontsize(60);
+	font-size: 60px;
 	color:#146DBD;
 }
 .sendTab label{
 	display: block;
 	text-align: left;
-    @include fontsize(18);
+	font-size: 18px;
 }*/
 .sendTab .destinationInput {
   display: block;
@@ -550,8 +430,6 @@ body.transparent #copyright {
   right: 20px;
   top: 20px;
   font-size: 30px;
-  font-size: 3rem;
-  line-height: 45px;
   color: black;
   border: 3px solid black;
   -webkit-border-radius: 30px;
@@ -561,11 +439,6 @@ body.transparent #copyright {
   height: 40px;
   line-height: 35px;
   text-align: center; }
-  @media (max-width: 767px) {
-    .qrCodeScanningContainer .close {
-      font-size: 24px;
-      font-size: 2.4rem;
-      line-height: 36px; } }
 
 .qrCodeScanningContainer.native .close {
   color: white;
@@ -600,7 +473,7 @@ body.transparent #copyright {
 .button{
 	display: inline-block;
 	padding: 10px;
-    @include fontsize(16);
+	font-size: 16px;
 	background: none;
 	border: 3px solid #005B95;
 	color:#005B95;
@@ -624,11 +497,11 @@ body.transparent #copyright {
 .indexTab .mainBlock {
   min-height: 90vh;
   position: relative;
+  /*background: url(../img/binary-background.jpg) #146DBD;*/
   text-align: center;
-  background: #212121;
-  background-image: -webkit-linear-gradient(rgba(62, 75, 92, 0.7), rgba(62, 75, 92, 0.7)), url(../landing/ple.png);
-  background-image: -o-linear-gradient(rgba(62, 75, 92, 0.7), rgba(62, 75, 92, 0.7)), url(../landing/ple.png);
-  background-image: linear-gradient(rgba(62, 75, 92, 0.7), rgba(62, 75, 92, 0.7)), url(../img/landing/ple.png);
+  background-image: -webkit-linear-gradient(rgba(62, 75, 92, 0.7), rgba(62, 75, 92, 0.7)), url(../img/landing/75-usersthink-stock-image.jpg);
+  background-image: -o-linear-gradient(rgba(62, 75, 92, 0.7), rgba(62, 75, 92, 0.7)), url(../img/landing/75-usersthink-stock-image.jpg);
+  background-image: linear-gradient(rgba(62, 75, 92, 0.7), rgba(62, 75, 92, 0.7)), url(../img/landing/75-usersthink-stock-image.jpg);
   background-position: center center;
   background-size: cover;
   margin-bottom: 160px; }
@@ -654,25 +527,11 @@ body.native .indexTab .mainBlock {
   border-bottom: 1px solid white;
   padding: 0 20px;
   margin-bottom: 0;
-  font-size: 40px;
-  font-size: 4rem;
-  line-height: 60px; }
-  @media (max-width: 767px) {
-    .indexTab .mainBlock h1 {
-      font-size: 32px;
-      font-size: 3.2rem;
-      line-height: 48px; } }
+  font-size: 40px; }
 
 .indexTab .mainBlock h2 {
   color: #c8cacf;
-  font-size: 18px;
-  font-size: 1.8rem;
-  line-height: 27px; }
-  @media (max-width: 767px) {
-    .indexTab .mainBlock h2 {
-      font-size: 14.4px;
-      font-size: 1.44rem;
-      line-height: 21.6px; } }
+  font-size: 18px; }
 
 .indexTab .mainBlock > .actions {
   text-align: left;
@@ -754,29 +613,15 @@ body.native .indexTab .mainBlock > .actions {
 
 .indexTab .block i {
   font-size: 40px;
-  font-size: 4rem;
-  line-height: 60px;
   color: #75829e; }
-  @media (max-width: 767px) {
-    .indexTab .block i {
-      font-size: 32px;
-      font-size: 3.2rem;
-      line-height: 48px; } }
 
 .indexTab .block h3 {
   color: #212529;
   font-size: 24px;
-  font-size: 2.4rem;
-  line-height: 36px;
   margin: 0;
   margin-bottom: 5px;
   margin-top: 8px;
   font-weight: normal; }
-  @media (max-width: 767px) {
-    .indexTab .block h3 {
-      font-size: 19.2px;
-      font-size: 1.92rem;
-      line-height: 28.8px; } }
 
 .indexTab .block a {
   text-decoration: none; }
@@ -784,15 +629,8 @@ body.native .indexTab .mainBlock > .actions {
 .indexTab .block h4 {
   color: #868e96;
   font-size: 14px;
-  font-size: 1.4rem;
-  line-height: 21px;
   margin: 0;
   font-weight: normal; }
-  @media (max-width: 767px) {
-    .indexTab .block h4 {
-      font-size: 11.2px;
-      font-size: 1.12rem;
-      line-height: 16.8px; } }
 
 .indexTab .walletImportSelector {
   z-index: 90;
@@ -809,8 +647,6 @@ body.native .indexTab .mainBlock > .actions {
   right: 20px;
   top: 20px;
   font-size: 30px;
-  font-size: 3rem;
-  line-height: 45px;
   color: white;
   border: 3px solid white;
   -webkit-border-radius: 30px;
@@ -820,11 +656,6 @@ body.native .indexTab .mainBlock > .actions {
   height: 40px;
   line-height: 35px;
   text-align: center; }
-  @media (max-width: 767px) {
-    .indexTab .walletImportSelector .close {
-      font-size: 24px;
-      font-size: 2.4rem;
-      line-height: 36px; } }
 
 .indexTab .walletImportSelector .close:hover {
   background: white;
@@ -838,15 +669,8 @@ body.native .indexTab .mainBlock > .actions {
   color: white;
   font-weight: bold;
   font-size: 24px;
-  font-size: 2.4rem;
-  line-height: 36px;
   margin-bottom: 20px;
   text-align: center; }
-  @media (max-width: 767px) {
-    .indexTab .walletImportSelector .container .text {
-      font-size: 19.2px;
-      font-size: 1.92rem;
-      line-height: 28.8px; } }
 
 .indexTab .walletImportSelector .container .options {
   display: block;
@@ -875,14 +699,7 @@ body.native .indexTab .mainBlock > .actions {
 
 .indexTab .walletImportSelector .container .walletOption i {
   font-size: 60px;
-  font-size: 6rem;
-  line-height: 90px;
   margin-bottom: 10px; }
-  @media (max-width: 767px) {
-    .indexTab .walletImportSelector .container .walletOption i {
-      font-size: 48px;
-      font-size: 4.8rem;
-      line-height: 72px; } }
 
 @media screen and (max-width: 600px) {
   .indexTab .walletImportSelector .container .walletOption {
@@ -898,17 +715,10 @@ body {
   font-family: "Roboto-Regular", sans-serif;
   font-weight: normal;
   font-size: 14px;
-  font-size: 1.4rem;
-  line-height: 21px;
   line-height: 1;
   color: #000;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent; }
-  @media (max-width: 767px) {
-    body {
-      font-size: 11.2px;
-      font-size: 1.12rem;
-      line-height: 16.8px; } }
 
 .body-root {
   padding: 0 30px;
@@ -923,16 +733,9 @@ body {
 
 .body-header .header-title {
   font-size: 26px;
-  font-size: 2.6rem;
-  line-height: 39px;
   color: #474E5D;
   line-height: 1;
   margin-bottom: 15px; }
-  @media (max-width: 767px) {
-    .body-header .header-title {
-      font-size: 20.8px;
-      font-size: 2.08rem;
-      line-height: 31.2px; } }
 
 .body-header .header-title-icon {
   vertical-align: top;
@@ -940,27 +743,13 @@ body {
 
 .body-header .header-subtitle {
   font-size: 14px;
-  font-size: 1.4rem;
-  line-height: 21px;
   color: #474E5D;
   line-height: 26px; }
-  @media (max-width: 767px) {
-    .body-header .header-subtitle {
-      font-size: 11.2px;
-      font-size: 1.12rem;
-      line-height: 16.8px; } }
 
 .body-header .header-subtitle a {
   font-size: 14px;
-  font-size: 1.4rem;
-  line-height: 21px;
   color: #474E5D;
   line-height: 1; }
-  @media (max-width: 767px) {
-    .body-header .header-subtitle a {
-      font-size: 11.2px;
-      font-size: 1.12rem;
-      line-height: 16.8px; } }
 
 .body-content {
   padding-top: 30px; }
@@ -990,15 +779,8 @@ body {
 
 .panel .header-title {
   font-size: 20px;
-  font-size: 2rem;
-  line-height: 30px;
   color: #474E5D;
   margin-bottom: 22px; }
-  @media (max-width: 767px) {
-    .panel .header-title {
-      font-size: 16px;
-      font-size: 1.6rem;
-      line-height: 24px; } }
 
 .panel.nopadding .header-title {
   padding: 32px 40px 0 40px; }
@@ -1015,14 +797,7 @@ body {
   margin-bottom: 20px; }
 
 .step > .title {
-  font-size: 18px;
-  font-size: 1.8rem;
-  line-height: 27px; }
-  @media (max-width: 767px) {
-    .step > .title {
-      font-size: 14.4px;
-      font-size: 1.44rem;
-      line-height: 21.6px; } }
+  font-size: 18px; }
 
 .message {
   position: relative;
@@ -1046,7 +821,7 @@ body {
   padding-bottom: 8px; }
 
 .message > .content {
-  font-size: 1.65rem; }
+  font-size: 1em; }
 
 .message.error {
   background-color: #fff6f6;
@@ -1072,9 +847,7 @@ body {
   -ms-touch-action: manipulation;
   touch-action: manipulation;
   vertical-align: middle;
-  font-size: 16px;
-  font-size: 1.6rem;
-  line-height: 24px;
+  font-size: 1.07rem;
   line-height: 1.4;
   border-radius: .28571429rem;
   -webkit-user-select: none;
@@ -1085,11 +858,6 @@ body {
   -o-transition: all ease .25s;
   transition: all .25s ease;
   padding: .78571429em 1.5em .78571429em; }
-  @media (max-width: 767px) {
-    .btn {
-      font-size: 12.8px;
-      font-size: 1.28rem;
-      line-height: 19.2px; } }
 
 .btn.basic {
   background: none;
@@ -1145,84 +913,28 @@ body {
   pointer-events: none !important; }
 
 .btn.mini {
-  font-size: 14px;
-  font-size: 1.4rem;
-  line-height: 21px; }
-  @media (max-width: 767px) {
-    .btn.mini {
-      font-size: 11.2px;
-      font-size: 1.12rem;
-      line-height: 16.8px; } }
+  font-size: .78571429rem; }
 
 .btn.tiny {
-  font-size: 16px;
-  font-size: 1.6rem;
-  line-height: 24px; }
-  @media (max-width: 767px) {
-    .btn.tiny {
-      font-size: 12.8px;
-      font-size: 1.28rem;
-      line-height: 19.2px; } }
+  font-size: .85714286rem; }
 
 .btn.small {
-  font-size: 18px;
-  font-size: 1.8rem;
-  line-height: 27px; }
-  @media (max-width: 767px) {
-    .btn.small {
-      font-size: 14.4px;
-      font-size: 1.44rem;
-      line-height: 21.6px; } }
+  font-size: .92857143rem; }
 
 .btn.medium {
-  font-size: 20px;
-  font-size: 2rem;
-  line-height: 30px; }
-  @media (max-width: 767px) {
-    .btn.medium {
-      font-size: 16px;
-      font-size: 1.6rem;
-      line-height: 24px; } }
+  font-size: 1rem; }
 
 .btn.large {
-  font-size: 22px;
-  font-size: 2.2rem;
-  line-height: 33px; }
-  @media (max-width: 767px) {
-    .btn.large {
-      font-size: 17.6px;
-      font-size: 1.76rem;
-      line-height: 26.4px; } }
+  font-size: 1.14285714rem; }
 
 .btn.big {
-  font-size: 24px;
-  font-size: 2.4rem;
-  line-height: 36px; }
-  @media (max-width: 767px) {
-    .btn.big {
-      font-size: 19.2px;
-      font-size: 1.92rem;
-      line-height: 28.8px; } }
+  font-size: 1.28571429rem; }
 
 .btn.huge {
-  font-size: 26px;
-  font-size: 2.6rem;
-  line-height: 39px; }
-  @media (max-width: 767px) {
-    .btn.huge {
-      font-size: 20.8px;
-      font-size: 2.08rem;
-      line-height: 31.2px; } }
+  font-size: 1.42857143rem; }
 
 .btn.massive {
-  font-size: 28px;
-  font-size: 2.8rem;
-  line-height: 42px; }
-  @media (max-width: 767px) {
-    .btn.massive {
-      font-size: 22.4px;
-      font-size: 2.24rem;
-      line-height: 33.6px; } }
+  font-size: 1.71428571rem; }
 
 /*==================FORMS===================*/
 .field {
@@ -1238,17 +950,10 @@ body {
   border: 1px solid #D9DCE7;
   border-radius: 5px;
   font-size: 14px;
-  font-size: 1.4rem;
-  line-height: 21px;
   padding: 17px 16px 15px;
   width: 100%;
   color: rgba(71, 78, 93, 0.7);
   background: #FFFFFF; }
-  @media (max-width: 767px) {
-    .field input, .field .subfield, .field select {
-      font-size: 11.2px;
-      font-size: 1.12rem;
-      line-height: 16.8px; } }
 
 .field input:read-only, .field input.readonly, .field .subfield.readonly {
   background: #f8f8f9; }

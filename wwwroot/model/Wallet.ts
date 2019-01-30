@@ -20,27 +20,25 @@ import { Observable } from "../lib/numbersLab/Observable";
 import { CryptoUtils } from "./CryptoUtils";
 
 export type RawWalletOptions = {
-    checkMinerTx?: boolean,
     readSpeed: number,
+    localNode: string,
 }
 
 export class WalletOptions {
-    checkMinerTx: boolean = false;
     readSpeed: number = 10;
+    localNode: string = '';
 
     static fromRaw(raw: RawWalletOptions) {
         let options = new WalletOptions();
-
-        if (typeof raw.checkMinerTx !== 'undefined') options.checkMinerTx = raw.checkMinerTx;
         if (typeof raw.readSpeed !== 'undefined') options.readSpeed = raw.readSpeed;
-
+        if (typeof raw.localNode !== 'undefined') options.localNode = raw.localNode;
         return options;
     }
 
     exportToJson(): RawWalletOptions {
         let data: RawWalletOptions = {
             readSpeed: this.readSpeed,
-            checkMinerTx: this.checkMinerTx
+            localNode: this.localNode
         };
         return data;
     }
