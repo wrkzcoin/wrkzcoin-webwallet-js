@@ -25,6 +25,7 @@ using WebWallet.Helpers;
 using Microsoft.AspNetCore.ResponseCompression;
 using Serilog;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc.Cors.Internal;
 
 namespace WebWallet
 {
@@ -52,6 +53,9 @@ namespace WebWallet
                .WriteTo.File(string.Concat(AppContext.BaseDirectory, "webwallet.log"), rollingInterval: RollingInterval.Day)
                .Enrich.FromLogContext()
                .CreateLogger();
+
+            // Add Cors
+            services.AddCors();
 
             //add Hangfire
             services.AddHangfire(config => {
@@ -92,13 +96,12 @@ namespace WebWallet
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                app.UseHsts();
-            }
+
             app.UseResponseCompression();
-            //app.UseHttpsRedirection();
             app.UseFileServer();
+            app.UseCors(
+                options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
+            );
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
