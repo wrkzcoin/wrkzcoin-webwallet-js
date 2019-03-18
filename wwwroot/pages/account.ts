@@ -67,7 +67,7 @@ class AccountView extends DestructableView{
 
     moreInfoOnTx(transaction: Transaction) {
         //console.log("display tx:", transaction);
-		let explorerUrl = config.testnet ? config.testnetExplorerUrl : config.mainnetExplorerUrl;
+		let explorerUrl = config.mainnetExplorerUrl;
 		let feesHtml = '';
 		if(transaction.getAmount() < 0)
 			feesHtml = `<div>`+i18n.t('accountPage.txDetails.feesOnTx')+`: `+Vue.options.filters.piconero(transaction.fees)+`</a></div>`;
