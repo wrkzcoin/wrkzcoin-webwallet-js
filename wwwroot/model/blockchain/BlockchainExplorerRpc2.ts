@@ -176,7 +176,7 @@ export class WalletWatchdog {
             return;
         }
 
-        let transactionsToProcess: RawDaemonTransaction[] = this.transactionsToProcess.splice(0, 25); //process 25 tx's at a time
+        let transactionsToProcess: RawDaemonTransaction[] = this.transactionsToProcess.splice(0, 100); //process 100 tx's at a time
         if (transactionsToProcess.length > 0) {
             this.workerCurrentProcessing = transactionsToProcess;
             this.workerProcessing.postMessage({
@@ -253,9 +253,15 @@ export class WalletWatchdog {
                             }
                         }
                         self.processTransactions(transactions);
-                        setTimeout(function () {
-                            self.loadHistory();
-                        }, 1);// then try load history again... 
+                        if (self.lastBlockLoading < height - 1) {
+                            setTimeout(function () {
+                                self.loadHistory();
+                            }, 1);// then try load history again... 
+                        } else {
+                            setTimeout(function () {
+                                self.loadHistory();
+                            }, 30000); // wait 30 seconds, then try load history again... 
+                        }
                     }).catch(function () {
                         setTimeout(function () {
                             self.loadHistory();
@@ -284,9 +290,7 @@ export class WalletWatchdog {
 
 export class BlockchainExplorerRpc2 implements BlockchainExplorer {
 
-    // testnet : boolean = true;
     serverAddress = config.apiUrl;
-
     heightCache = 0;
     heightLastTimeRetrieve = 0;
     getHeight(): Promise<number> {
@@ -309,10 +313,6 @@ export class BlockchainExplorerRpc2 implements BlockchainExplorer {
             });
         });
     }
-
-    // getDaemonUrl(){
-    // 	return this.testnet ? 'http://localhost:48081/' : 'http://localhost:38081/';
-    // }
 
     scannedHeight: number = 0;
 
