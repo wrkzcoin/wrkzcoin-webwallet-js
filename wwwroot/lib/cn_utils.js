@@ -529,13 +529,15 @@ var cnUtil = (function (initConfig) {
         dec = dec.slice(expectedPrefix.length);
         var spend = dec.slice(0, 64);
         var view = dec.slice(64, 128);
-        if (prefix === expectedPrefixInt) {
+        var checksum = '';
+        var expectedChecksum = '';
+        if (prefix === expectedPrefixInt && address.length > 98) {
             var intPaymentId = dec.slice(128, 128 + (INTEGRATED_ID_SIZE * 2));
-            var checksum = dec.slice(128 + (INTEGRATED_ID_SIZE * 2), 128 + (INTEGRATED_ID_SIZE * 2) + (ADDRESS_CHECKSUM_SIZE * 2));
-            var expectedChecksum = this.cn_fast_hash(prefix + spend + view + intPaymentId).slice(0, ADDRESS_CHECKSUM_SIZE * 2);
+            checksum = dec.slice(128 + (INTEGRATED_ID_SIZE * 2), 128 + (INTEGRATED_ID_SIZE * 2) + (ADDRESS_CHECKSUM_SIZE * 2));
+            expectedChecksum = this.cn_fast_hash(prefix + spend + view + intPaymentId).slice(0, ADDRESS_CHECKSUM_SIZE * 2);
         } else {
-            var checksum = dec.slice(128, 128 + (ADDRESS_CHECKSUM_SIZE * 2));
-            var expectedChecksum = this.cn_fast_hash(prefix + spend + view).slice(0, ADDRESS_CHECKSUM_SIZE * 2);
+            checksum = dec.slice(128, 128 + (ADDRESS_CHECKSUM_SIZE * 2));
+            expectedChecksum = this.cn_fast_hash(prefix + spend + view).slice(0, ADDRESS_CHECKSUM_SIZE * 2);
         }
         if (checksum !== expectedChecksum) {
             throw "Invalid checksum";
