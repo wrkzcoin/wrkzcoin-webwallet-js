@@ -138,7 +138,7 @@ body.native .hideOnNonNative {
   display: initial !important; }
 
 #topBar {
-  height: 34px;
+  height: 22px;
   line-height: 34px;
   position: fixed;
   top: 0;
@@ -370,40 +370,40 @@ body.transparent #copyright {
       line-height: 19.2px; } }
 
 .transactions .transaction .direction {
-  font-size: 20px;
-  font-size: 2rem;
-  line-height: 30px;
+  font-size: 16px;
+  font-size: 1.6rem;
+  line-height: 24px;
   width: 5%;
   padding-left: 5px; }
   @media (max-width: 767px) {
     .transactions .transaction .direction {
-      font-size: 16px;
-      font-size: 1.6rem;
-      line-height: 24px; } }
+      font-size: 12.8px;
+      font-size: 1.28rem;
+      line-height: 19.2px; } }
 
 .transactions .transaction .timestamp {
   width: 45%;
-  font-size: 20px;
-  font-size: 2rem;
-  line-height: 30px; }
+  font-size: 16px;
+  font-size: 1.6rem;
+  line-height: 24px; }
   @media (max-width: 767px) {
     .transactions .transaction .timestamp {
-      font-size: 16px;
-      font-size: 1.6rem;
-      line-height: 24px; } }
+      font-size: 12.8px;
+      font-size: 1.28rem;
+      line-height: 19.2px; } }
 
 .transactions .transaction .amount {
-  font-size: 20px;
-  font-size: 2rem;
-  line-height: 30px;
+  font-size: 16px;
+  font-size: 1.6rem;
+  line-height: 24px;
   width: 42%;
   text-align: right;
   padding-right: 5px; }
   @media (max-width: 767px) {
     .transactions .transaction .amount {
-      font-size: 16px;
-      font-size: 1.6rem;
-      line-height: 24px; } }
+      font-size: 12.8px;
+      font-size: 1.28rem;
+      line-height: 19.2px; } }
 
 .transactions .transaction .amount.more {
   color: #6bc534; }
