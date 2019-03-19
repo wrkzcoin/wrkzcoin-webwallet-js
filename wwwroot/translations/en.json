@@ -232,7 +232,7 @@
 	  },
 	  "thankYouDonationModal":{
 		"title":"Thank you for your donation!",
-		"content":"Your help is appreciated. <br/>This donation will help make Plenteum better",
+		"content":"Your help is appreciated. This donation will help make Plenteum better",
 		"confirmText":"OK"
 	  },
 	  "transferSentModal":{
