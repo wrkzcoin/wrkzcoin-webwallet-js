@@ -110,10 +110,11 @@ namespace WebWallet
             });
 
             //Queue up the caching job
-            using (var jobServer = new BackgroundJobServer(new BackgroundJobServerOptions { ServerName = "BackgroundJobServer", WorkerCount = 1 }))
-            {
-                BackgroundJob.Enqueue(() => BlockchainCache.BuildCache(null));
-            }
+            /* Replaced in Favour of Ple Apps Blockchain Cache API */
+            //using (var jobServer = new BackgroundJobServer(new BackgroundJobServerOptions { ServerName = "BackgroundJobServer", WorkerCount = 1 }))
+            //{
+            //    BackgroundJob.Enqueue(() => BlockchainCache.BuildCache(null));
+            //}
 
         }
     }

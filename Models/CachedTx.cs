@@ -13,10 +13,10 @@ namespace WebWallet.Models
         public int timestamp { get; set; } //timestamp
         public string paymentId { get; set; } //paymentId
         public Int64 fee { get; set; } //fee
-        public int unlock_time { get; set; } //unlock time
+        public int unlockTime { get; set; } //unlock time
         public string publicKey { get; set; }
-        public List<CachedInput> vin { get; set; } //inputs
-        public List<CachedOutput> vout { get; set; } //outputs
+        public List<CachedInput> inputs { get; set; } //inputs
+        public List<CachedOutput> outputs { get; set; } //outputs
         //public List<CachedSignature> signatures { get; set; }
     }
 
@@ -24,7 +24,7 @@ namespace WebWallet.Models
     {
         public Int64 amount { get; set; } //amount
         //public string type { get; set; } //type
-        public string k_image { get; set; } //k_image
+        public string keyImage { get; set; } //k_image
         //public List<int> key_offsets { get; set; } //key_offsets
         //public int mixin { get; set; } //mixin
         //public int outnumber { get; set; } //output.number
@@ -33,6 +33,8 @@ namespace WebWallet.Models
     public class CachedOutput
     {
         public int globalIndex { get; set; } //global_index
+
+        public int index { get; set; } //global_index
         public Int64 amount { get; set; } //amount
         //public string type { get; set; } //type
         public string key { get; set; } //key

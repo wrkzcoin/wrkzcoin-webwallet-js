@@ -70,11 +70,11 @@ export class TransactionsExplorer {
 		let outs: TransactionOut[] = [];
 		let ins: TransactionIn[] = [];
 
-		for (let iOut = 0; iOut < rawTransaction.vout.length; ++iOut) {
-            let out = rawTransaction.vout[iOut];
+		for (let iOut = 0; iOut < rawTransaction.outputs.length; ++iOut) {
+            let out = rawTransaction.outputs[iOut];
             //let txout_k = out;
             let amount = out.amount;
-			let output_idx_in_tx = iOut;
+            let output_idx_in_tx = out.index;
 
 			// let generated_tx_pubkey = cnUtil.derive_public_key(derivation,output_idx_in_tx,wallet.keys.pub.spend);//5.5ms
 			let generated_tx_pubkey = CnUtilNative.derive_public_key(derivation,output_idx_in_tx,wallet.keys.pub.spend);//5.5ms
@@ -88,7 +88,7 @@ export class TransactionsExplorer {
                 transactionOut.globalIndex = out.globalIndex;
                 transactionOut.amount = amount;
 				transactionOut.pubKey = out.key;
-				transactionOut.outputIdx = output_idx_in_tx;
+				transactionOut.outputIdx = out.index;
 
 				if (wallet.keys.priv.spend !== null && wallet.keys.priv.spend !== '') {
 					let m_key_image = CryptoUtils.generate_key_image_helper({
@@ -109,13 +109,13 @@ export class TransactionsExplorer {
 		//check if no read only wallet
 		if (wallet.keys.priv.spend !== null && wallet.keys.priv.spend !== '') {
 			let keyImages = wallet.getTransactionKeyImages();
-			for (let iIn = 0; iIn < rawTransaction.vin.length; ++iIn) {
-                let input = rawTransaction.vin[iIn];
-                if (keyImages.indexOf(input.k_image) != -1) {
+            for (let iIn = 0; iIn < rawTransaction.inputs.length; ++iIn) {
+                let input = rawTransaction.inputs[iIn];
+                if (keyImages.indexOf(input.keyImage) != -1) {
 					// console.log('found in', vin);
 					let walletOuts = wallet.getAllOuts();
 					for (let ut of walletOuts) {
-                        if (ut.keyImage == input.k_image) {
+                        if (ut.keyImage == input.keyImage) {
 							// ins.push(vin.key.k_image);
 							// sumIns += ut.amount;
 							let transactionIn = new TransactionIn();

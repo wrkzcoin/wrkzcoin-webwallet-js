@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,9 +19,9 @@ namespace WebWallet.Helpers
             lightTx.timestamp = tx.timestamp;
             lightTx.paymentId = tx.paymentId == "0000000000000000000000000000000000000000000000000000000000000000" ? "" : tx.paymentId;
             lightTx.fee = tx.fee;
-            lightTx.unlock_time = tx.unlockTime;
+            lightTx.unlockTime = tx.unlockTime;
             //map inputs
-            lightTx.vin = new List<CachedInput>();
+            lightTx.inputs = new List<CachedInput>();
             if (tx.inputs != null)
             {
 
@@ -33,24 +33,26 @@ namespace WebWallet.Helpers
                     {
                         if (inp.data.input != null)
                         {
-                            cachedInput.k_image = inp.data.input.k_image;
+                            cachedInput.keyImage = inp.data.input.k_image;
                             if (inp.data.input.amount > 0 && cachedInput.amount == 0)
                                 cachedInput.amount = inp.data.input.amount;
                         }
                     }
-                    lightTx.vin.Add(cachedInput);
+                    lightTx.inputs.Add(cachedInput);
                 }
 
             }
             //map outputs
-            lightTx.vout = new List<CachedOutput>();
+            lightTx.outputs = new List<CachedOutput>();
             if (tx.outputs != null)
             {
+                int index = 0;
                 foreach (var outp in tx.outputs)
                 {
                     var cachedOutput = new CachedOutput();
                     cachedOutput.amount = outp.output.amount;
                     cachedOutput.globalIndex = outp.globalIndex;
+                    cachedOutput.index = index;
                     if (outp.output != null)
                     {
                         if (outp.output.target != null)
@@ -61,7 +63,8 @@ namespace WebWallet.Helpers
                             }
                         }
                     }
-                    lightTx.vout.Add(cachedOutput);
+                    lightTx.outputs.Add(cachedOutput);
+                    index++;
                 }
             }
             return lightTx;
@@ -82,14 +85,14 @@ namespace WebWallet.Helpers
             lightTx.hash = tx.hash;
             lightTx.height = tx.height;
             //map outputs
-            lightTx.vout = new List<LightOutput>();
-            if (tx.vout != null)
+            lightTx.outputs = new List<LightOutput>();
+            if (tx.outputs != null)
             {
-                foreach (var outp in tx.vout)
+                foreach (var outp in tx.outputs)
                 {
                     var lightOutput = new LightOutput();
                     lightOutput.key = outp.key;
-                    lightTx.vout.Add(lightOutput);
+                    lightTx.outputs.Add(lightOutput);
                 }
             }
             return lightTx;

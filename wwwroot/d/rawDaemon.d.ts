@@ -1,11 +1,11 @@
 type vi = {
     amount: number,
-    k_image: string,
-    key_offsets: number[],
+    keyImage: string,
     type: string
 }
 
 type vo = {
+    index: number,
     globalIndex: number,
     amount: 0,
     key: string,
@@ -13,11 +13,10 @@ type vo = {
 }
 
 type RawDaemonTransaction = {
-    vout: vo[],
-    vin: vi[],
+    outputs: vo[],
+    inputs: vi[],
     fee: number, //fee
-    unlock_time: number, //unlockTime
-    global_index_start?: number, //global_index_start
+    unlockTime: number, //unlockTime
     height?: number, //height
     timestamp?: number, //timestamp
     hash?: string, //hash
