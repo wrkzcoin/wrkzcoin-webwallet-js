@@ -17,7 +17,6 @@ namespace WebWallet.Helpers
 {
     public static class BlockchainCache
     {
-
         private static ILogger logger = StaticLogger.CreateLogger("BlockchainChache");
 
         private static void LogException(Exception ex)
@@ -35,7 +34,7 @@ namespace WebWallet.Helpers
         [DisableConcurrentExecution(30)]
         public static void BuildCache(PerformContext context)
         {
-            int batchSize = 100;
+            int batchSize = 10;
             try
             {
                 //get bc height from RPC
@@ -159,24 +158,31 @@ namespace WebWallet.Helpers
                                             //fetch the transactions
                                             var args = new Dictionary<string, object>();
                                             args.Add("blockHeights", blockHeights);
-                                            var blocks = RpcHelper.Request<BlockResp>("get_blocks_details_by_heights", args).blocks;
-                                            List<CachedTx> transactionsToInsert = new List<CachedTx>();
-                                            foreach (var block in blocks)
+                                            var blocksResponse = RpcHelper.Request<BlockResp>("get_blocks_details_by_heights", args);
+                                            if (blocksResponse.blocks != null)
                                             {
-                                                foreach (var transaction in block.transactions)
+                                                List<CachedTx> transactionsToInsert = new List<CachedTx>();
+                                                foreach (var block in blocksResponse.blocks)
                                                 {
-                                                    var cachedTx = TransactionHelpers.MapTx(transaction);
-                                                    //persist tx's to cache
-                                                    if (cachedTx != null && !transactions.Find(x => x.hash == cachedTx.hash).Any())
+                                                    foreach (var transaction in block.transactions)
                                                     {
-                                                        transactionsToInsert.Add(cachedTx);
+                                                        var cachedTx = TransactionHelpers.MapTx(transaction);
+                                                        //persist tx's to cache
+                                                        if (cachedTx != null && !transactions.Find(x => x.hash == cachedTx.hash).Any())
+                                                        {
+                                                            transactionsToInsert.Add(cachedTx);
+                                                        }
                                                     }
-                                                }
 
+                                                }
+                                                if (transactionsToInsert.Any())
+                                                {
+                                                    transactions.InsertBulk(transactionsToInsert);
+                                                }
                                             }
-                                            if (transactionsToInsert.Any())
+                                            else
                                             {
-                                                transactions.InsertBulk(transactionsToInsert);
+                                                //try again with a smaller batch size, maybe do these in 10 block batches ?
                                             }
                                         }
                                     }
@@ -204,7 +210,7 @@ namespace WebWallet.Helpers
             }
         }
 
-        private static CachedTx AddSingleTransaction(string hash)
+        private static CachedTx GetSingleTransaction(string hash)
         {
             var tx_hash = new Dictionary<string, object>();
             tx_hash.Add("transactionHashes", new string[] { hash });
