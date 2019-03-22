@@ -162,7 +162,7 @@ class AccountView extends DestructableView{
 	shareWithNfc(){
 		swal({
 			title: 'Sharing your payment address',
-			html: 'Bring closer the other device to share your public information',
+			html: 'Bring this device closer to the other device to share your public information',
 			onOpen: () => {
 				swal.showLoading();
 			},

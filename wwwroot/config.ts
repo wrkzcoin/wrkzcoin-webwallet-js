@@ -1,7 +1,7 @@
 let global : any = typeof window !== 'undefined' ? window : self;
 global.config = {
-    apiUrl: typeof window !== 'undefined' && window.location ? window.location.href.substr(0, window.location.href.lastIndexOf('/') + 1) + 'api/' : 'https://wallet.plenteum.com/api/',
-    //apiUrl: 'https://wallet.plenteum.com/api/', //temporary testing front end
+    //apiUrl: typeof window !== 'undefined' && window.location ? window.location.href.substr(0, window.location.href.lastIndexOf('/') + 1) + 'api/' : 'https://wallet.plenteum.com/api/',
+    apiUrl: 'https://wallet.plenteum.com/api/', //temporary testing front end
 	mainnetExplorerUrl: "http://block-explorer.plenteum.com",
     coinUnitPlaces: 8,
     coinDisplayUnitPlaces: 2,

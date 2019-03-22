@@ -55,6 +55,7 @@
 	},
 	"bottom": {
 	  "termsOfUse": "Terms of Use",
+	  "privacyPolicy": "Privacy Policy",
 	  "support": "Support",
 	  "donate": "Donate",
 	  "network": "Network Stats",
@@ -174,7 +175,7 @@
 	  "subtitle":"Help to fund the development and pay the bills",
 	  "webwalletBlock":{
 		"title":"Webwallet",
-		"content":"This Web wallet is developed by Gnock on his free time.<br/>If you want to help the development, help to pay for the servers, and like this app, please consider a donation: <br/><br/>"
+		"content":"If you want to help the development, help to pay for the servers, and like this app, please consider a donation: <br/><br/>"
 	  },
 	  "pleFundBlock":{
 		"title":"Plenteum Dev fund",
@@ -264,8 +265,8 @@
 		"cancelText":"Cancel"
 	  },
 	  "waitingNfcModal":{
-		"title":"Waiting Nfc",
-		"content":"Bring closer to the other device"
+		"title":"Waiting NFC",
+		"content":"Bring this device closer to the other device"
 	  }
 	},
 	"receivePage":{
@@ -287,9 +288,9 @@
 		"title":"Your customized QR code"
 	  },
 	  "waitingNfcToWriteModal":{
-		"title":"Waiting Nfc",
-		"titleSuccess":"Nfc Tag written",
-		"content":"Bring closer the NFC tag to write"
+		"title":"Waiting NFC",
+		"titleSuccess":"NFC Tag written",
+		"content":"Bring the NFC tag closer to this device to write"
 	  },
 	  "nfcErrorModal":{
 		"titleInsufficientCapacity":"Tag capacity insufficient"
@@ -416,6 +417,10 @@
 	},
 	"termsOfUsePage":{
 	  "title":"Terms of use",
+	  "subtitle":"Please read them carefully."
+	},
+	"privacyPolicyPage":{
+	  "title":"Privacy Policy",
 	  "subtitle":"Please read them carefully."
 	},
 	"importFromFilePage":{
