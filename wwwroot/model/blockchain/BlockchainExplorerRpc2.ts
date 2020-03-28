@@ -301,12 +301,10 @@ export class BlockchainExplorerRpc2 implements BlockchainExplorer {
         this.heightLastTimeRetrieve = Date.now();
         return new Promise<number>(function (resolve, reject) {
             $.ajax({
-                url: self.serverAddress + 'getheight', //self.serverAddress to be replaced with local / public node setting
+                url: config.apiUrl + "height", //self.serverAddress to be replaced with local / public node setting
                 method: 'GET'
             }).done(function (raw: any) {
-                // self.heightCache = raw.height;
-                // resolve(raw.height);
-                self.heightCache = parseInt(raw);
+                self.heightCache = parseInt(raw.height);
                 resolve(self.heightCache);
             }).fail(function (data: any) {
                 reject(data);
@@ -332,7 +330,7 @@ export class BlockchainExplorerRpc2 implements BlockchainExplorer {
             //old way, hitting cache
             if (localNode === '') {
                 $.ajax({
-                    url: "https://cache.pleapps.plenteum.com/sync",
+                    url: config.apiUrl + "sync",
                     method: 'POST',
                     dataType: "json",
                     contentType: 'application/json',
