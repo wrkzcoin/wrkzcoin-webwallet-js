@@ -22,9 +22,9 @@
 			<div class="body" >
 				<div class="header-title" >{{ $t("accountPage.balanceBlock.title") }}</div>
                 <div class="content">
-                    <span class="walletAmount">{{ walletAmount | formatMoney }}</span> PLE
+                    <span class="walletAmount">{{ walletAmount | formatMoney }}</span> WRKZ
                     <tempate class="amount unlocked" v-if="unlockedWalletAmount !== walletAmount">
-                        <br /><span class="walletAmount">{{ $t("accountPage.balanceBlock.unlocked") }}: {{ unlockedWalletAmount | formatMoney }}</span> PLE
+                        <br /><span class="walletAmount">{{ $t("accountPage.balanceBlock.unlocked") }}: {{ unlockedWalletAmount | formatMoney }}</span> WRKZ
                     </tempate>
                     <tempate class="" v-if="fusionCount > 0">
                         <br /><span class="walletAmount">{{ fusionCount }} {{ $t("accountPage.balanceBlock.fusions") }}</span>
@@ -52,9 +52,6 @@
 									<td class="moreInfo">
 										<i class="fa fa-search" aria-hidden="true" @click="moreInfoOnTx(transaction)"></i>
 									</td>
-								</tr>
-								<tr v-if="transaction.paymentId !== ''">
-									<td colspan="4" class="paymentId" >{{transaction.paymentId}}</td><!--UNDER-->
 								</tr>
 							</template>
 							<tr v-if="transactions.length == 0" >
