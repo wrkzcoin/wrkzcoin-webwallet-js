@@ -1,7 +1,7 @@
 {
   "website":{
-	"title":"Επίσημο πορτοφόλι ιστού Plenteum",
-	"description":"Επίσημο online πορτοφόλι για το νόμισμα Plenteum - ανώνυμο, ασφαλές, και πλήρως διαχειριζόμενο από τον φυλλομετρητή σας για μέγιστη ασφάλεια"
+	"title":"Επίσημο πορτοφόλι ιστού WrkzCoin",
+	"description":"Επίσημο online πορτοφόλι για το νόμισμα WrkzCoin - ανώνυμο, ασφαλές, και πλήρως διαχειριζόμενο από τον φυλλομετρητή σας για μέγιστη ασφάλεια"
   },
   "messages": {
 	"menu": {
@@ -62,8 +62,8 @@
 	  "github": "GitHub"
 	},
 	"homepage": {
-	  "mainTitle": "Ασφαλισμένο Πορτοφόλι Plenteum",
-	  "tagLine": "Ο απλούστερος τρόπος χρήσης του Plenteum - οπουδήποτε, οποτεδήποτε",
+	  "mainTitle": "Ασφαλισμένο Πορτοφόλι WrkzCoin",
+	  "tagLine": "Ο απλούστερος τρόπος χρήσης του WrkzCoin - οπουδήποτε, οποτεδήποτε",
 	  "actions": {
 		"loadWallet": "Φόρτωσε το πορτοφόλι μου",
 		"importWallet": "Εισαγωγή πορτοφολιού",
@@ -81,7 +81,7 @@
 		},
 		"technology": {
 		  "title": "Μοναδική Τεχνολογία",
-		  "description": "Συνδεδεμένο κατευθείαν στο Plenteum blockchain!"
+		  "description": "Συνδεδεμένο κατευθείαν στο WrkzCoin blockchain!"
 		},
 		"openSource": {
 		  "title": "100% ανοιχτού κώδικα",
@@ -105,7 +105,7 @@
 		"emptyWallet": "Αυτή τη στιγμή δεν έχετε χρήματα σε αυτό το πορτοφόλι.",
 		"waitSync": "Παρακαλώ περιμένετε μέχρι να ανανεωθεί το πορτοφόλι",
 		"beReallyPatient": "Η αρχική ρύθμιση μπορεί να διαρκέσει λίγη ώρα...",
-		"getMSRAddress": "Λήψη PLE"
+		"getMSRAddress": "Λήψη WRKZ"
 	  },
 	  "txDetails":{
 		"title":"Λεπτομέρειες συναλλαγής",
@@ -141,7 +141,7 @@
 	  },
 	  "finalizationStep":{
 		"title":"Αυτό ήταν απλό. Ο λογαριασμός σας είναι έτοιμος!",
-		"subtitle":"Ετοιμαστείτε να χρησιμοποιήσετε το Plenteum όπως δεν το έχετε ξανακάνει",
+		"subtitle":"Ετοιμαστείτε να χρησιμοποιήσετε το WrkzCoin όπως δεν το έχετε ξανακάνει",
 		"passwordSelectionBlock":{
 		  "label":"Προστατέψτε το πορτοφόλι σας με έναν κωδικό"
 		},
@@ -164,8 +164,8 @@
 		}
 	  },
 	  "disclaimerBlock":{
-		"title":"Κίνδυνος χρήσης του PlenteumWallet",
-		"content":"Το PlenteumWallet είναι ένα πορτοφόλι βασισμένο στον ιστό. Σας επιτρέπει να χρησιμοποιήσετε το Plenteum χωρίς να χρειάζετε να λειτουργείτε έναν δικό σας κόμβο Plenteum. <br/> Σας συνιστούμε να θεωρείτε το PlenteumWallet ως ένα κανονικό πορτοφόλι"
+		"title":"Κίνδυνος χρήσης του WrkzCoinWallet",
+		"content":"Το WrkzCoinWallet είναι ένα πορτοφόλι βασισμένο στον ιστό. Σας επιτρέπει να χρησιμοποιήσετε το WrkzCoin χωρίς να χρειάζετε να λειτουργείτε έναν δικό σας κόμβο WrkzCoin. <br/> Σας συνιστούμε να θεωρείτε το WrkzCoinWallet ως ένα κανονικό πορτοφόλι"
 	  }
 	},
 	"donatePage":{
@@ -176,8 +176,8 @@
 		"content":"Εαν θέλετε να βοηθήσετε στην ανάπτυξη, να συνεισφέρετε στα έξοδα των διακομιστών και σας αρέσει αυτή η εφαρμογή, παρακαλώ σκεφτείτε να κάνετε μια δωρεά: <br/><br/>"
 	  },
 	  "masariFundBlock":{
-		"title":"Plenteum Dev fund",
-		"content":"Για να βοηθήσετε το Plenteum, μπορείτε να κάνετε δωρεά στις παρακάτω διευθύνσεις"
+		"title":"WrkzCoin Dev fund",
+		"content":"Για να βοηθήσετε το WrkzCoin, μπορείτε να κάνετε δωρεά στις παρακάτω διευθύνσεις"
 	  }
 	},
 	"supportPage":{
@@ -186,12 +186,12 @@
 	  "getInTouchBlock":{
 		"title":"Ας έρθουμε σε επικοινωνία!",
 		"content":"'Εχετε ιδέες που θα μπορούσαν να μας βοηθήσουν να βελτιώσουμε το πορτοφόλι; Επικοινωνήστε μαζί μας!",
-		"discord":"Plenteum Discord Channel"
+		"discord":"WrkzCoin Discord Channel"
 	  }
 	},
 	"networkPage":{
 	  "title":"Στατιστικά Δικτύου΄",
-	  "subtitle":"Επισκόπηση τπυ δικτύου Plenteum",
+	  "subtitle":"Επισκόπηση τπυ δικτύου WrkzCoin",
 	  "statsBlock":{
 		"hashrate":"Network hashrate",
 		"height":"Blockchain height",
@@ -201,7 +201,7 @@
 	  }
 	},
 	"sendPage":{
-	  "title":"Στείλτε PLE",
+	  "title":"Στείλτε WRKZ",
 	  "sendBlock":{
 		"address":{
 		  "label":"Διεύθυνση παραλήπτη",
@@ -231,7 +231,7 @@
 	  },
 	  "thankYouDonationModal":{
 		"title":"Ευχαριστούμε για τη δωρεά σας!",
-		"content":"Εκτιμούμε τη βοήθειά σας. <br/>Αυτή η δωρεά θα βοηθήσει στο να κάνουμε το Plenteum καλύτερο",
+		"content":"Εκτιμούμε τη βοήθειά σας. <br/>Αυτή η δωρεά θα βοηθήσει στο να κάνουμε το WrkzCoin καλύτερο",
 		"confirmText":"OK"
 	  },
 	  "transferSentModal":{
@@ -268,7 +268,7 @@
 	  }
 	},
 	"receivePage":{
-	  "title":"Λήψη PLE",
+	  "title":"Λήψη WRKZ",
 	  "receiveBlock":{
 		"address":{
 		  "title":"Η διεύθυνσή σας για λήψη χρημάτων:",
@@ -296,7 +296,7 @@
 	},
 	"miningPage":{
 	  "title":"Κάντε mining μέσω του φυλλομετρητή σας",
-	  "subtitle":"Υποστηρίξτε το δίκτυο και αμοιφθείτε με PLE",
+	  "subtitle":"Υποστηρίξτε το δίκτυο και αμοιφθείτε με WRKZ",
 	  "parameterBlock":{
 		"title":"Παράμετροι",
 		"labelDestinationAddress":"Πορτοφόλι για κατάθεση αμοιβών από mining",
@@ -391,7 +391,7 @@
 	  },
 	  "warningBlock":{
 		"title":"Warning",
-		"content":"If you choose to save your private keys or your mnemonic phrase, PLEASE DO NOT store them in clear-text for your own safety.<br/>The file is an alternate solution where your keys are encrypted and contains a backup of all your transactions to spare you a future synchronisation."
+		"content":"If you choose to save your private keys or your mnemonic phrase, Please DO NOT store them in clear-text for your own safety.<br/>The file is an alternate solution where your keys are encrypted and contains a backup of all your transactions to spare you a future synchronisation."
 	  },
 	  "exportBlock":{
 		"title":"Export your RAW credentials",

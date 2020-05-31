@@ -81,7 +81,7 @@ class AccountView extends DestructableView{
 			title:i18n.t('accountPage.txDetails.title'),
 			html:`
 <div class="tl" >
-	<div>`+ i18n.t('accountPage.txDetails.txHash') + `: <a href="` + explorerUrl + `/?hash=` + transaction.hash +`#blockchain_transaction" target="_blank">`+transaction.hash+`</a></div>
+	<div>`+ i18n.t('accountPage.txDetails.txHash') + `: <a href="` + explorerUrl + `/transaction.html?hash=` + transaction.hash +`" target="_blank">`+transaction.hash+`</a></div>
 	`+paymentId+`
 	`+feesHtml+`
 	<div>`+i18n.t('accountPage.txDetails.blockHeight')+`: `+transaction.blockHeight+`</a></div>

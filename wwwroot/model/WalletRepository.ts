@@ -265,10 +265,10 @@ export class WalletRepository{
         doc.setFontSize(10)
         doc.setTextColor(255, 255, 255)
         doc.text(108, 125, 'To deposit funds to this paper wallet, send the');
-        doc.text(108, 130, 'Plenteum (PLE) coins to the public address.');
+        doc.text(108, 130, 'WrkzCoin (WRKZ) coins to the public address.');
         doc.text(108, 150, 'DO NOT REVEAL THE PRIVATE SPEND KEY.');
         doc.text(108, 165, 'Until you are ready to import the balance from this');
-        doc.text(108, 170, 'wallet to your Plenteum wallet, a cryptocurrency');
+        doc.text(108, 170, 'wallet to your WrkzCoin wallet, a cryptocurrency');
         doc.text(108, 175, 'client, or exchange.');
         doc.text(108, 185, 'Amount:');
         doc.setDrawColor(255, 255, 255);

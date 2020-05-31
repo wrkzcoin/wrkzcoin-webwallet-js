@@ -1,7 +1,7 @@
 {
   "website":{
-	"title":"Offizielle Plenteum Web Wallet",
-	"description":"Offizielle Online Wallet für Plenteum currency, anonym, sicher und für optimale Sicherheit vollständig in deinem Browser verwaltet"
+	"title":"Offizielle WrkzCoin Web Wallet",
+	"description":"Offizielle Online Wallet für WrkzCoin currency, anonym, sicher und für optimale Sicherheit vollständig in deinem Browser verwaltet"
   },
   "messages": {
 	"menu": {
@@ -62,8 +62,8 @@
 	  "github": "GitHub"
 	},
 	"homepage": {
-	  "mainTitle": "Gesicherte Plenteum Wallet",
-	  "tagLine": "Der einfachste Weg Plenteum jederzeit und überall zu nutzen",
+	  "mainTitle": "Gesicherte WrkzCoin Wallet",
+	  "tagLine": "Der einfachste Weg WrkzCoin jederzeit und überall zu nutzen",
 	  "actions": {
 		"loadWallet": "Lade meine Wallet",
 		"importWallet": "Importiere eine Wallet",
@@ -81,7 +81,7 @@
 		},
 		"technology": {
 		  "title": "Einzigartige Technologie",
-		  "description": "Direkt mit der Plenteum Blockchain verbunden!"
+		  "description": "Direkt mit der WrkzCoin Blockchain verbunden!"
 		},
 		"openSource": {
 		  "title": "Komplett open-source",
@@ -105,7 +105,7 @@
 		"emptyWallet": "Du hast zur Zeit kein Guthaben auf dieser Wallet",
 		"waitSync": "Warte bis die Wallet upgedated ist",
 		"beReallyPatient": "Die erste Einrichtung kann etwas dauern...",
-		"getMSRAddress": "Hol die deine Adresse um PLE zu empfangen"
+		"getMSRAddress": "Hol die deine Adresse um WRKZ zu empfangen"
 	  },
 	  "txDetails":{
 		"title":"Transaktionsdetails",
@@ -142,7 +142,7 @@
 	  },
 	  "finalizationStep":{
 		"title":"Das war einfach. Dein Account ist bereit!",
-		"subtitle":"Benutze Plenteum wie noch nie zuvor",
+		"subtitle":"Benutze WrkzCoin wie noch nie zuvor",
 		"passwordSelectionBlock":{
 		  "label":"Schütze deine Daten mit einem Passwort"
 		},
@@ -160,13 +160,13 @@
 		  "mnemonicPhrase":"Mnemonic phrase",
 		  "separatorManualMethodsSolution":" oder ",
 		  "confirmManuallyWritten":"Ich habe es aufgeschieben",
-		  "warningMessage":"**Auf keinen Fall verlieren!** Sie können nicht wiederhergestellt werden wenn du sie verlierst.<br/>**Nicht weitergeben!** Deine Plenteum werden gestohlen werden wenn diese Datei auf einer bösartigen/Phishing Seite benutzt.<br/>**Mache ein Backup!** Sichere es so wie die Millionen Euro, die es eines Tages vielleicht wert sein wird.<br/>",
+		  "warningMessage":"**Auf keinen Fall verlieren!** Sie können nicht wiederhergestellt werden wenn du sie verlierst.<br/>**Nicht weitergeben!** Deine WrkzCoin werden gestohlen werden wenn diese Datei auf einer bösartigen/Phishing Seite benutzt.<br/>**Mache ein Backup!** Sichere es so wie die Millionen Euro, die es eines Tages vielleicht wert sein wird.<br/>",
 		  "finishButton":"Ich habe verstanden. Weiter"
 		}
 	  },
 	  "disclaimerBlock":{
-		"title":"Risiko beim benutzen der PlenteumWallet",
-		"content":"PlenteumWallet ist ein web-basierendes Interface. Es hilft beim Nutzen von Plenteum ohne einen vollen Node zu betreiben. <br/>Wir empfehlen PlenteumWallet sicherheitstechnisch wie eine richtige Wallet zu behandeln."
+		"title":"Risiko beim benutzen der WrkzCoinWallet",
+		"content":"WrkzCoinWallet ist ein web-basierendes Interface. Es hilft beim Nutzen von WrkzCoin ohne einen vollen Node zu betreiben. <br/>Wir empfehlen WrkzCoinWallet sicherheitstechnisch wie eine richtige Wallet zu behandeln."
 	  }
 	},
 	"donatePage":{
@@ -177,8 +177,8 @@
 		"content":"Bitte denk über eine Spende nach wenn dir die App gefällt und du bei der Bezahlung der Server und der Enwicklung helfen willst.: <br/><br/>"
 	  },
 	  "masariFundBlock":{
-		"title":"Plenteum Entwicklerfonds",
-		"content":"Spende an diese Adresse um Plenteum zu helfen"
+		"title":"WrkzCoin Entwicklerfonds",
+		"content":"Spende an diese Adresse um WrkzCoin zu helfen"
 	  }
 	},
 	"supportPage":{
@@ -187,7 +187,7 @@
 	  "getInTouchBlock":{
 		"title":"Nehmen wir Kontakt auf!",
 		"content":"Wenn du Ideen oder Feedback hast um die Wallet zu verbessern, kontaktiere uns!",
-		"discord":"Plenteum Discord Channel"
+		"discord":"WrkzCoin Discord Channel"
 	  }
 	},
 	"networkPage":{
@@ -202,7 +202,7 @@
 	  }
 	},
 	"sendPage":{
-	  "title":"Schicke PLE",
+	  "title":"Schicke WRKZ",
 	  "sendBlock":{
 		"address":{
 		  "label":"Zieladresse",
@@ -232,7 +232,7 @@
 	  },
 	  "thankYouDonationModal":{
 		"title":"Danke für deine Spende!",
-		"content":"Deine Hilfe wird sehr geschätzt. <br/>Diese Spende wird helfen Plenteum noch beser zu machen",
+		"content":"Deine Hilfe wird sehr geschätzt. <br/>Diese Spende wird helfen WrkzCoin noch beser zu machen",
 		"confirmText":"Schließen"
 	  },
 	  "transferSentModal":{
@@ -269,7 +269,7 @@
 	  }
 	},
 	"receivePage":{
-	  "title":"Empfange PLE",
+	  "title":"Empfange WRKZ",
 	  "receiveBlock":{
 		"address":{
 		  "title":"Deine Adresse um Guthaben zu empfangen",
@@ -297,7 +297,7 @@
 	},
 	"miningPage":{
 	  "title":"Mine direkt in deinem Browser",
-	  "subtitle":"Unterstütze das Netzwerk für mehr Stabilität und werde mit PLE belohnt",
+	  "subtitle":"Unterstütze das Netzwerk für mehr Stabilität und werde mit WRKZ belohnt",
 	  "parameterBlock":{
 		"title":"Parameter",
 		"labelDestinationAddress":"Wallet für die gemined werden soll",

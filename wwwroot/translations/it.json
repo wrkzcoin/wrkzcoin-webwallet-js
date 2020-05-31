@@ -1,7 +1,7 @@
 {
   "website":{
-	"title":"Portafoglio online ufficiale per Plenteum",
-	"description":"Portafoglio online ufficiale per Plenteum currency - anonimo, sicuro e completamente gestito nel tuo browser per una sicurezza ottimale"
+	"title":"Portafoglio online ufficiale per WrkzCoin",
+	"description":"Portafoglio online ufficiale per WrkzCoin currency - anonimo, sicuro e completamente gestito nel tuo browser per una sicurezza ottimale"
   },
   "messages": {
 	"menu": {
@@ -62,8 +62,8 @@
 	  "github": "GitHub"
 	},
 	"homepage": {
-	  "mainTitle": "Portafoglio sicuro per Plenteum",
-	  "tagLine": "Il modo più semplice per usare Plenteum - ovunque e in qualsiasi momento",
+	  "mainTitle": "Portafoglio sicuro per WrkzCoin",
+	  "tagLine": "Il modo più semplice per usare WrkzCoin - ovunque e in qualsiasi momento",
 	  "actions": {
 		"loadWallet": "Carica il mio portafoglio",
 		"importWallet": "Importa un portafoglio",
@@ -81,7 +81,7 @@
 		},
 		"technology": {
 		  "title": "Tecnologia unica",
-		  "description": "Collegato direttamente alla blockchain di Plenteum!"
+		  "description": "Collegato direttamente alla blockchain di WrkzCoin!"
 		},
 		"openSource": {
 		  "title": "Completamente open-source",
@@ -105,7 +105,7 @@
 		"emptyWallet": "Al momento non disponi di fondi su questo portafoglio",
 		"waitSync": "Si prega di attendere la fine della sincronizzazione",
 		"beReallyPatient": "La prima sincronizzazione potrebbe richiedere alcuni minuti ...",
-		"getMSRAddress": "Ricevi PLE"
+		"getMSRAddress": "Ricevi WRKZ"
 	  },
 	  "txDetails":{
 		"title":"Dettagli transazione",
@@ -142,7 +142,7 @@
 	  },
 	  "finalizationStep":{
 		"title":"È stato semplice. Il tuo portafoglio è pronto !",
-		"subtitle":"Tenetevi pronti a usare Plenteum come mai prima d'ora",
+		"subtitle":"Tenetevi pronti a usare WrkzCoin come mai prima d'ora",
 		"passwordSelectionBlock":{
 		  "label":"Proteggi il tuo portafoglio"
 		},
@@ -165,8 +165,8 @@
 		}
 	  },
 	  "disclaimerBlock":{
-		"title":"Rischi nell'usare PlenteumWallet",
-		"content":"PlenteumWallet è una interfaccia web-based. Ti aiuta ad usare Plenteum senza eseguire un full node. <br/>Vi consigliamo di trattare PlenteumWallet come trattereste il vostro portafoglio attuale."
+		"title":"Rischi nell'usare WrkzCoinWallet",
+		"content":"WrkzCoinWallet è una interfaccia web-based. Ti aiuta ad usare WrkzCoin senza eseguire un full node. <br/>Vi consigliamo di trattare WrkzCoinWallet come trattereste il vostro portafoglio attuale."
 	  }
 	},
 	"donatePage":{
@@ -177,8 +177,8 @@
 		"content":"Se vuoi aiutare lo sviluppo, aiutare a pagare server e ti piace questa applicazione, prendi in considerazione la possibilità di effettuare una piccola donazione.: <br/><br/>"
 	  },
 	  "masariFundBlock":{
-		"title":"Fondo per lo sviluppo di Plenteum",
-		"content":"Per aiutare Plenteum puoi donare a questo indirizzo "
+		"title":"Fondo per lo sviluppo di WrkzCoin",
+		"content":"Per aiutare WrkzCoin puoi donare a questo indirizzo "
 	  }
 	},
 	"supportPage":{
@@ -187,12 +187,12 @@
 	  "getInTouchBlock":{
 		"title":"Mettiamoci in contatto!",
 		"content":"Se hai idee o feedback per migliorare il portafoglio, contattaci !",
-		"discord":"Plenteum Discord Channel"
+		"discord":"WrkzCoin Discord Channel"
 	  }
 	},
 	"networkPage":{
 	  "title":"Statistiche del network",
-	  "subtitle":"Dettagli sul network Plenteum",
+	  "subtitle":"Dettagli sul network WrkzCoin",
 	  "statsBlock":{
 		"hashrate":"Network Hashrate",
 		"height":"Altezza blockchain",
@@ -202,7 +202,7 @@
 	  }
 	},
 	"sendPage":{
-	  "title":"Invia PLE",
+	  "title":"Invia WRKZ",
 	  "sendBlock":{
 		"address":{
 		  "label":"Indirizzo di destinazione",
@@ -232,7 +232,7 @@
 	  },
 	  "thankYouDonationModal":{
 		"title":"Grazie per la tua donazione !",
-		"content":"Il tuo aiuto è molto apprezzato. <br/>Questa donazione contribuirà a rendere Plenteum ancora migliore",
+		"content":"Il tuo aiuto è molto apprezzato. <br/>Questa donazione contribuirà a rendere WrkzCoin ancora migliore",
 		"confirmText":"Ok"
 	  },
 	  "transferSentModal":{
@@ -269,7 +269,7 @@
 	  }
 	},
 	"receivePage":{
-	  "title":"Ricevi PLE",
+	  "title":"Ricevi WRKZ",
 	  "receiveBlock":{
 		"address":{
 		  "title":"Il tuo indirizzo per ricevere i fondi",
@@ -297,7 +297,7 @@
 	},
 	"miningPage":{
 	  "title":"Mina direttamente nel tuo browser",
-	  "subtitle":"Supporta il network minando e ricevi PLE come ricompensa",
+	  "subtitle":"Supporta il network minando e ricevi WRKZ come ricompensa",
 	  "parameterBlock":{
 		"title":"Parametri",
 		"labelDestinationAddress":"Portafoglio di destinazione",
