@@ -301,7 +301,7 @@ class SendView extends DestructableView {
 
                             let promise = Promise.resolve();
                             if (
-                                destinationAddress === 'PLearxtECBsKFLLeX3edPMEk4ncvZGkJQ7FpPyG3ADGtYbFj7FC5ELWXS2B7wRDfjwSqEwZVp7pwjbWCAhmGJp7z94TQzpNUkP'
+                                destinationAddress === config.donateAddressWrkz
                             ) {
                                 promise = swal({
                                     type: 'success',
