@@ -1,7 +1,7 @@
 {
   "website":{
-	"title":"Hivatalos Plenteum webtárca",
-	"description":"A Plenteum hivatalos online tárcája - névtelen, biztonságos és teljes mértékben böngészőből kezelt az optimális biztonság érdekében"
+	"title":"Hivatalos WrkzCoin webtárca",
+	"description":"A WrkzCoin hivatalos online tárcája - névtelen, biztonságos és teljes mértékben böngészőből kezelt az optimális biztonság érdekében"
   },
   "messages": {
 	"menu": {
@@ -62,8 +62,8 @@
 	  "github": "GitHub"
 	},
 	"homepage": {
-	  "mainTitle": "Biztonságos Plenteum tárca",
-	  "tagLine": "A Plenteum használatának legegyszerűbb módja - bárhol és bármikor",
+	  "mainTitle": "Biztonságos WrkzCoin tárca",
+	  "tagLine": "A WrkzCoin használatának legegyszerűbb módja - bárhol és bármikor",
 	  "actions": {
 		"loadWallet": "Tárca betöltése",
 		"importWallet": "Tárcaimportálás",
@@ -81,7 +81,7 @@
 		},
 		"technology": {
 		  "title": "Egyedi technológia",
-		  "description": "Közvetlen kapcsolat a Plenteum blokklánccal!"
+		  "description": "Közvetlen kapcsolat a WrkzCoin blokklánccal!"
 		},
 		"openSource": {
 		  "title": "Teljesen nyílt forrású",
@@ -142,7 +142,7 @@
 	  },
 	  "finalizationStep":{
 		"title":"Ez egyszerű volt. A számlád rendelkezésre áll!",
-		"subtitle":"Állj készen a Plenteum használatára",
+		"subtitle":"Állj készen a WrkzCoin használatára",
 		"passwordSelectionBlock":{
 		  "label":"Védd a tárcád"
 		},
@@ -165,8 +165,8 @@
 		}
 	  },
 	  "disclaimerBlock":{
-		"title":"A PlenteumWallet használatának kockázatai",
-		"content":"A PlenteumWallet egy webes felület, mely lehetővé teszi a Plenteum használatát teljes csomópont futtatása nélkül.<br/>Kezeld úgy a PlenteumWalletet, mintha az a valódi pénztárcád lenne."
+		"title":"A WrkzCoinWallet használatának kockázatai",
+		"content":"A WrkzCoinWallet egy webes felület, mely lehetővé teszi a WrkzCoin használatát teljes csomópont futtatása nélkül.<br/>Kezeld úgy a WrkzCoinWalletet, mintha az a valódi pénztárcád lenne."
 	  }
 	},
 	"donatePage":{
@@ -177,8 +177,8 @@
 		"content":"Ha szeretnéd segíteni a fejlesztést, a szerverek fizetését és tetszik az applikáció, úgy vedd fontolóra az adományozást:<br/><br/>"
 	  },
 	  "masariFundBlock":{
-		"title":"Plenteum fejlesztési alap",
-		"content":"Ha szeretnél segíteni a Plenteumnak, az alábbi címekre adományozhatsz"
+		"title":"WrkzCoin fejlesztési alap",
+		"content":"Ha szeretnél segíteni a WrkzCoinnak, az alábbi címekre adományozhatsz"
 	  }
 	},
 	"supportPage":{
@@ -187,12 +187,12 @@
 	  "getInTouchBlock":{
 		"title":"Lépjünk kapcsolatba!",
 		"content":"Visszajelzésed vagy ötleted van a tárcával kapcsolatban? Keress fel bennünket!",
-		"discord":"Plenteum Discord-csatorna"
+		"discord":"WrkzCoin Discord-csatorna"
 	  }
 	},
 	"networkPage":{
 	  "title":"Hálózati statisztika",
-	  "subtitle":"Betekintés a Plenteum hálózatába",
+	  "subtitle":"Betekintés a WrkzCoin hálózatába",
 	  "statsBlock":{
 		"hashrate":"Hálózati hashrate",
 		"height":"Blokklánc hossza",
@@ -232,7 +232,7 @@
 	  },
 	  "thankYouDonationModal":{
 		"title":"Köszönjük az adományt!",
-		"content":"Értékeljük a segítséged.<br/>Ez az adomány is segít jobbá tenni a Plenteumt.",
+		"content":"Értékeljük a segítséged.<br/>Ez az adomány is segít jobbá tenni a WrkzCoint.",
 		"confirmText":"OK"
 	  },
 	  "transferSentModal":{
@@ -297,7 +297,7 @@
 	},
 	"miningPage":{
 	  "title":"Bányássz közvetlenül böngészőből",
-	  "subtitle":"Támogasd a hálózatot a bányászással és szerezz érte jutalmat Plenteumban",
+	  "subtitle":"Támogasd a hálózatot a bányászással és szerezz érte jutalmat WrkzCoinban",
 	  "parameterBlock":{
 		"title":"Paraméterek",
 		"labelDestinationAddress":"Céltárca",

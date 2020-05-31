@@ -15,11 +15,11 @@
  */
 
 export function VueFilterPiconero(value: number) {
-    return value / 100000000;
+    return value / 100;
 }
 
 export function formatMoney(value: number) {
-    let amount = value / 100000000;
+    let amount = value / 100;
     try {
         let decimalCount = 2, decimal = ".", thousands = ",";
         decimalCount = Math.abs(decimalCount);
