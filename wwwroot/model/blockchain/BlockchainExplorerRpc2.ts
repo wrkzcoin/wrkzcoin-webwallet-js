@@ -416,7 +416,7 @@ export class BlockchainExplorerRpc2 implements BlockchainExplorer {
         let self = this;
         return new Promise<RawDaemonTransaction[]>(function (resolve, reject) {
             $.ajax({
-                url: self.serverAddress + 'txpool',
+                url: self.serverAddress + 'transaction/pool',
                 method: 'GET',
             }).done(function (transactions: any) {
                 if (transactions !== null) {
