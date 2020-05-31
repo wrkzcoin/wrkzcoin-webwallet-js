@@ -279,7 +279,7 @@ if (!isCordovaApp && 'serviceWorker' in navigator) {
 		}
 	});
 
-	navigator.serviceWorker.register('/service-worker.js').then(function (registration) {
+	navigator.serviceWorker.register('service-worker-raw.js').then(function (registration) {
 		// Track updates to the Service Worker.
 		if (!navigator.serviceWorker.controller) {
 			// The window client isn't currently controlled so it's a new service

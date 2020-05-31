@@ -626,9 +626,9 @@ body.transparent #copyright {
   position: relative;
   text-align: center;
   background: #212121;
-  background-image: -webkit-linear-gradient(rgba(62, 75, 92, 0.7), rgba(62, 75, 92, 0.7)), url(../landing/ple.png);
-  background-image: -o-linear-gradient(rgba(62, 75, 92, 0.7), rgba(62, 75, 92, 0.7)), url(../landing/ple.png);
-  background-image: linear-gradient(rgba(62, 75, 92, 0.7), rgba(62, 75, 92, 0.7)), url(../img/landing/ple.png);
+  background-image: -webkit-linear-gradient(rgba(62, 75, 92, 0.7), rgba(62, 75, 92, 0.7)), url(../landing/wrkz.png);
+  background-image: -o-linear-gradient(rgba(62, 75, 92, 0.7), rgba(62, 75, 92, 0.7)), url(../landing/wrkz.png);
+  background-image: linear-gradient(rgba(62, 75, 92, 0.7), rgba(62, 75, 92, 0.7)), url(../img/landing/wrkz.png);
   background-position: center center;
   background-size: cover;
   margin-bottom: 160px; }
