@@ -508,7 +508,7 @@ export class BlockchainExplorerRpc2 implements BlockchainExplorer {
         let self = this;
         return new Promise(function (resolve, reject) {
             //console.log('sending:', rawTx);
-            $.post(self.serverAddress + 'sendrawtx', { '': rawTx })
+            $.post(self.serverAddress + 'sendrawtransaction', { '': rawTx })
             .done(function (transactions: any) {
                 if (transactions.status && transactions.status == 'OK') {
                     resolve(transactions);
