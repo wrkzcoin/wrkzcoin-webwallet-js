@@ -19,4 +19,5 @@ global.config = {
 	coinUriPrefix: 'wrkzcoin:',
 	avgBlockTime: 60,
 	maxBlockNumber: 500000000,
+	donateAddressWrkz: 'WrkzRNDQDwFCBynKPc459v3LDa1gEGzG3j962tMUBko1fw9xgdaS9mNiGMgA9s1q7hS1Z8SGRVWzcGc8Sh8xsvfZ6u2wJEtoZB',
 };
