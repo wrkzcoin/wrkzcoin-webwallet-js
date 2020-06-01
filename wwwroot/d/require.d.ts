@@ -38,15 +38,15 @@ interface RequireConfig {
      *
      * @example
      * requirejs.config({
-	*	map: {
-	*		'some/newmodule': {
-	*			'foo': 'foo1.2'
-	*		},
-	*		'some/oldmodule': {
-	*			'foo': 'foo1.0'
-	*		}
-	*	}
-	* });
+    *    map: {
+    *        'some/newmodule': {
+    *            'foo': 'foo1.2'
+    *        },
+    *        'some/oldmodule': {
+    *            'foo': 'foo1.0'
+    *        }
+    *    }
+    * });
      **/
     map?: {
         [id: string]: {
@@ -174,18 +174,18 @@ interface RequireDefine {
      * Define function with dependencies.
      * @deps List of dependencies module IDs.
      * @ready Callback function when the dependencies are loaded.
-     *	@deps module dependencies
-     *	@return module definition
+     *    @deps module dependencies
+     *    @return module definition
      **/
     (deps: string[], ready: (...deps: any[]) => any): void;
 
     /**
      *  Define module with simplified CommonJS wrapper.
      * @ready
-     *	@require requirejs instance
-     *	@exports exports object
-     *	@module module
-     *	@return module definition
+     *    @require requirejs instance
+     *    @exports exports object
+     *    @module module
+     *    @return module definition
      **/
     (ready: (require: Require, exports: { [key: string]: any; }, module: RequireModule) => any): void;
 
@@ -194,8 +194,8 @@ interface RequireDefine {
      * @name The name of the module.
      * @deps List of dependencies module IDs.
      * @ready Callback function when the dependencies are loaded.
-     *	@deps module dependencies
-     *	@return module definition
+     *    @deps module dependencies
+     *    @return module definition
      **/
     (name: string, deps: string[], ready: (...deps: any[]) => any): void;
 }

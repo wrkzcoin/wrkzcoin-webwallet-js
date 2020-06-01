@@ -31,99 +31,99 @@ let blockchainExplorer : BlockchainExplorerRpc2 = DependencyInjectorInstance().g
 let walletWatchdog : WalletWatchdog = DependencyInjectorInstance().getInstance(WalletWatchdog.name,'default', false);
 
 class SendView extends DestructableView{
-	@VueVar(10) readSpeed !: number;
+    @VueVar(10) readSpeed !: number;
 
-	@VueVar(0) creationHeight !: number;
-	@VueVar(0) scanHeight !: number;
+    @VueVar(0) creationHeight !: number;
+    @VueVar(0) scanHeight !: number;
 
-	@VueVar(-1) maxHeight !: number;
-	@VueVar('en') language !: string;
+    @VueVar(-1) maxHeight !: number;
+    @VueVar('en') language !: string;
 
     @VueVar('') localNode !: string;
 
-	@VueVar(0) nativeVersionCode !: number;
-	@VueVar('') nativeVersionNumber !: string;
+    @VueVar(0) nativeVersionCode !: number;
+    @VueVar('') nativeVersionNumber !: string;
 
-	constructor(container : string){
-		super(container);
-		let self = this;
-		this.readSpeed = wallet.options.readSpeed;
+    constructor(container : string){
+        super(container);
+        let self = this;
+        this.readSpeed = wallet.options.readSpeed;
 
-		this.creationHeight = wallet.creationHeight;
+        this.creationHeight = wallet.creationHeight;
         this.scanHeight = wallet.lastHeight;
         this.localNode == '';
 
-		blockchainExplorer.getHeight().then(function (height: number) {
-			self.maxHeight = height;
-		});
+        blockchainExplorer.getHeight().then(function (height: number) {
+            self.maxHeight = height;
+        });
 
-		Translations.getLang().then((userLang : string) => {
-			this.language = userLang;
-		});
+        Translations.getLang().then((userLang : string) => {
+            this.language = userLang;
+        });
 
-		if(typeof (<any>window).cordova !== 'undefined' && typeof (<any>window).cordova.getAppVersion !== 'undefined') {
-			(<any>window).cordova.getAppVersion.getVersionNumber().then((version : string) => {
-				this.nativeVersionNumber = version;
-			});
-			(<any>window).cordova.getAppVersion.getVersionCode().then((version : number) => {
-				this.nativeVersionCode = version;
-			});
-		}
-	}
+        if(typeof (<any>window).cordova !== 'undefined' && typeof (<any>window).cordova.getAppVersion !== 'undefined') {
+            (<any>window).cordova.getAppVersion.getVersionNumber().then((version : string) => {
+                this.nativeVersionNumber = version;
+            });
+            (<any>window).cordova.getAppVersion.getVersionCode().then((version : number) => {
+                this.nativeVersionCode = version;
+            });
+        }
+    }
 
-	@VueWatched()
-	languageWatch() {
-		Translations.setBrowserLang(this.language);
-		Translations.loadLangTranslation(this.language);
-	}
+    @VueWatched()
+    languageWatch() {
+        Translations.setBrowserLang(this.language);
+        Translations.loadLangTranslation(this.language);
+    }
 
-	deleteWallet() {
-		swal({
-			title: i18n.t('settingsPage.deleteWalletModal.title'),
-			html: i18n.t('settingsPage.deleteWalletModal.content'),
-			showCancelButton: true,
-			confirmButtonText: i18n.t('global.openWalletModal.confirmText'),
-			cancelButtonText: i18n.t('global.openWalletModal.cancelText'),
-		}).then((result:any) => {
-			if (result.value) {
-				AppState.disconnect();
-				DependencyInjectorInstance().register(Wallet.name, undefined,'default');
-				WalletRepository.deleteLocalCopy();
-				window.location.href = '#index';
-			}
-		});
-	}
+    deleteWallet() {
+        swal({
+            title: i18n.t('settingsPage.deleteWalletModal.title'),
+            html: i18n.t('settingsPage.deleteWalletModal.content'),
+            showCancelButton: true,
+            confirmButtonText: i18n.t('global.openWalletModal.confirmText'),
+            cancelButtonText: i18n.t('global.openWalletModal.cancelText'),
+        }).then((result:any) => {
+            if (result.value) {
+                AppState.disconnect();
+                DependencyInjectorInstance().register(Wallet.name, undefined,'default');
+                WalletRepository.deleteLocalCopy();
+                window.location.href = '#index';
+            }
+        });
+    }
 
-	@VueWatched()	readSpeedWatch(){this.updateWalletOptions();}
-	@VueWatched()	localNodeWatch(){this.updateWalletOptions();}
-	@VueWatched()	creationHeightWatch(){
-		if(this.creationHeight < 0)this.creationHeight = 0;
-		if(this.creationHeight > this.maxHeight && this.maxHeight !== -1)this.creationHeight = this.maxHeight;
-	}
-	@VueWatched()	scanHeightWatch(){
-		if(this.scanHeight < 0)this.scanHeight = 0;
-		if(this.scanHeight > this.maxHeight && this.maxHeight !== -1)this.scanHeight = this.maxHeight;
-	}
+    @VueWatched()    readSpeedWatch(){this.updateWalletOptions();}
+    @VueWatched()    localNodeWatch(){this.updateWalletOptions();}
+    @VueWatched()    creationHeightWatch(){
+        if(this.creationHeight < 0)this.creationHeight = 0;
+        if(this.creationHeight > this.maxHeight && this.maxHeight !== -1)this.creationHeight = this.maxHeight;
+    }
+    @VueWatched()    scanHeightWatch(){
+        if(this.scanHeight < 0)this.scanHeight = 0;
+        if(this.scanHeight > this.maxHeight && this.maxHeight !== -1)this.scanHeight = this.maxHeight;
+    }
 
-	private updateWalletOptions(){
-		let options = wallet.options;
+    private updateWalletOptions(){
+        let options = wallet.options;
         options.readSpeed = this.readSpeed;
         options.localNode = this.localNode;
-		wallet.options = options;
-		walletWatchdog.signalWalletUpdate();
-	}
+        wallet.options = options;
+        walletWatchdog.signalWalletUpdate();
+    }
 
-	updateWalletSettings(){
-		wallet.creationHeight = this.creationHeight;
-		wallet.lastHeight = this.scanHeight;
-		walletWatchdog.signalWalletUpdate();
-	}
+    updateWalletSettings(){
+        wallet.creationHeight = this.creationHeight;
+        wallet.lastHeight = this.scanHeight;
+        walletWatchdog.signalWalletUpdate();
+    }
 
 
 }
 
 
 if(wallet !== null && blockchainExplorer !== null)
-	new SendView('#app');
+    new SendView('#app');
 else
-	window.location.href = '#index';
+    window.location.href = '#index';

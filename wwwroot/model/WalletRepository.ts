@@ -21,76 +21,76 @@ import { Mnemonic } from "../model/Mnemonic";
 
 export class WalletRepository{
 
-	static hasOneStored() : Promise<boolean>{
-		return Storage.getItem('wallet', null).then(function (wallet : any) {
-			return wallet !== null;
-		});
-	}
-	
-	static getWithPassword(rawWallet : RawWallet, password : string) : Wallet|null{
-		if(password.length > 32)
-			password = password.substr(0 , 32);
-		if(password.length < 32){
-			password = ('00000000000000000000000000000000'+password).slice(-32);
-		}
+    static hasOneStored() : Promise<boolean>{
+        return Storage.getItem('wallet', null).then(function (wallet : any) {
+            return wallet !== null;
+        });
+    }
+    
+    static getWithPassword(rawWallet : RawWallet, password : string) : Wallet|null{
+        if(password.length > 32)
+            password = password.substr(0 , 32);
+        if(password.length < 32){
+            password = ('00000000000000000000000000000000'+password).slice(-32);
+        }
 
-		let privKey = new (<any>TextEncoder)("utf8").encode(password);
-		let nonce = new (<any>TextEncoder)("utf8").encode(rawWallet.nonce);
-		// rawWallet.encryptedKeys = this.b64DecodeUnicode(rawWallet.encryptedKeys);
-		let encrypted = new Uint8Array(<any>rawWallet.encryptedKeys);
-		let decrypted = nacl.secretbox.open(encrypted, nonce, privKey);
-		if(decrypted === null)
-			return null;
-		rawWallet.encryptedKeys = new TextDecoder("utf8").decode(decrypted);
-		return Wallet.loadFromRaw(rawWallet);
-	}
+        let privKey = new (<any>TextEncoder)("utf8").encode(password);
+        let nonce = new (<any>TextEncoder)("utf8").encode(rawWallet.nonce);
+        // rawWallet.encryptedKeys = this.b64DecodeUnicode(rawWallet.encryptedKeys);
+        let encrypted = new Uint8Array(<any>rawWallet.encryptedKeys);
+        let decrypted = nacl.secretbox.open(encrypted, nonce, privKey);
+        if(decrypted === null)
+            return null;
+        rawWallet.encryptedKeys = new TextDecoder("utf8").decode(decrypted);
+        return Wallet.loadFromRaw(rawWallet);
+    }
 
-	static getLocalWalletWithPassword(password : string) : Promise<Wallet|null>{
-		return Storage.getItem('wallet', null).then((existingWallet : any) => {
-			//console.log(existingWallet);
-			if(existingWallet !== null){
-				//console.log(JSON.parse(existingWallet));
-				let wallet : Wallet|null = this.getWithPassword(JSON.parse(existingWallet), password);
-				//console.log(wallet);
-				return wallet;
-			}else{
-				return null;
-			}
-		});
-	}
-	
-	static save(wallet : Wallet, password : string) : Promise<void>{
-		let rawWallet = this.getEncrypted(wallet, password);
-		return Storage.setItem('wallet', JSON.stringify(rawWallet));
-	}
+    static getLocalWalletWithPassword(password : string) : Promise<Wallet|null>{
+        return Storage.getItem('wallet', null).then((existingWallet : any) => {
+            //console.log(existingWallet);
+            if(existingWallet !== null){
+                //console.log(JSON.parse(existingWallet));
+                let wallet : Wallet|null = this.getWithPassword(JSON.parse(existingWallet), password);
+                //console.log(wallet);
+                return wallet;
+            }else{
+                return null;
+            }
+        });
+    }
+    
+    static save(wallet : Wallet, password : string) : Promise<void>{
+        let rawWallet = this.getEncrypted(wallet, password);
+        return Storage.setItem('wallet', JSON.stringify(rawWallet));
+    }
 
-	static getEncrypted(wallet : Wallet, password : string){
-		if(password.length > 32)
-			password = password.substr(0 , 32);
-		if(password.length < 32){
-			password = ('00000000000000000000000000000000'+password).slice(-32);
-		}
+    static getEncrypted(wallet : Wallet, password : string){
+        if(password.length > 32)
+            password = password.substr(0 , 32);
+        if(password.length < 32){
+            password = ('00000000000000000000000000000000'+password).slice(-32);
+        }
 
-		let privKey = new (<any>TextEncoder)("utf8").encode(password);
-		let rawNonce = nacl.util.encodeBase64(nacl.randomBytes(16));
-		let nonce = new (<any>TextEncoder)("utf8").encode(rawNonce);
-		let rawWallet = wallet.exportToRaw();
-		let uint8EncryptedKeys = new (<any>TextEncoder)("utf8").encode(rawWallet.encryptedKeys);
+        let privKey = new (<any>TextEncoder)("utf8").encode(password);
+        let rawNonce = nacl.util.encodeBase64(nacl.randomBytes(16));
+        let nonce = new (<any>TextEncoder)("utf8").encode(rawNonce);
+        let rawWallet = wallet.exportToRaw();
+        let uint8EncryptedKeys = new (<any>TextEncoder)("utf8").encode(rawWallet.encryptedKeys);
 
-		let encrypted : Uint8Array = nacl.secretbox(uint8EncryptedKeys, nonce, privKey);
-		rawWallet.encryptedKeys = <any>encrypted.buffer;
-		let tabEncrypted = [];
-		for(let i = 0; i < encrypted.length; ++i){
-			tabEncrypted.push(encrypted[i]);
-		}
-		rawWallet.encryptedKeys = <any>tabEncrypted;
-		rawWallet.nonce = rawNonce;
-		return rawWallet;
-	}
+        let encrypted : Uint8Array = nacl.secretbox(uint8EncryptedKeys, nonce, privKey);
+        rawWallet.encryptedKeys = <any>encrypted.buffer;
+        let tabEncrypted = [];
+        for(let i = 0; i < encrypted.length; ++i){
+            tabEncrypted.push(encrypted[i]);
+        }
+        rawWallet.encryptedKeys = <any>tabEncrypted;
+        rawWallet.nonce = rawNonce;
+        return rawWallet;
+    }
 
-	static deleteLocalCopy() : Promise<void>{
-		return Storage.remove('wallet');
-	}
+    static deleteLocalCopy() : Promise<void>{
+        return Storage.remove('wallet');
+    }
 
     static dottedLine(doc: any, xFrom: number, yFrom: number, xTo: number, yTo: number, segmentLength: number) {
         // Calculate line length (c)
@@ -114,22 +114,22 @@ export class WalletRepository{
         }
     }
 
-	static downloadEncryptedPdf(wallet : Wallet){
-		if(wallet.keys.priv.spend === '')
-			throw 'missing_spend';
+    static downloadEncryptedPdf(wallet : Wallet){
+        if(wallet.keys.priv.spend === '')
+            throw 'missing_spend';
 
-		let coinWalletUri = CoinUri.encodeWalletKeys(
-			wallet.getPublicAddress(),
-			wallet.keys.priv.spend,
-			wallet.keys.priv.view,
-			wallet.creationHeight
-		);
+        let coinWalletUri = CoinUri.encodeWalletKeys(
+            wallet.getPublicAddress(),
+            wallet.keys.priv.spend,
+            wallet.keys.priv.view,
+            wallet.creationHeight
+        );
 
-		let publicQrCode = kjua({
-			render: 'canvas',
-			text: wallet.getPublicAddress(),
-			size:300,
-		});
+        let publicQrCode = kjua({
+            render: 'canvas',
+            text: wallet.getPublicAddress(),
+            size:300,
+        });
 
         let privateSpendQrCode = kjua({
             render: 'canvas',
@@ -146,7 +146,7 @@ export class WalletRepository{
         
         let logo = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARkAAACACAYAAAA/Dh0oAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkUyREQ0NThDOTg2RTExRTg4NUYwRDYyM0MxNjM2MkYyIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkUyREQ0NThEOTg2RTExRTg4NUYwRDYyM0MxNjM2MkYyIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6RTJERDQ1OEE5ODZFMTFFODg1RjBENjIzQzE2MzYyRjIiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6RTJERDQ1OEI5ODZFMTFFODg1RjBENjIzQzE2MzYyRjIiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4u1QeXAAAdFElEQVR42uyd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";
 
-		let doc = new jsPDF('landscape');
+        let doc = new jsPDF('landscape');
 
         // background color
         doc.setFillColor(0, 118, 168);
@@ -333,12 +333,12 @@ export class WalletRepository{
         doc.text('you transfer to it. KEEP IT SAFE.', 15, 193, null, 0);
 
 
-		try {
-			doc.save('wallet_backup.pdf');
-		} catch(e) {
-			alert('Error ' + e);
-		}
+        try {
+            doc.save('wallet_backup.pdf');
+        } catch(e) {
+            alert('Error ' + e);
+        }
 
-	}
+    }
 
 }

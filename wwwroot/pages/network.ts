@@ -27,46 +27,46 @@ import {AppState} from "../model/AppState";
 AppState.enableLeftMenu();
 
 class NetworkView extends DestructableView{
-	@VueVar(0) networkHashrate !: number;
-	@VueVar(0) blockchainHeight !: number;
-	@VueVar(0) networkDifficulty !: number;
-	@VueVar(0) lastReward !: number;
+    @VueVar(0) networkHashrate !: number;
+    @VueVar(0) blockchainHeight !: number;
+    @VueVar(0) networkDifficulty !: number;
+    @VueVar(0) lastReward !: number;
     @VueVar(0) lastBlockFound !: number;
     @VueVar(100) currencyDivider !: number;
 
-	private intervalRefreshStat = 0;
+    private intervalRefreshStat = 0;
 
-	constructor(container : string){
-		super(container);
+    constructor(container : string){
+        super(container);
 
-		let self = this;
-		this.intervalRefreshStat = setInterval(function(){
-			self.refreshStats();
-		}, 30*1000);
-		this.refreshStats();
-	}
+        let self = this;
+        this.intervalRefreshStat = setInterval(function(){
+            self.refreshStats();
+        }, 30*1000);
+        this.refreshStats();
+    }
 
-	destruct(): Promise<void> {
-		clearInterval(this.intervalRefreshStat);
-		return super.destruct();
-	}
+    destruct(): Promise<void> {
+        clearInterval(this.intervalRefreshStat);
+        return super.destruct();
+    }
 
-	refreshStats() {
-		let self = this;
-		$.ajax({
-			url:config.apiUrl+'info'
-		}).done(function(data : any){
+    refreshStats() {
+        let self = this;
+        $.ajax({
+            url:config.apiUrl+'info'
+        }).done(function(data : any){
             self.networkDifficulty = data.difficulty;
             self.networkHashrate = parseFloat((data.difficulty / config.avgBlockTime / 1000).toFixed(2));//hash rate in KH/s
-			self.blockchainHeight = data.height;
-		});
-		$.ajax({
-			url:config.apiUrl+'block/header/top'
-		}).done(function(data : any){
-			self.lastReward = data.reward;
-			self.lastBlockFound = parseInt(data.timestamp);
-		});
-	}
+            self.blockchainHeight = data.height;
+        });
+        $.ajax({
+            url:config.apiUrl+'block/header/top'
+        }).done(function(data : any){
+            self.lastReward = data.reward;
+            self.lastBlockFound = parseInt(data.timestamp);
+        });
+    }
 
 }
 

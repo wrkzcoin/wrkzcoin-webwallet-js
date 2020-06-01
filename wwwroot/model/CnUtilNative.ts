@@ -16,15 +16,15 @@
 
 let KEY_SIZE = 32;
 let STRUCT_SIZES = {
-	GE_P3: 160,
-	GE_P2: 120,
-	GE_P1P1: 160,
-	GE_CACHED: 160,
-	EC_SCALAR: 32,
-	EC_POINT: 32,
-	KEY_IMAGE: 32,
-	GE_DSMP: 160 * 8, // ge_cached * 8
-	SIGNATURE: 64 // ec_scalar * 2
+    GE_P3: 160,
+    GE_P2: 120,
+    GE_P1P1: 160,
+    GE_CACHED: 160,
+    EC_SCALAR: 32,
+    EC_POINT: 32,
+    KEY_IMAGE: 32,
+    GE_DSMP: 160 * 8, // ge_cached * 8
+    SIGNATURE: 64 // ec_scalar * 2
 };
 
 
@@ -35,72 +35,72 @@ let derive_public_key_bind = (<any>self).Module_native.cwrap('derive_public_key'
 
 export class CnUtilNative{
 
-	static hextobin(hex : any) {
-		if (hex.length % 2 !== 0) throw "Hex string has invalid length!";
-		let res = new Uint8Array(hex.length / 2);
-		for (let i = 0; i < hex.length / 2; ++i) {
-			res[i] = parseInt(hex.slice(i * 2, i * 2 + 2), 16);
-		}
-		return res;
-	}
+    static hextobin(hex : any) {
+        if (hex.length % 2 !== 0) throw "Hex string has invalid length!";
+        let res = new Uint8Array(hex.length / 2);
+        for (let i = 0; i < hex.length / 2; ++i) {
+            res[i] = parseInt(hex.slice(i * 2, i * 2 + 2), 16);
+        }
+        return res;
+    }
 
-	static bintohex(bin : any) {
-		let out = [];
-		for (let i = 0; i < bin.length; ++i) {
-			out.push(("0" + bin[i].toString(16)).slice(-2));
-		}
-		return out.join("");
-	}
+    static bintohex(bin : any) {
+        let out = [];
+        for (let i = 0; i < bin.length; ++i) {
+            out.push(("0" + bin[i].toString(16)).slice(-2));
+        }
+        return out.join("");
+    }
 
-	static generate_key_derivation(pub : any, sec : any){
+    static generate_key_derivation(pub : any, sec : any){
 
-		let pub_b = CnUtilNative.hextobin(pub);
-		let sec_b = CnUtilNative.hextobin(sec);
-		let Module_native = (<any>self).Module_native;
+        let pub_b = CnUtilNative.hextobin(pub);
+        let sec_b = CnUtilNative.hextobin(sec);
+        let Module_native = (<any>self).Module_native;
 
-		let pub_m = Module_native._malloc(KEY_SIZE);
-		Module_native.HEAPU8.set(pub_b, pub_m);
+        let pub_m = Module_native._malloc(KEY_SIZE);
+        Module_native.HEAPU8.set(pub_b, pub_m);
 
-		let sec_m = Module_native._malloc(KEY_SIZE);
-		Module_native.HEAPU8.set(sec_b, sec_m);
+        let sec_m = Module_native._malloc(KEY_SIZE);
+        Module_native.HEAPU8.set(sec_b, sec_m);
 
-		let derivation_m = Module_native._malloc(KEY_SIZE);
-		let r = generate_key_derivation_bind(pub_m,sec_m,derivation_m);
+        let derivation_m = Module_native._malloc(KEY_SIZE);
+        let r = generate_key_derivation_bind(pub_m,sec_m,derivation_m);
 
-		Module_native._free(pub_m);
-		Module_native._free(sec_m);
+        Module_native._free(pub_m);
+        Module_native._free(sec_m);
 
-		let res = Module_native.HEAPU8.subarray(derivation_m, derivation_m + KEY_SIZE);
-		Module_native._free(derivation_m);
+        let res = Module_native.HEAPU8.subarray(derivation_m, derivation_m + KEY_SIZE);
+        Module_native._free(derivation_m);
 
-		return CnUtilNative.bintohex(res);
-	}
+        return CnUtilNative.bintohex(res);
+    }
 
-	static derive_public_key(derivation : string,
-							 output_idx_in_tx : number,
-							 pubSpend : string){
+    static derive_public_key(derivation : string,
+                             output_idx_in_tx : number,
+                             pubSpend : string){
 
-		let derivation_b = CnUtilNative.hextobin(derivation);
-		let pub_spend_b = CnUtilNative.hextobin(pubSpend);
+        let derivation_b = CnUtilNative.hextobin(derivation);
+        let pub_spend_b = CnUtilNative.hextobin(pubSpend);
 
 
-		let Module_native = (<any>self).Module_native;
+        let Module_native = (<any>self).Module_native;
 
-		let derivation_m = Module_native._malloc(KEY_SIZE);
-		Module_native.HEAPU8.set(derivation_b, derivation_m);
+        let derivation_m = Module_native._malloc(KEY_SIZE);
+        Module_native.HEAPU8.set(derivation_b, derivation_m);
 
-		let pub_spend_m = Module_native._malloc(KEY_SIZE);
-		Module_native.HEAPU8.set(pub_spend_b, pub_spend_m);
+        let pub_spend_m = Module_native._malloc(KEY_SIZE);
+        Module_native.HEAPU8.set(pub_spend_b, pub_spend_m);
 
-		let derived_key_m = Module_native._malloc(KEY_SIZE);
-		let r = derive_public_key_bind(derivation_m, output_idx_in_tx, pub_spend_m, derived_key_m);
+        let derived_key_m = Module_native._malloc(KEY_SIZE);
+        let r = derive_public_key_bind(derivation_m, output_idx_in_tx, pub_spend_m, derived_key_m);
 
-		Module_native._free(derivation_m);
-		Module_native._free(pub_spend_m);
+        Module_native._free(derivation_m);
+        Module_native._free(pub_spend_m);
 
-		let res = Module_native.HEAPU8.subarray(derived_key_m, derived_key_m + KEY_SIZE);
-		Module_native._free(derived_key_m);
+        let res = Module_native.HEAPU8.subarray(derived_key_m, derived_key_m + KEY_SIZE);
+        Module_native._free(derived_key_m);
 
-		return CnUtilNative.bintohex(res);
-	}
+        return CnUtilNative.bintohex(res);
+    }
 }

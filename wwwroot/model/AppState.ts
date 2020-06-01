@@ -25,154 +25,154 @@ import {Constants} from "./Constants";
 import {TransactionsExplorer} from "./TransactionsExplorer";
 
 export class WalletWorker{
-	wallet : Wallet;
-	password : string;
+    wallet : Wallet;
+    password : string;
 
-	intervalSave = 0;
+    intervalSave = 0;
 
-	constructor(wallet: Wallet, password:string) {
-		this.wallet = wallet;
-		this.password = password;
-		let self = this;
-		wallet.addObserver(Observable.EVENT_MODIFIED, function(){
-			if(self.intervalSave === 0)
-				self.intervalSave = setTimeout(function(){
-					self.save();
-					self.intervalSave = 0;
-				}, 1000);
-		});
+    constructor(wallet: Wallet, password:string) {
+        this.wallet = wallet;
+        this.password = password;
+        let self = this;
+        wallet.addObserver(Observable.EVENT_MODIFIED, function(){
+            if(self.intervalSave === 0)
+                self.intervalSave = setTimeout(function(){
+                    self.save();
+                    self.intervalSave = 0;
+                }, 1000);
+        });
 
-		this.save();
-	}
+        this.save();
+    }
 
-	save(){
-		WalletRepository.save(this.wallet, this.password);
-	}
+    save(){
+        WalletRepository.save(this.wallet, this.password);
+    }
 }
 
 export class AppState{
 
-	static openWallet(wallet : Wallet, password:string){
-		let walletWorker = new WalletWorker(wallet, password);
+    static openWallet(wallet : Wallet, password:string){
+        let walletWorker = new WalletWorker(wallet, password);
 
-		DependencyInjectorInstance().register(Wallet.name,wallet);
-		let watchdog = BlockchainExplorerProvider.getInstance().watchdog(wallet);
-		DependencyInjectorInstance().register(WalletWatchdog.name,watchdog);
-		DependencyInjectorInstance().register(WalletWorker.name,walletWorker);
+        DependencyInjectorInstance().register(Wallet.name,wallet);
+        let watchdog = BlockchainExplorerProvider.getInstance().watchdog(wallet);
+        DependencyInjectorInstance().register(WalletWatchdog.name,watchdog);
+        DependencyInjectorInstance().register(WalletWorker.name,walletWorker);
 
-		$('body').addClass('connected');
-		if(wallet.isViewOnly())
-			$('body').addClass('viewOnlyWallet');
-	}
+        $('body').addClass('connected');
+        if(wallet.isViewOnly())
+            $('body').addClass('viewOnlyWallet');
+    }
 
-	static disconnect(){
-		let wallet : Wallet = DependencyInjectorInstance().getInstance(Wallet.name,'default', false);
-		let walletWorker : WalletWorker = DependencyInjectorInstance().getInstance(WalletWorker.name,'default', false);
-		let walletWatchdog : WalletWatchdog = DependencyInjectorInstance().getInstance(WalletWatchdog.name,'default', false);
-		if(walletWatchdog !== null)
-			walletWatchdog.stop();
+    static disconnect(){
+        let wallet : Wallet = DependencyInjectorInstance().getInstance(Wallet.name,'default', false);
+        let walletWorker : WalletWorker = DependencyInjectorInstance().getInstance(WalletWorker.name,'default', false);
+        let walletWatchdog : WalletWatchdog = DependencyInjectorInstance().getInstance(WalletWatchdog.name,'default', false);
+        if(walletWatchdog !== null)
+            walletWatchdog.stop();
 
-		DependencyInjectorInstance().register(Wallet.name,undefined,'default');
-		DependencyInjectorInstance().register(WalletWorker.name,undefined,'default');
-		DependencyInjectorInstance().register(WalletWatchdog.name,undefined,'default');
-		$('body').removeClass('connected');
-		$('body').removeClass('viewOnlyWallet');
-	}
+        DependencyInjectorInstance().register(Wallet.name,undefined,'default');
+        DependencyInjectorInstance().register(WalletWorker.name,undefined,'default');
+        DependencyInjectorInstance().register(WalletWatchdog.name,undefined,'default');
+        $('body').removeClass('connected');
+        $('body').removeClass('viewOnlyWallet');
+    }
 
-	private static leftMenuEnabled = false;
-	static enableLeftMenu(){
-		if(!this.leftMenuEnabled) {
-			this.leftMenuEnabled = true;
-			$('body').removeClass('menuDisabled');
-		}
-	}
-	static disableLeftMenu(){
-		if(this.leftMenuEnabled) {
-			this.leftMenuEnabled = false;
-			$('body').addClass('menuDisabled');
-		}
-	}
+    private static leftMenuEnabled = false;
+    static enableLeftMenu(){
+        if(!this.leftMenuEnabled) {
+            this.leftMenuEnabled = true;
+            $('body').removeClass('menuDisabled');
+        }
+    }
+    static disableLeftMenu(){
+        if(this.leftMenuEnabled) {
+            this.leftMenuEnabled = false;
+            $('body').addClass('menuDisabled');
+        }
+    }
 
-	static askUserOpenWallet(redirectToHome:boolean=true){
-		let self = this;
-		return new Promise<void>(function (resolve, reject) {
-			swal({
-				title: i18n.t('global.openWalletModal.title'),
-				input: 'password',
-				showCancelButton: true,
-				confirmButtonText: i18n.t('global.openWalletModal.confirmText'),
-				cancelButtonText: i18n.t('global.openWalletModal.cancelText'),
-			}).then((result:any) => {
-				setTimeout(function(){//for async
-					if (result.value) {
-						swal({
-							type: 'info',
-							title: i18n.t('global.loading'),
-							onOpen: () => {
-								swal.showLoading();
-							}
-						});
+    static askUserOpenWallet(redirectToHome:boolean=true){
+        let self = this;
+        return new Promise<void>(function (resolve, reject) {
+            swal({
+                title: i18n.t('global.openWalletModal.title'),
+                input: 'password',
+                showCancelButton: true,
+                confirmButtonText: i18n.t('global.openWalletModal.confirmText'),
+                cancelButtonText: i18n.t('global.openWalletModal.cancelText'),
+            }).then((result:any) => {
+                setTimeout(function(){//for async
+                    if (result.value) {
+                        swal({
+                            type: 'info',
+                            title: i18n.t('global.loading'),
+                            onOpen: () => {
+                                swal.showLoading();
+                            }
+                        });
 
-						let savePassword = result.value;
-						// let password = prompt();
-						let memoryWallet = DependencyInjectorInstance().getInstance(Wallet.name, 'default', false);
-						if(memoryWallet === null){
-							WalletRepository.getLocalWalletWithPassword(savePassword).then((wallet : Wallet|null) => {
-								//console.log(wallet);
-								if (wallet !== null) {
-									wallet.recalculateIfNotViewOnly();
+                        let savePassword = result.value;
+                        // let password = prompt();
+                        let memoryWallet = DependencyInjectorInstance().getInstance(Wallet.name, 'default', false);
+                        if(memoryWallet === null){
+                            WalletRepository.getLocalWalletWithPassword(savePassword).then((wallet : Wallet|null) => {
+                                //console.log(wallet);
+                                if (wallet !== null) {
+                                    wallet.recalculateIfNotViewOnly();
 
-									//checking the wallet to find integrity/problems and try to update it before loading
-									let blockchainHeightToRescanObj: any = {};
-									for (let tx of wallet.getTransactionsCopy()) {
-										if (tx.hash === '') {
-											blockchainHeightToRescanObj[tx.blockHeight] = true;
-										}
-									}
-									let blockchainHeightToRescan = Object.keys(blockchainHeightToRescanObj);
-									if (blockchainHeightToRescan.length > 0) {
-										let blockchainExplorer: BlockchainExplorerRpc2 = DependencyInjectorInstance().getInstance(Constants.BLOCKCHAIN_EXPLORER);
+                                    //checking the wallet to find integrity/problems and try to update it before loading
+                                    let blockchainHeightToRescanObj: any = {};
+                                    for (let tx of wallet.getTransactionsCopy()) {
+                                        if (tx.hash === '') {
+                                            blockchainHeightToRescanObj[tx.blockHeight] = true;
+                                        }
+                                    }
+                                    let blockchainHeightToRescan = Object.keys(blockchainHeightToRescanObj);
+                                    if (blockchainHeightToRescan.length > 0) {
+                                        let blockchainExplorer: BlockchainExplorerRpc2 = DependencyInjectorInstance().getInstance(Constants.BLOCKCHAIN_EXPLORER);
 
-										let promisesBlocks = [];
-										for (let height of blockchainHeightToRescan) {
-											promisesBlocks.push(blockchainExplorer.getTransactionsForBlocks(parseInt(height)));
-										}
-										Promise.all(promisesBlocks).then(function (arrayOfTxs: Array<RawDaemonTransaction[]>) {
-											for (let txs of arrayOfTxs) {
-												for (let rawTx of txs) {
-													if (wallet !== null) {
-														let tx = TransactionsExplorer.parse(rawTx, wallet);
-														if (tx !== null)
-															wallet.addNew(tx);
-													}
-												}
-											}
-										});
-									}
-									swal.close();
-									resolve();
+                                        let promisesBlocks = [];
+                                        for (let height of blockchainHeightToRescan) {
+                                            promisesBlocks.push(blockchainExplorer.getTransactionsForBlocks(parseInt(height)));
+                                        }
+                                        Promise.all(promisesBlocks).then(function (arrayOfTxs: Array<RawDaemonTransaction[]>) {
+                                            for (let txs of arrayOfTxs) {
+                                                for (let rawTx of txs) {
+                                                    if (wallet !== null) {
+                                                        let tx = TransactionsExplorer.parse(rawTx, wallet);
+                                                        if (tx !== null)
+                                                            wallet.addNew(tx);
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    }
+                                    swal.close();
+                                    resolve();
 
-									AppState.openWallet(wallet, savePassword);
-									if (redirectToHome)
-										window.location.href = '#account';
-								} else {
-									swal({
-										type: 'error',
-										title: i18n.t('global.invalidPasswordModal.title'),
-										text: i18n.t('global.invalidPasswordModal.content'),
-										confirmButtonText: i18n.t('global.invalidPasswordModal.confirmText'),
-									});
-									reject();
-								}
-							});
-						}else
-							swal.close();
-					}else
-						reject();
-				},1);
-			});
-		});
-	}
+                                    AppState.openWallet(wallet, savePassword);
+                                    if (redirectToHome)
+                                        window.location.href = '#account';
+                                } else {
+                                    swal({
+                                        type: 'error',
+                                        title: i18n.t('global.invalidPasswordModal.title'),
+                                        text: i18n.t('global.invalidPasswordModal.content'),
+                                        confirmButtonText: i18n.t('global.invalidPasswordModal.confirmText'),
+                                    });
+                                    reject();
+                                }
+                            });
+                        }else
+                            swal.close();
+                    }else
+                        reject();
+                },1);
+            });
+        });
+    }
 
 
 }

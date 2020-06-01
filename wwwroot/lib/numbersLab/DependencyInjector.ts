@@ -57,23 +57,23 @@ export class DependencyInjector{
                 }
                 dependency = container[name];
             }else{
-				// console.log('default->', typeof container['default']);
-				if(
-					typeof container['default'] === 'function' ||
-					typeof container['default'] === 'object'
-				){
-            		if(container['default'].name === name){
-						if(!DependencyInjector.debug)
-							return container['default'];
-						else{
-							if(dependency != null){
-								//console.log('%c/!\\ Dependency injector : Multiple Classes Have the same name !! Conflict when resolving dependencies', 'background: white;color: red');
-							}
-						}
-						dependency = container['default'];
-					}
-				}
-			}
+                // console.log('default->', typeof container['default']);
+                if(
+                    typeof container['default'] === 'function' ||
+                    typeof container['default'] === 'object'
+                ){
+                    if(container['default'].name === name){
+                        if(!DependencyInjector.debug)
+                            return container['default'];
+                        else{
+                            if(dependency != null){
+                                //console.log('%c/!\\ Dependency injector : Multiple Classes Have the same name !! Conflict when resolving dependencies', 'background: white;color: red');
+                            }
+                        }
+                        dependency = container['default'];
+                    }
+                }
+            }
         }
         return dependency;
     }
@@ -81,15 +81,15 @@ export class DependencyInjector{
 }
 
 export function DependencyInjectorInstance() : DependencyInjector{
-	if(
-		typeof Context.getGlobalContext()['di'] === 'undefined' ||
-		Context.getGlobalContext()['di'] === null
-	){
-		let Inj : DependencyInjector = new DependencyInjector();
-		Context.getGlobalContext()['di'] = Inj;
-		//console.log('register');
-	}
-	return Context.getGlobalContext()['di'];
+    if(
+        typeof Context.getGlobalContext()['di'] === 'undefined' ||
+        Context.getGlobalContext()['di'] === null
+    ){
+        let Inj : DependencyInjector = new DependencyInjector();
+        Context.getGlobalContext()['di'] = Inj;
+        //console.log('register');
+    }
+    return Context.getGlobalContext()['di'];
 }
 
 
@@ -98,7 +98,7 @@ export function Autowire(...keys: string[]) {
     return function(target: any, key: string) {
         // property getter
         let getter = function () {
-			let Inj : DependencyInjector = DependencyInjectorInstance();
+            let Inj : DependencyInjector = DependencyInjectorInstance();
             ///console.log(Get: ${key} => ${_val});
             let subname = keys.length > 1 ? keys[1] : 'default';
             return Inj.getInstance(keys[0],subname);

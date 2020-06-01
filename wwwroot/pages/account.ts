@@ -32,75 +32,75 @@ let blockchainExplorer = DependencyInjectorInstance().getInstance(Constants.BLOC
 class AccountView extends DestructableView{
     @VueVar([]) transactions !: Transaction[];
     @VueVar(0) fusionCount !: number;
-	@VueVar(0) walletAmount !: number;
-	@VueVar(0) unlockedWalletAmount !: number;
+    @VueVar(0) walletAmount !: number;
+    @VueVar(0) unlockedWalletAmount !: number;
 
-	@VueVar(0) currentScanBlock !: number;
-	@VueVar(0) blockchainHeight !: number;
-	@VueVar(100000000) currencyDivider !: number;
+    @VueVar(0) currentScanBlock !: number;
+    @VueVar(0) blockchainHeight !: number;
+    @VueVar(100000000) currencyDivider !: number;
 
     intervalRefresh : number = 0;
 
-	constructor(container : string){
-		super(container);
-		let self = this;
-		AppState.enableLeftMenu();
-		this.intervalRefresh = setInterval(function(){
-			self.refresh();
-		}, 1*1000);
-		this.refresh();
-	}
+    constructor(container : string){
+        super(container);
+        let self = this;
+        AppState.enableLeftMenu();
+        this.intervalRefresh = setInterval(function(){
+            self.refresh();
+        }, 1*1000);
+        this.refresh();
+    }
 
-	destruct(): Promise<void> {
-		clearInterval(this.intervalRefresh);
-		return super.destruct();
-	}
+    destruct(): Promise<void> {
+        clearInterval(this.intervalRefresh);
+        return super.destruct();
+    }
 
-	refresh(){
-		let self = this;
-		blockchainExplorer.getHeight().then(function(height : number){
-			self.blockchainHeight = height;
-		});
+    refresh(){
+        let self = this;
+        blockchainExplorer.getHeight().then(function(height : number){
+            self.blockchainHeight = height;
+        });
 
-		this.refreshWallet();
-	}
+        this.refreshWallet();
+    }
 
     moreInfoOnTx(transaction: Transaction) {
         //console.log("display tx:", transaction);
-		let explorerUrl = config.mainnetExplorerUrl;
-		let feesHtml = '';
-		if(transaction.getAmount() < 0)
-			feesHtml = `<div>`+i18n.t('accountPage.txDetails.feesOnTx')+`: `+Vue.options.filters.piconero(transaction.fees)+`</a></div>`;
+        let explorerUrl = config.mainnetExplorerUrl;
+        let feesHtml = '';
+        if(transaction.getAmount() < 0)
+            feesHtml = `<div>`+i18n.t('accountPage.txDetails.feesOnTx')+`: `+Vue.options.filters.piconero(transaction.fees)+`</a></div>`;
 
-		let paymentId = '';
-		if(transaction.paymentId !== ''){
-			paymentId = `<div>`+i18n.t('accountPage.txDetails.paymentId')+`: `+transaction.paymentId+`</a></div>`;
-		}
+        let paymentId = '';
+        if(transaction.paymentId !== ''){
+            paymentId = `<div>`+i18n.t('accountPage.txDetails.paymentId')+`: `+transaction.paymentId+`</a></div>`;
+        }
 
-		swal({
-			title:i18n.t('accountPage.txDetails.title'),
-			html:`
+        swal({
+            title:i18n.t('accountPage.txDetails.title'),
+            html:`
 <div class="tl" >
-	<div>`+ i18n.t('accountPage.txDetails.txHash') + `: <a href="` + explorerUrl + `/transaction.html?hash=` + transaction.hash +`" target="_blank">`+transaction.hash+`</a></div>
-	`+paymentId+`
-	`+feesHtml+`
-	<div>`+i18n.t('accountPage.txDetails.blockHeight')+`: `+transaction.blockHeight+`</a></div>
+    <div>`+ i18n.t('accountPage.txDetails.txHash') + `: <a href="` + explorerUrl + `/transaction.html?hash=` + transaction.hash +`" target="_blank">`+transaction.hash+`</a></div>
+    `+paymentId+`
+    `+feesHtml+`
+    <div>`+i18n.t('accountPage.txDetails.blockHeight')+`: `+transaction.blockHeight+`</a></div>
 </div>`
-		});
-	}
+        });
+    }
 
-	refreshWallet(){
-		this.currentScanBlock = wallet.lastHeight;
-		this.walletAmount = wallet.amount;
-		this.unlockedWalletAmount = wallet.unlockedAmount(this.currentScanBlock);
-		if(wallet.getAll().length+wallet.txsMem.length !== this.transactions.length) {
+    refreshWallet(){
+        this.currentScanBlock = wallet.lastHeight;
+        this.walletAmount = wallet.amount;
+        this.unlockedWalletAmount = wallet.unlockedAmount(this.currentScanBlock);
+        if(wallet.getAll().length+wallet.txsMem.length !== this.transactions.length) {
             this.transactions = wallet.txsMem.concat(wallet.getTransactionsCopy().reverse());
             this.fusionCount = wallet.fusionTxs.length;
-		}
-	}
+        }
+    }
 }
 
 if(wallet !== null && blockchainExplorer !== null)
-	new AccountView('#app');
+    new AccountView('#app');
 else
-	window.location.href = '#index';
+    window.location.href = '#index';
