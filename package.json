@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "localforage": "^1.7.3",
+    "turtlecoin-wallet-backend": "https://github.com/wrkzcoin/turtlecoin-wallet-backend-js#fusion_fee_504",
     "typescript": "^2.9.2",
     "workbox-build": "^3.6.3"
   },
