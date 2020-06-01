@@ -6,7 +6,7 @@ on:
     types: [published]
 
 jobs:
-  build-android:
+  webwallet-js:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
