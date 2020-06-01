@@ -32,89 +32,89 @@ AppState.enableLeftMenu();
 let blockchainExplorer : BlockchainExplorerRpc2 = BlockchainExplorerProvider.getInstance();
 
 class ImportView extends DestructableView{
-	@VueVar('') password !: string;
-	@VueVar('') password2 !: string;
-	@VueVar(false) insecurePassword !: boolean;
-	@VueVar(false) forceInsecurePassword !: boolean;
+    @VueVar('') password !: string;
+    @VueVar('') password2 !: string;
+    @VueVar(false) insecurePassword !: boolean;
+    @VueVar(false) forceInsecurePassword !: boolean;
 
-	rawFile : any = null;
-	invalidRawFile : boolean = false;
+    rawFile : any = null;
+    invalidRawFile : boolean = false;
 
-	constructor(container : string){
-		super(container);
-	}
+    constructor(container : string){
+        super(container);
+    }
 
-	formValid(){
-		if(this.password != this.password2)
-			return false;
+    formValid(){
+        if(this.password != this.password2)
+            return false;
 
-		if(!(this.password !== '' && (!this.insecurePassword || this.forceInsecurePassword)))
-			return false;
+        if(!(this.password !== '' && (!this.insecurePassword || this.forceInsecurePassword)))
+            return false;
 
-		if(this.rawFile === null)
-			return false;
+        if(this.rawFile === null)
+            return false;
 
-		return true;
-	}
+        return true;
+    }
 
 
-	selectFile(){
-		let self = this;
-		let element = $('<input type="file">');
-		self.invalidRawFile = true;
-		element.on('change', function(event : Event){
-			let files :File[] = (<any>event.target).files; // FileList object
-			if(files.length > 0) {
-				let fileReader = new FileReader();
-				fileReader.onload = function () {
-					try {
-						self.rawFile = JSON.parse(fileReader.result);
-						self.invalidRawFile = false;
-					}catch (e) {
-						self.invalidRawFile = true;
-					}
-				};
+    selectFile(){
+        let self = this;
+        let element = $('<input type="file">');
+        self.invalidRawFile = true;
+        element.on('change', function(event : Event){
+            let files :File[] = (<any>event.target).files; // FileList object
+            if(files.length > 0) {
+                let fileReader = new FileReader();
+                fileReader.onload = function () {
+                    try {
+                        self.rawFile = JSON.parse(fileReader.result);
+                        self.invalidRawFile = false;
+                    }catch (e) {
+                        self.invalidRawFile = true;
+                    }
+                };
 
-				fileReader.readAsText(files[0]);
-			}
-		});
-		element.click();
-	}
+                fileReader.readAsText(files[0]);
+            }
+        });
+        element.click();
+    }
 
-	importWallet(){
-		let self = this;
-		blockchainExplorer.getHeight().then(function(currentHeight){
-			setTimeout(function(){
-				let newWallet = WalletRepository.getWithPassword(self.rawFile,self.password);
-				if(newWallet !== null) {
-					newWallet.recalculateIfNotViewOnly();
-					AppState.openWallet(newWallet, self.password);
-					window.location.href = '#account';
-				}else{
-					swal({
-						type: 'error',
-						title: i18n.t('global.invalidPasswordModal.title'),
-						text: i18n.t('global.invalidPasswordModal.content'),
-						confirmButtonText: i18n.t('global.invalidPasswordModal.confirmText'),
-					});
-				}
-			},1);
+    importWallet(){
+        let self = this;
+        blockchainExplorer.getHeight().then(function(currentHeight){
+            setTimeout(function(){
+                let newWallet = WalletRepository.getWithPassword(self.rawFile,self.password);
+                if(newWallet !== null) {
+                    newWallet.recalculateIfNotViewOnly();
+                    AppState.openWallet(newWallet, self.password);
+                    window.location.href = '#account';
+                }else{
+                    swal({
+                        type: 'error',
+                        title: i18n.t('global.invalidPasswordModal.title'),
+                        text: i18n.t('global.invalidPasswordModal.content'),
+                        confirmButtonText: i18n.t('global.invalidPasswordModal.confirmText'),
+                    });
+                }
+            },1);
 
-		});
-	}
+        });
+    }
 
-	@VueWatched()
-	passwordWatch(){
-		if(!Password.checkPasswordConstraints(this.password, false)){
-			this.insecurePassword = true;
-		}else
-			this.insecurePassword = false;
-	}
+    @VueWatched()
+    passwordWatch(){
+        if(!Password.checkPasswordConstraints(this.password, false)){
+            this.insecurePassword = true;
+        }else
+            this.insecurePassword = false;
+    }
 
-	forceInsecurePasswordCheck(){
-		let self = this;
-		self.forceInsecurePassword = true;
-	}
+    forceInsecurePasswordCheck(){
+        let self = this;
+        self.forceInsecurePassword = true;
+    }
 
 }
 

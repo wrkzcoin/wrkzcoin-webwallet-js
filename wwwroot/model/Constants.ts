@@ -15,5 +15,5 @@
  */
 
 export class Constants{
-	static BLOCKCHAIN_EXPLORER = 'blockchainExplorer';
+    static BLOCKCHAIN_EXPLORER = 'blockchainExplorer';
 }

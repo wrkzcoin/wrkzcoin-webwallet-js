@@ -12,7 +12,7 @@ importScripts('../lib/sha3.js');
 
 (<any>self).Module_native['onRuntimeInitialized'] = function() {
 
-	require(['./TransferProcessing.js'], function (App) {
-	});
+    require(['./TransferProcessing.js'], function (App) {
+    });
 
 };

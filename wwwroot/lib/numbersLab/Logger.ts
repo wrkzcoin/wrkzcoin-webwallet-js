@@ -49,7 +49,7 @@ export class Logger{
             else if(level >= Logger.WARNING)
                 console.warn(levelName+'['+Logger.getCallerName(caller)+']'+Logger.interpolate(message, context));
             else{
-				console.log(levelName+'['+Logger.getCallerName(caller)+']'+Logger.interpolate(message, context));
+                console.log(levelName+'['+Logger.getCallerName(caller)+']'+Logger.interpolate(message, context));
             }
 
         }
