@@ -507,9 +507,15 @@ export class BlockchainExplorerRpc2 implements BlockchainExplorer {
     sendRawTx(rawTx: string) {
         let self = this;
         return new Promise(function (resolve, reject) {
-            //console.log('sending:', rawTx);
-            $.post(self.serverAddress + 'sendrawtransaction', { '': rawTx })
-            .done(function (transactions: any) {
+            console.log('sending:', rawTx);
+            $.ajax({
+                url: config.apiUrl + "sendrawtransaction",
+                method: 'POST',
+                crossDomain: true,
+                dataType: "json",
+                contentType: 'application/json',
+                data: JSON.stringify({ 'tx_as_hex': rawTx })
+            }).done(function (transactions: any) {
                 if (transactions.status && transactions.status == 'OK') {
                     resolve(transactions);
                 } else
